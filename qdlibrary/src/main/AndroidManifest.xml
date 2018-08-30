@@ -5,8 +5,7 @@
     <application>
         <activity
             android:name=".QDCalculator"
-            android:label="@string/qd_calculator_title"
-            android:parentActivityName="">
+            android:label="@string/qd_calculator_title">
             <meta-data
                 android:name="gregory.dan.licenceorganiser.MainActivity"
                 android:value="android.support.PARENT_ACTIVITY" />
