@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">QD library</string>
+
+    <string name="qd_calculator_title">QD Calculator</string>
+
+    <!--Strings for the QD table PES descriptions-->
+    <string name="select_pes">Select PES type.</string>
+    <string-array name="pes_descriptions_short">
+        <item name="pes_igloo_rear">Igloo rear</item>
+        <item name="pes_igloo_side">Igloo side</item>
+        <item name="pes_igloo_front">Igloo front</item>
+        <item name="pes_heavy_wall_side">Heavy walled building side</item>
+        <item name="pes_heavy_wall_front">Heavy walled building front</item>
+        <item name="pes_heavy_wall_light_roof">Heavywalled building- light roof</item>
+        <item name="pes_light_wall_traversed">Light walled building - traversed</item>
+        <item name="pes_light_wall_untraversed">Light walled building - untraversed</item>
+        <item name="pes_open_stack_traversed">Open stack - traversed</item>
+        <item name="pes_open_stack_untraversed">Open stack - untraversed</item>
+    </string-array>
+
+    <string-array name="pes_descriptions_full">
+        <item name="pes_igloo_rear">Building with earth on the roof and against three walls. Directional effects through the door and headwall are away from the Exposed Site.</item>
+        <item name="pes_igloo_side">Building with earth on the roof and against three walls. Directional effects through the door and headwall are perpendicular to the direction of an ES.</item>
+        <item name="pes_igloo_front">Building with earth on the roof and against three walls. Directional effects through the door and headwall are towards an Exposed Site.</item>
+        <item name="pes_heavy_wall_side">Building of non-combustible construction with walls of nominal 450 mm RC (680 mm brick or equivalent) and protective roof of 150 mm RC with suitable support.</item>
+        <item name="pes_heavy_wall_front">Building of non-combustible construction with walls of nominal 450 mm RC (680 mm brick or equivalent) and protective roof of 150 mm RC with suitable support. Door or other large aperture faces an ES.</item>
+        <item name="pes_heavy_wall_light_roof">Building of non-combustible construction with walls of nominal 450 mm RC (680 mm brick or equivalent) without a protective roof. Integrated Weapons Complex.</item>
+        <item name="pes_light_wall_traversed">Building constructed with walls of 215 mm brick (or equivalent) and protective roof of 150 mm concrete with suitable support, traversed.</item>
+        <item name="pes_light_wall_untraversed">Building constructed with walls of 215 mm brick (or equivalent) and protective roof of 150 mm concrete with suitable support, untraversed.</item>
+        <item name="pes_open_stack_traversed">Open-air stack or light structure, traversed. Truck, trailer, rail-car or freight container loaded with ammunition, traversed.</item>
+        <item name="pes_open_stack_untraversed">Open-air stack or light structure, untraversed. Truck, trailer, rail-car or freight container loaded with ammunition, untraversed.</item>
+    </string-array>
+
+
+    <!--Strings for the QD table ES descriptions-->
+    <string name="select_es">Select ES type.</string>
+    <string-array name="es_descriptions_short">
+        <item name="es_igloo_rear">Igloo rear</item>
+        <item name="es_igloo_side">Igloo side</item>
+        <item name="es_igloo_front">Igloo front</item>
+        <item name="es_igloo_front_2"> Igloo door - non compliant</item>
+        <item name="es_igloo_door_traversed">Igloo door - traversed</item>
+        <item name="es_igloos_rear_2">Igloo rear - non compliant</item>
+        <item name="es_igloo_side_2">Igloo side - non compliant</item>
+        <item name="es_igloo_front_3">Igloo - non compliant - front</item>
+        <item name="es_heavy_walled">Heavy walled building</item>
+        <item name="es_heavy_walled_light_roof">Heavy walled building - light roof</item>
+        <item name="es_open_stack_traversed">Open stack - traversed</item>
+        <item name="es_open_stack_untraversed">Open stack - untraversed</item>
+        <item name="es_light_walled_traversed">Light walled building - traversed</item>
+        <item name="es_light_walled_untraversed">Light walled building - untraversed</item>
+        <item name="es_process_building_traversed_roofed">Process Building with protective roof - traversed</item>
+        <item name="es_process_building_traversed">Process Building without protective roof - traversed</item>
+        <item name="es_process_building_untraversed">Process Building - untraversed</item>
+        <item name="es_transfer_shed_traversed_lessthan_10_persons">Transfer shed &lt; 10 persons - traversed</item>
+        <item name="es_transfer_shed_traversed_morethan_10_persons">Transfer shed \u2265 10 persons - traversed</item>
+        <item name="es_transfer_shed_untraversed_lessthan_10_persons">Transfer shed &lt; 10 persons - untraversed</item>
+        <item name="es_transfer_shed_untraversed_morethan_10_persons">Transfer shed \u2265 10 persons - untraversed</item>
+        <item name="es_low_density_road">Low Density Usage Roads</item>
+        <item name="es_medium_density_road">Medium Density Usage Roads</item>
+        <item name="es_high_density_road">High Density Usage Roads</item>
+        <item name="es_inhabited_building">Inhabited Building or Places of Assembly</item>
+        <item name="es_vulnerable_building">Vulnerable Constructions</item>
+        <item name="es_office_lessthan_20">Office - &lt; 20 persons</item>
+        <item name="es_office_morethan_20">Office - \u2265 20 persons</item>
+        <item name="es_office_changing">Office or Amenity Changing facility</item>
+        <item name="es_overhead_power_supergrid">Overhead Power Grid - Supergrid</item>
+        <item name="es_overhead_power_normal">Overhead Power Grid - Normal</item>
+        <item name="es_overhead_power_minor">Overhead Power Grid - Minor</item>
+        <item name="es_pol_protected">POL Facilities - Protected or Underground </item>
+        <item name="es_pol_unprotected_vital">POL Facilities - Unprotected, aboveground vital</item>
+        <item name="es_pol_unprotected_nonvital">POL Facilities - Unprotected, aboveground, non-vital </item>
+        <item name="es_pol_small_quantities">POL Facilities - Small Quantities</item>
+        <item name="es_boiler_house_manned">Boiler Houses - Manned or Vital</item>
+        <item name="es_boiler_house_unmanned_nonvital">Boiler Houses - Unmanned, non-vital </item>
+        <item name="es_boiler_house_unmanned_local">Boiler Houses - Unmanned, local </item>
+
+    </string-array>
+    <string-array name="es_descriptions_long">
+        <item name="es_igloo_rear">Standard UK Igloo designed in accordance with Chapter 6, with the door facing away from PES.</item>
+        <item name="es_igloo_side">Standard UK Igloo designed in accordance with Chapter 6, with the door facing perpendicularly to the direction of PES.</item>
+        <item name="es_igloo_front">Standard UK Igloo designed in accordance with Chapter 6, with the door towards a PES.</item>
+        <item name="es_igloo_front_2"> Earth-covered building not complying with Chapter 6, but with a headwall and door(s) resistant to high velocity projections (see Chapter 10 Section 2). The door faces a PES</item>
+        <item name="es_igloo_door_traversed">Earth-covered building not complying with Chapter 6, but with a door barricade, (see Chapter 10 Section 2). The door faces a PES.</item>
+        <item name="es_igloos_rear_2"> Earth-covered building not complying with Chapter 6, with or without a headwall and door(s) resistant to fire and low velocity projections, (see Chapter 10 Section 2), but the door faces away from a PES.</item>
+        <item name="es_igloo_side_2">Earth-covered building not complying with Chapter 6, with or without a headwall and door(s) resistant to fire and low velocity projections, (see Chapter 10 Section 2), but the door faces perpendicularly to the direction of a PES.</item>
+        <item name="es_igloo_front_3">Earth-covered building not complying with Chapter 6, with or without a headwall and door(s) resistant to fire and low velocity projections, (see Chapter 10 Section 2), with the door facing a PES</item>
+        <item name="es_heavy_walled">Building of noncombustible construction with walls of nominal 450 mm RC (680 mm brick or equivalent) and protective roof of 150 mm RC with suitable support. The door is traversed if it faces a PES.</item>
+        <item name="es_heavy_walled_light_roof">Building of noncombustible construction with walls of nominal 450 mm RC (680 mm brick or equivalent), without a protective roof. The door is traversed if it faces a PES.</item>
+        <item name="es_open_stack_traversed">Open air stack or light structure, traversed. Truck, trailer, rail-car or freight container loaded with ammunition, traversed</item>
+        <item name="es_open_stack_untraversed"> Open air stack or light structure, untraversed. Truck, trailer, rail-car or freight container loaded with ammunition, untraversed.</item>
+        <item name="es_light_walled_traversed"> Building constructed with walls of 215 mm brick (or equivalent) and protective roof of 150 mm concrete with suitable support, traversed. </item>
+        <item name="es_light_walled_untraversed">Building constructed with walls of 215 mm brick (or equivalent) and protective roof of 150 mm concrete with suitable support, untraversed. </item>
+        <item name="es_process_building_traversed_roofed">Process Building with protective roof, traversed</item>
+        <item name="es_process_building_traversed">Process Building without protective roof, traversed</item>
+        <item name="es_process_building_untraversed">Process Building with or without protective roof, untraversed</item>
+        <item name="es_transfer_shed_traversed_lessthan_10_persons">Transfer Shed Traversed. Occupied by less than 10 persons</item>
+        <item name="es_transfer_shed_traversed_morethan_10_persons">Transfer Shed Traversed. Occupied by 10 or more persons</item>
+        <item name="es_transfer_shed_untraversed_lessthan_10_persons">Transfer Shed Untraversed. Occupied by less than 10 persons </item>
+        <item name="es_transfer_shed_untraversed_morethan_10_persons">Transfer Shed Untraversed. Occupied by 10 or more persons</item>
+        <item name="es_low_density_road">Low Density Usage Roads – Less than 1000 vehicles per day. Railways – Less than 1000 passengers per day. Waterways – Less than 400 users per day. Public Rights of Way or Recreational Facilities – Less than 200 users per day</item>
+        <item name="es_medium_density_road">Medium Density Usage Roads – 1000 or more but less than 5000 vehicles per day. Railways – 1000 or more but less than 5000 passengers per day. Waterways – 400 or more but less than 1800 users per day. Public Rights of Way or Recreational Facilities – 200 or more but less than 900 users per day</item>
+        <item name="es_high_density_road">High Density Usage Roads – 5000 or more vehicles per day. Railways – 5000 or more passengers per day. Waterways – 1800 or more users per day. Public Rights of Way or Recreational Facilities – 900 or more users per day</item>
+        <item name="es_inhabited_building">Inhabited Building or Places of Assembly</item>
+        <item name="es_vulnerable_building">Vulnerable Constructions</item>
+        <item name="es_office_lessthan_20">Office, Non-explosives workshop, Canteen with less than 20 persons who are directly associated with the explosives task in a support role</item>
+        <item name="es_office_morethan_20">Office, Non-explosives workshop, Canteen with 20 or more persons who are directly associated with the explosives task in a support role</item>
+        <item name="es_office_changing">Office or Amenity Changing facility used by Explosives Workers or EASW </item>
+        <item name="es_overhead_power_supergrid"> Overhead Power Grid - Supergrid Network and associated substations</item>
+        <item name="es_overhead_power_normal"> Overhead Power Grid - Normal Network and associated substations</item>
+        <item name="es_overhead_power_minor"> Overhead Power Grid - Minor Network and associated substations</item>
+        <item name="es_pol_protected">POL Facilities inc pipelines - Protected or Underground </item>
+        <item name="es_pol_unprotected_vital">POL Facilities inc pipelines - Unprotected, aboveground vital</item>
+        <item name="es_pol_unprotected_nonvital">POL Facilities inc pipelines - Unprotected, aboveground, non-vital </item>
+        <item name="es_pol_small_quantities">POL Facilities inc pipelines - Small Quantities</item>
+        <item name="es_boiler_house_manned">Boiler Houses - Manned or Vital</item>
+        <item name="es_boiler_house_unmanned_nonvital">Boiler Houses - Unmanned, non-vital </item>
+        <item name="es_boiler_house_unmanned_local">Boiler Houses - Unmanned, local </item>
+    </string-array>
+
+    <string name="select_hazard_division_title">Select hazard division</string>
+    <string name="distance_in_metres_hint">Distance in metres from PES to ES.</string>
+    <string name="calculate">Calculate</string>
+    <string-array name="hazard_divisions">
+        <item>1.1</item>
+        <item>1.2.1</item>
+        <item>1.2.2</item>
+        <item>1.3.3</item>
+        <item>1.3.4</item>
+    </string-array>
+
+</resources>

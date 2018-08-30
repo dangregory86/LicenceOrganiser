@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="gregory.dan.qdlibrary">
+
+    <application>
+        <activity
+            android:name=".QDCalculator"
+            android:label="@string/qd_calculator_title"
+            android:parentActivityName="">
+            <meta-data
+                android:name="gregory.dan.licenceorganiser.MainActivity"
+                android:value="android.support.PARENT_ACTIVITY" />
+        </activity>
+    </application>
+
+</manifest>
