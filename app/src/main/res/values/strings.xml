@@ -9,9 +9,14 @@
     <string name="next_due_title">Next inspection due:</string>
     <string name="unit_list_item_points_title_text">Points outstanding:</string>
     <string name="qd_calculator_title">QD Calculator</string>
-
-
-
+    <string name="add_new_unit">Add New Unit</string>
+    <string name="new_unit_edit_text_hint">Unit Title</string>
+    <string name="new_unit_address_edit_text">Unit address</string>
+    <string name="new_unit_phone_edit_text">Phone</string>
+    <string name="new_unit_co_name">CO</string>
+    <string name="new_unit_add_licences_checkbox">Add licence?</string>
+    <string name="new_unit_add_points_checkbox">Add inspection points?</string>
+    <string name="new_unit_save_button">Save</string>
 
 
 </resources>

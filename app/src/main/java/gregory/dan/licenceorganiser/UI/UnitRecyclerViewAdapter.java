@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import gregory.dan.licenceorganiser.R;
 import gregory.dan.licenceorganiser.Unit.Unit;
@@ -18,7 +18,7 @@ import gregory.dan.licenceorganiser.Unit.Unit;
  */
 public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerViewAdapter.UnitViewHolder>{
 
-    private ArrayList<Unit> units;
+    private List<Unit> units;
     private ListItemClickListener mListItemClickListener;
 
     @NonNull
@@ -36,7 +36,7 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
         if(units == null) {
             return;
         }
-        String unitTitle = units.get(position).getUnitTitle();
+        String unitTitle = units.get(position).unitTitle;
         holder.unitTitleText.setText(unitTitle);
     }
 
@@ -73,7 +73,7 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
         }
     }
 
-    public void setUnits(ArrayList<Unit> units){
+    public void setUnits(List<Unit> units){
         this.units = units;
         notifyDataSetChanged();
     }

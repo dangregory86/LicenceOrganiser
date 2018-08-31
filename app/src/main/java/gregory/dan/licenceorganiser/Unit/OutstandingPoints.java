@@ -19,24 +19,25 @@ import java.util.Date;
         childColumns = "unit")
 }, indices = @Index("unit"))
 @TypeConverters(DateConverter.class)
-public class Licence{
+public class OutstandingPoints{
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    public String licenceSerial;
+    public int id;
 
     @ColumnInfo(name = "unit")
     public String unitTitle;
 
-    public String licenceType;
-    public Date licenceIssueDate;
-    public Date licenceRenewalDate;
+    public String point;
 
-    public Licence(@NonNull String licenceSerial, String unitTitle, String licenceType, Date licenceIssueDate, Date licenceRenewalDate) {
-        this.licenceSerial = licenceSerial;
+    public Date inspectionDate;
+
+    public Date reminderDate;
+
+    public OutstandingPoints(String unitTitle, String point, Date inspectionDate, Date reminderDate) {
         this.unitTitle = unitTitle;
-        this.licenceType = licenceType;
-        this.licenceIssueDate = licenceIssueDate;
-        this.licenceRenewalDate = licenceRenewalDate;
+        this.point = point;
+        this.inspectionDate = inspectionDate;
+        this.reminderDate = reminderDate;
     }
 }

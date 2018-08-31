@@ -1,84 +1,39 @@
 package gregory.dan.licenceorganiser.Unit;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Daniel Gregory on 26/08/2018.
  */
-public class Ammunition implements Parcelable {
+@Entity(foreignKeys = {
+        @ForeignKey(entity = Licence.class,
+                parentColumns = "licenceSerial",
+                childColumns = "licence_serial")
+}, indices = @Index("licence_serial"))
+public class Ammunition {
 
-    private String adac, description, HCC;
-    private int quantity;
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    public int id;
 
-    public Ammunition(String adac, String description, String HCC, int quantity) {
+    @ColumnInfo(name = "licence_serial")
+    public String licenceSerial;
+
+    public String adac;
+    public String description;
+    public String HCC;
+    public int quantity;
+
+    public Ammunition(String licenceSerial, String adac, String description, String HCC, int quantity) {
+        this.licenceSerial = licenceSerial;
         this.adac = adac;
         this.description = description;
         this.HCC = HCC;
         this.quantity = quantity;
-    }
-
-    protected Ammunition(Parcel in) {
-        adac = in.readString();
-        description = in.readString();
-        HCC = in.readString();
-        quantity = in.readInt();
-    }
-
-    public static final Creator<Ammunition> CREATOR = new Creator<Ammunition>() {
-        @Override
-        public Ammunition createFromParcel(Parcel in) {
-            return new Ammunition(in);
-        }
-
-        @Override
-        public Ammunition[] newArray(int size) {
-            return new Ammunition[size];
-        }
-    };
-
-    public String getAdac() {
-        return adac;
-    }
-
-    public void setAdac(String adac) {
-        this.adac = adac;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getHCC() {
-        return HCC;
-    }
-
-    public void setHCC(String HCC) {
-        this.HCC = HCC;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(adac);
-        dest.writeString(description);
-        dest.writeString(HCC);
-        dest.writeInt(quantity);
     }
 }

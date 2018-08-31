@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddUnitActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/add_new_unit">
+            <meta-data
+                android:name="gregory.dan.licenceorganiser.MainActivity"
+                android:value="android.support.PARENT_ACTIVITY" />
+        </activity>
     </application>
 
 </manifest>

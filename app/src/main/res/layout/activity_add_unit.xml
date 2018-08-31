@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddUnitActivity">
+
+    <EditText
+        android:id="@+id/new_unit_title_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/new_unit_edit_text_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/new_unit_address_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/new_unit_address_edit_text"
+        android:inputType="textPostalAddress"
+        app:layout_constraintEnd_toEndOf="@+id/new_unit_title_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/new_unit_title_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_title_edit_text" />
+
+    <EditText
+        android:id="@+id/new_unit_phone_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/new_unit_phone_edit_text"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="@+id/new_unit_address_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/new_unit_address_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_address_edit_text" />
+
+    <EditText
+        android:id="@+id/new_unit_co_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/new_unit_co_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/new_unit_phone_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/new_unit_phone_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_phone_edit_text" />
+
+    <CheckBox
+        android:id="@+id/new_unit_add_licences_checkbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="@dimen/unit_list_item_padding"
+        android:text="@string/new_unit_add_licences_checkbox"
+        app:layout_constraintEnd_toStartOf="@+id/new_unit_add_points_check_box"
+        app:layout_constraintStart_toStartOf="@+id/new_unit_co_name"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_co_name" />
+
+    <CheckBox
+        android:id="@+id/new_unit_add_points_check_box"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="@dimen/unit_list_item_padding"
+        android:text="@string/new_unit_add_points_checkbox"
+        app:layout_constraintEnd_toEndOf="@+id/new_unit_co_name"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_co_name" />
+
+    <Button
+        android:id="@+id/new_unit_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="saveUnit"
+        android:text="@string/new_unit_save_button"
+        app:layout_constraintEnd_toEndOf="@+id/new_unit_co_name"
+        app:layout_constraintStart_toStartOf="@+id/new_unit_co_name"
+        app:layout_constraintTop_toBottomOf="@+id/new_unit_add_licences_checkbox" />
+</android.support.constraint.ConstraintLayout>
