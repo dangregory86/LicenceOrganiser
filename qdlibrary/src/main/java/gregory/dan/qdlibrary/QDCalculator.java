@@ -16,9 +16,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 public class QDCalculator extends AppCompatActivity {
-
-
-    private TextView pESDescriptionTv, eSDescriptionTv, mResultTextView;
+    public TextView pESDescriptionTv, eSDescriptionTv, mResultTextView;
     private ImageView hdImageView, pEsImageView, eSImageView;
     private EditText mDistanceEditText;
     private Button mCalculateButton;

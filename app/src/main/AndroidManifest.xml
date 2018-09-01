@@ -19,12 +19,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddUnitActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/add_new_unit">
+        <activity
+            android:name=".AddUnitActivity"
+            android:label="@string/add_new_unit"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="gregory.dan.licenceorganiser.MainActivity"
                 android:value="android.support.PARENT_ACTIVITY" />
+        </activity>
+        <activity
+            android:name=".AddLicenceActivity"
+            android:label="@string/add_new_licence"
+            android:parentActivityName=".AddUnitActivity">
+
+            <!-- android:theme="@style/Theme.AppCompat.Dialog.Alert" -->
+            <meta-data
+                android:name="gregory.dan.licenceorganiser.AddUnitActivity"
+                android:value="android.support.PARENT_ACTIVITY" />
+        </activity>
+        <activity android:name=".ViewUnitActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="gregory.dan.licenceorganiser.MainActivity"
+                android:value="android.support.PARENT_ACTIVITY"/>
         </activity>
     </application>
 

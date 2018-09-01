@@ -7,11 +7,14 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 /**
  * Created by Daniel Gregory on 26/08/2018.
  */
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Licence.class,
+        @ForeignKey(onDelete = CASCADE,
+                entity = Licence.class,
                 parentColumns = "licenceSerial",
                 childColumns = "licence_serial")
 }, indices = @Index("licence_serial"))

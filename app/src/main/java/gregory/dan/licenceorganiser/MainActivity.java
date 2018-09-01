@@ -21,29 +21,32 @@ import android.view.View;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gregory.dan.licenceorganiser.UI.UnitRecyclerViewAdapter;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 import gregory.dan.qdlibrary.QDCalculator;
 
+import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UnitRecyclerViewAdapter.ListItemClickListener {
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.unit_list_recycler_view)
+    RecyclerView mRecyclerView;
     private UnitRecyclerViewAdapter mUnitRecyclerViewAdapter;
     private MyViewModel mUnitViewModel;
     private List<Unit> mUnits;
 
-    //TODO implement butterknife
-    //TODO create unit view activity
-    //TODO create new licence activity
+    //TODO update unit view activity to include inspection points(or a pop up showing points
+    //TODO update new licence activity to include adding ammunition items
     //TODO create new inspection activity
     //TODO create firebase database
     //TODO create icon images for calculator
     //TODO create login screen
     //TODO improve ui
     //TODO implement notifications
-
 
 
     @Override
@@ -73,8 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         mUnitViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
 
-
-        mRecyclerView = findViewById(R.id.unit_list_recycler_view);
+        ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUnitRecyclerViewAdapter = new UnitRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mUnitRecyclerViewAdapter);
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if(id == R.id.action_delete_all){
+        } else if (id == R.id.action_delete_all) {
             mUnitViewModel.deleteAllUnits();
         }
         return super.onOptionsItemSelected(item);
@@ -140,6 +142,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(int item) {
-
+        Intent intent = new Intent(this, ViewUnitActivity.class);
+        intent.putExtra(UNIT_NAME_EXTRA, mUnits.get(item).unitTitle);
+        startActivity(intent);
     }
 }

@@ -39,12 +39,16 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.deleteUnit(unit);
     }
 
+    public void updateUnit(Unit unit){
+        mRepository.updateUnit(unit);
+    }
+
     public void deleteAllUnits() {
         mRepository.deleteAllUnits();
     }
 
-    public void loadUnitWithName(String unitName) {
-        mRepository.loadUnitWithName(unitName);
+    public Unit loadUnitWithName(String unitName) {
+        return mRepository.loadUnitWithName(unitName);
     }
 
     /*

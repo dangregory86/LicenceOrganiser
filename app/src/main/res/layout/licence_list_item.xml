@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/licence_item_type_label_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="7dp"
+            android:text="@string/licence_item_type_label_text"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_issue_date_label_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/licence_item_type_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_serial_label_text_view" />
+
+        <TextView
+            android:id="@+id/licence_item_issue_date_label_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="7dp"
+            android:text="@string/licence_item_issue_date_label_text"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_expiry_date_label_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/licence_item_issue_date_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_type_label_text_view" />
+
+        <TextView
+            android:id="@+id/licence_item_expiry_date_label_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="7dp"
+            android:text="@string/licence_item_expiry_date_label_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/licence_item_expiry_date_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_issue_date_label_text_view" />
+
+        <TextView
+            android:id="@+id/licence_item_expiry_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/licence_item_expiry_date_label_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_issue_date_text_view"
+            tools:text="4/5/2020" />
+
+        <TextView
+            android:id="@+id/licence_item_type_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_issue_date_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/licence_item_type_label_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_serial_text_view"
+            tools:text="AQ25" />
+
+        <TextView
+            android:id="@+id/licence_item_issue_date_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_expiry_date_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/licence_item_issue_date_label_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/licence_item_type_text_view"
+            tools:text="4/4/2015" />
+
+        <TextView
+            android:id="@+id/licence_item_serial_label_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/licence_item_serial_label_text"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_type_label_text_view"
+            app:layout_constraintEnd_toStartOf="@+id/licence_item_serial_text_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/licence_item_serial_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/licence_item_type_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/licence_item_serial_label_text_view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="che/123/34" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public interface UnitDao {
 
     @Delete
     void deleteUnit(Unit unit);
+
+    @Update(onConflict = REPLACE)
+    void updateUnit(Unit unit);
 
     @Query("DELETE FROM Unit")
     void deleteAllUnits();

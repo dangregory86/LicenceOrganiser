@@ -17,7 +17,7 @@ import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
 /**
  * Created by Daniel Gregory on 31/08/2018.
  */
-@Database(entities = {Unit.class, Licence.class, OutstandingPoints.class, Ammunition.class}, version = 3)
+@Database(entities = {Unit.class, Licence.class, OutstandingPoints.class, Ammunition.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;

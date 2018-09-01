@@ -90,6 +90,24 @@ public class AppRepository {
         }
     }
 
+    public void updateUnit(Unit unit){
+        new UpdateUnitAsyncTask(mDatabase.unitModel()).execute(unit);
+    }
+
+    private static class UpdateUnitAsyncTask extends AsyncTask<Unit, Void, Void>{
+        private UnitDao asyncDao;
+
+        UpdateUnitAsyncTask(UnitDao unitDao){
+            asyncDao = unitDao;
+        }
+
+        @Override
+        protected Void doInBackground(Unit... units) {
+            asyncDao.updateUnit(units[0]);
+            return null;
+        }
+    }
+
     public Unit loadUnitWithName(String unitName) {
         return mDatabase.unitModel().loadUnitByTitle(unitName);
     }

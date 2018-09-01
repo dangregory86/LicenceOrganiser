@@ -10,11 +10,14 @@ import android.support.annotation.NonNull;
 
 import java.util.Date;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 /**
  * Created by Daniel Gregory on 26/08/2018.
  */
 @Entity(foreignKeys = {
-        @ForeignKey(entity = Unit.class,
+        @ForeignKey(onDelete = CASCADE,
+                entity = Unit.class,
         parentColumns = "unitTitle",
         childColumns = "unit")
 }, indices = @Index("unit"))

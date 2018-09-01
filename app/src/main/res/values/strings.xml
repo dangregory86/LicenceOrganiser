@@ -17,6 +17,21 @@
     <string name="new_unit_add_licences_checkbox">Add licence?</string>
     <string name="new_unit_add_points_checkbox">Add inspection points?</string>
     <string name="new_unit_save_button">Save</string>
+    <string name="add_new_licence">Add new licence</string>
+    <string name="new_licence_serial_edit_text_hint">Licence serial number</string>
+    <string name="new_licence_standard_radio_button_text">Standard licence</string>
+    <string name="new_licence_aq25_radio_button_text">AQ25 Licence</string>
+    <string name="new_licence_saa_radio_button_text">SAA licence</string>
+    <string name="new_licence_issue_date_edit_text_hint">Issue date</string>
+    <string name="new_licence_add_ammo_button_text">Add ammunition</string>
+    <string name="new_licence_save_button">Save licence</string>
+    <string name="view_unit_co_label_text_view">CO:</string>
+    <string name="licence_item_serial_label_text">Serial:</string>
+    <string name="licence_item_type_label_text">Licence type:</string>
+    <string name="licence_item_issue_date_label_text">Issued:</string>
+    <string name="licence_item_expiry_date_label_text">Expires:</string>
+    <string name="view_unit_add_licence_button_text">Add licence</string>
+    <string name="add_unit_add_inspectionpoint_button_text">Add inspection point</string>
 
 
 </resources>
