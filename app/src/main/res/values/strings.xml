@@ -14,8 +14,6 @@
     <string name="new_unit_address_edit_text">Unit address</string>
     <string name="new_unit_phone_edit_text">Phone</string>
     <string name="new_unit_co_name">CO</string>
-    <string name="new_unit_add_licences_checkbox">Add licence?</string>
-    <string name="new_unit_add_points_checkbox">Add inspection points?</string>
     <string name="new_unit_save_button">Save</string>
     <string name="add_new_licence">Add new licence</string>
     <string name="new_licence_serial_edit_text_hint">Licence serial number</string>
@@ -55,6 +53,14 @@
     <string name="view_licence_ammo_allowed_title_text_view_text">Authorised ammunition</string>
     <string name="ammo_item_layout_max_quantity_label_text">Authorised quantity:</string>
     <string name="view_licence_add_ammo_button_text">Add ammunition</string>
+    <string name="add_inspection_point_inspection_point_hint">Inspection point</string>
+    <string name="date_of_inspection">Date of inspection</string>
+    <string name="add_inspection_point_save_button_text">Save point</string>
+    <string name="complete_all_boxes">Ensure all input boxes are filled in</string>
+    <string name="add_inspection_point_button_text">Add inspection point</string>
+    <string name="save_inspection_button_text">Save inspection</string>
+    <string name="add_inspection_button_text">Add inspection</string>
+    <string name="inspection_item_label_text_view_text">Inspection date</string>
     <string-array name="compatibility_group_array">
         <item>A</item>
         <item>B</item>

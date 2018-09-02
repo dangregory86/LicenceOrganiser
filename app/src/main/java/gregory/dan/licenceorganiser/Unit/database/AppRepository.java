@@ -7,10 +7,12 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
+import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.daos.AmmunitionDao;
+import gregory.dan.licenceorganiser.Unit.daos.InspectionDao;
 import gregory.dan.licenceorganiser.Unit.daos.LicenceDao;
 import gregory.dan.licenceorganiser.Unit.daos.OutstandingPointsDao;
 import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
@@ -115,8 +117,8 @@ public class AppRepository {
     /*
      * The following functions all link to the OutstandingPointsDao
      * */
-    public LiveData<List<OutstandingPoints>> getAllUnitPoints(String unitTitle) {
-        return mDatabase.pointsModel().getOutstandingPoints(unitTitle);
+    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long date) {
+        return mDatabase.pointsModel().getOutstandingPoints(date);
     }
 
     public void insertPoint(OutstandingPoints point) {
@@ -137,6 +139,28 @@ public class AppRepository {
         }
     }
 
+    public void updatePoint(int complete, int pointId) {
+        new UpdatePointAsyncTask(mDatabase.pointsModel(), complete, pointId).execute();
+    }
+
+    private static class UpdatePointAsyncTask extends AsyncTask<Void, Void, Void> {
+        private OutstandingPointsDao asyncDao;
+        private int completed;
+        private int pointId;
+
+        UpdatePointAsyncTask(OutstandingPointsDao dao, int isComplete, int thisPointId) {
+            asyncDao = dao;
+            completed = isComplete;
+            pointId = thisPointId;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            asyncDao.updatePoint(completed, pointId);
+            return null;
+        }
+    }
+
     public void deletePoint(OutstandingPoints point) {
         new DeletePointAsyncTask(mDatabase.pointsModel()).execute(point);
     }
@@ -151,6 +175,53 @@ public class AppRepository {
         @Override
         protected Void doInBackground(OutstandingPoints... points) {
             aSyncDao.insertPoint(points[0]);
+            return null;
+        }
+    }
+
+    /*
+     * The following functions all link to the InspectionDao
+     *
+     * */
+
+    public LiveData<List<Inspection>> getAllPreviousInspectionsFromUnit(String unitName) {
+        return mDatabase.inspectionModel().getInspections(unitName);
+    }
+
+    public void insertInspection(Inspection inspection) {
+        new InsertInspectionAsyncTask(mDatabase.inspectionModel()).execute(inspection);
+    }
+
+    private static class InsertInspectionAsyncTask extends AsyncTask<Inspection, Void, Void> {
+        private InspectionDao dao;
+
+        InsertInspectionAsyncTask(InspectionDao inspectionDao) {
+            dao = inspectionDao;
+        }
+
+        @Override
+        protected Void doInBackground(Inspection... inspections) {
+            dao.insertInspection(inspections[0]);
+            return null;
+        }
+    }
+
+    public void updateInspection(Inspection inspection) {
+        new UpdateInspectionAsyncTask(mDatabase.inspectionModel()).execute(inspection);
+    }
+
+    private static class UpdateInspectionAsyncTask extends AsyncTask<Inspection, Void, Void> {
+        private InspectionDao dao;
+        private int numPoints;
+        private int inspId;
+
+        public UpdateInspectionAsyncTask(InspectionDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Inspection... inspections) {
+            dao.updateInspection(inspections[0]);
             return null;
         }
     }
@@ -217,7 +288,7 @@ public class AppRepository {
         }
     }
 
-    public Licence getIndividualLicence(String licenceSerialNo){
+    public Licence getIndividualLicence(String licenceSerialNo) {
         return mDatabase.licenceModel().getIndividualLicence(licenceSerialNo);
     }
 

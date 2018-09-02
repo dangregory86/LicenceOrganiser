@@ -5,11 +5,9 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.TypeConverters;
 
 import java.util.List;
 
-import gregory.dan.licenceorganiser.Unit.DateConverter;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
@@ -18,15 +16,17 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
  * Created by Daniel Gregory on 31/08/2018.
  */
 @Dao
-@TypeConverters(DateConverter.class)
 public interface OutstandingPointsDao {
 
-    @Query("SELECT * FROM OutstandingPoints WHERE unit=:unitName")
-    LiveData<List<OutstandingPoints>> getOutstandingPoints(String unitName);
+    @Query("SELECT * FROM OutstandingPoints WHERE inspection_date=:date")
+    LiveData<List<OutstandingPoints>> getOutstandingPoints(long date);
 
     @Insert(onConflict = REPLACE)
     void insertPoint(OutstandingPoints point);
 
+    @Query("UPDATE OutstandingPoints SET complete=:completeIt WHERE id=:pointId")
+    void updatePoint(int completeIt, int pointId);
+
     @Delete
-    void deletePoint(OutstandingPoints points);
+    void deletePoint(OutstandingPoints point);
 }

@@ -6,10 +6,12 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
+import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.daos.AmmunitionDao;
+import gregory.dan.licenceorganiser.Unit.daos.InspectionDao;
 import gregory.dan.licenceorganiser.Unit.daos.LicenceDao;
 import gregory.dan.licenceorganiser.Unit.daos.OutstandingPointsDao;
 import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
@@ -17,7 +19,7 @@ import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
 /**
  * Created by Daniel Gregory on 31/08/2018.
  */
-@Database(entities = {Unit.class, Licence.class, OutstandingPoints.class, Ammunition.class}, version = 3, exportSchema = false)
+@Database(entities = {Unit.class, Licence.class, Inspection.class, OutstandingPoints.class, Ammunition.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -25,6 +27,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UnitDao unitModel();
 
     public abstract LicenceDao licenceModel();
+
+    public abstract InspectionDao inspectionModel();
 
     public abstract OutstandingPointsDao pointsModel();
 

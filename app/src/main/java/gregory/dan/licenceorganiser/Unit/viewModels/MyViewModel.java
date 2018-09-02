@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
+import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.Unit;
@@ -54,16 +55,37 @@ public class MyViewModel extends AndroidViewModel {
     /*
      * The following functions all link to the OutstandingPointsDao
      * */
-    public LiveData<List<OutstandingPoints>> getAllUnitPoints(String unitTitle) {
-        return mRepository.getAllUnitPoints(unitTitle);
+    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long inspectionDate) {
+        return mRepository.getAllUnitPoints(inspectionDate);
     }
 
     public void insertPoint(OutstandingPoints point) {
-        insertPoint(point);
+        mRepository.insertPoint(point);
+    }
+
+    public void updatePoint(int complete, int pointId) {
+        mRepository.updatePoint(complete, pointId);
     }
 
     public void deletePoint(OutstandingPoints point) {
         mRepository.deletePoint(point);
+    }
+
+    /*
+     * The following functions all link to the LicenceDao
+     *
+     * */
+
+    public LiveData<List<Inspection>> getAllPreviousInspections(String unitName) {
+        return mRepository.getAllPreviousInspectionsFromUnit(unitName);
+    }
+
+    public void insertInspection(Inspection inspection) {
+        mRepository.insertInspection(inspection);
+    }
+
+    public void updateInspection(Inspection inspection) {
+        mRepository.updateInspection(inspection);
     }
 
     /*
@@ -86,7 +108,7 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.updateLicence(licence);
     }
 
-    public Licence getIndividualLicence(String licenceSerialNo){
+    public Licence getIndividualLicence(String licenceSerialNo) {
         return mRepository.getIndividualLicence(licenceSerialNo);
     }
 

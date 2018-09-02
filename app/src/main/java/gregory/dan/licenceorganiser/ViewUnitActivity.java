@@ -17,7 +17,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import gregory.dan.licenceorganiser.UI.InspectionRecyclerAdapter;
 import gregory.dan.licenceorganiser.UI.LicenceRecyclerAdapter;
+import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
@@ -25,7 +27,7 @@ import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 import static gregory.dan.licenceorganiser.AddLicenceActivity.LICENCE_SERIAL_EXTRA;
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
-public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener{
+public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener, InspectionRecyclerAdapter.ListItemClickListener{
 
     @BindView(R.id.view_unit_title_text_view)
     TextView mUnitTitleTextView;
@@ -37,11 +39,13 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     TextView mUnitContactNumber;
     @BindView(R.id.view_unit_licence_recycler_view)
     RecyclerView mUnitLicenceRecyclerView;
+    @BindView(R.id.unit_view_inspection_points_recycler_view) RecyclerView mInspectionRecyclerView;
 
     private MyViewModel mMyViewModel;
     private String mUnitTitle;
     private Unit mUnit;
-    private LicenceRecyclerAdapter recyclerAdapter;
+    private LicenceRecyclerAdapter licenceRecyclerAdapter;
+    private InspectionRecyclerAdapter inspectionRecyclerAdapter;
     private List<Licence> mLicences;
 
     @Override
@@ -55,8 +59,11 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
 
         mMyViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
         mUnitLicenceRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new LicenceRecyclerAdapter(this);
-        mUnitLicenceRecyclerView.setAdapter(recyclerAdapter);
+        licenceRecyclerAdapter = new LicenceRecyclerAdapter(this);
+        mUnitLicenceRecyclerView.setAdapter(licenceRecyclerAdapter);
+        mInspectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        inspectionRecyclerAdapter = new InspectionRecyclerAdapter(this);
+        mInspectionRecyclerView.setAdapter(inspectionRecyclerAdapter);
         Intent intent = getIntent();
 
 
@@ -68,7 +75,13 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
                 @Override
                 public void onChanged(@Nullable List<Licence> licences) {
                     mLicences = licences;
-                    recyclerAdapter.setLicences(licences);
+                    licenceRecyclerAdapter.setLicences(licences);
+                }
+            });
+            mMyViewModel.getAllPreviousInspections(mUnitTitle).observe(this, new Observer<List<Inspection>>() {
+                @Override
+                public void onChanged(@Nullable List<Inspection> inspections) {
+                    inspectionRecyclerAdapter.setInspections(inspections);
                 }
             });
         }else{
@@ -98,6 +111,18 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
         Intent intent = new Intent(this, AddLicenceActivity.class);
         intent.putExtra(UNIT_NAME_EXTRA, mUnitTitle);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.unit_view_add_inspection_point_button)
+    public void addInspectionPoint(){
+        Intent intent = new Intent(this, AddInspectionActivity.class);
+        intent.putExtra(UNIT_NAME_EXTRA, mUnitTitle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickInspection(int item) {
+
     }
 
 

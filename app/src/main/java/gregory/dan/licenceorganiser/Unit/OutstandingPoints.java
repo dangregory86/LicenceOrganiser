@@ -17,10 +17,10 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  */
 @Entity(foreignKeys = {
         @ForeignKey(onDelete = CASCADE,
-                entity = Unit.class,
-        parentColumns = "unitTitle",
-        childColumns = "unit")
-}, indices = @Index("unit"))
+                entity = Inspection.class,
+        parentColumns = "inspectionDate",
+        childColumns = "inspection_date")
+}, indices = @Index("inspection_date"))
 @TypeConverters(DateConverter.class)
 public class OutstandingPoints{
 
@@ -28,19 +28,16 @@ public class OutstandingPoints{
     @NonNull
     public int id;
 
-    @ColumnInfo(name = "unit")
-    public String unitTitle;
+    @ColumnInfo(name = "inspection_date")
+    public Date inspectionDate;
 
     public String point;
 
-    public Date inspectionDate;
+    public int complete;
 
-    public Date reminderDate;
-
-    public OutstandingPoints(String unitTitle, String point, Date inspectionDate, Date reminderDate) {
-        this.unitTitle = unitTitle;
-        this.point = point;
+    public OutstandingPoints(Date inspectionDate, String point, int complete) {
         this.inspectionDate = inspectionDate;
-        this.reminderDate = reminderDate;
+        this.point = point;
+        this.complete = complete;
     }
 }

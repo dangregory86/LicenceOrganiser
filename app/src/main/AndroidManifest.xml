@@ -47,8 +47,11 @@
         <activity
             android:name=".AddAmmoActivity"
             android:theme="@style/Theme.AppCompat.Dialog.Alert" />
-        <activity android:name=".ViewLicenceActivity"
+        <activity
+            android:name=".ViewLicenceActivity"
             android:theme="@style/Theme.MyDialog" />
+        <activity android:name=".AddInspectionPointActivity" />
+        <activity android:name=".AddInspectionActivity"></activity>
     </application>
 
 </manifest>
