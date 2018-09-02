@@ -87,7 +87,22 @@ public class AddUnitActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_unit_add_inspection_button)
     public void addInspectionPoint(View v) {
-
+        if (unitNameEt.getText().toString().equals("") ||
+                unitAddressEt.getText().toString().equals("") ||
+                unitNumberEt.getText().toString().equals("") ||
+                unitCoEt.getText().toString().equals("")) {
+            Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
+        } else if (alreadySaved) {
+            Intent intent = new Intent(this, AddInspectionActivity.class);
+            intent.putExtra(UNIT_NAME_EXTRA, unitNameEt.getText().toString());
+            startActivity(intent);
+        } else {
+            saveUnit();
+            alreadySaved = true;
+            Intent intent = new Intent(this, AddInspectionActivity.class);
+            intent.putExtra(UNIT_NAME_EXTRA, unitNameEt.getText().toString());
+            startActivity(intent);
+        }
     }
 
     public void saveUnit() {

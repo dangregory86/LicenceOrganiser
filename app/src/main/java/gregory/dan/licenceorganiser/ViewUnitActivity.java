@@ -24,6 +24,7 @@ import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
+import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_DATE_EXTRA;
 import static gregory.dan.licenceorganiser.AddLicenceActivity.LICENCE_SERIAL_EXTRA;
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
@@ -47,6 +48,7 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     private LicenceRecyclerAdapter licenceRecyclerAdapter;
     private InspectionRecyclerAdapter inspectionRecyclerAdapter;
     private List<Licence> mLicences;
+    private List<Inspection> mInspections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
             mMyViewModel.getAllPreviousInspections(mUnitTitle).observe(this, new Observer<List<Inspection>>() {
                 @Override
                 public void onChanged(@Nullable List<Inspection> inspections) {
+                    mInspections = inspections;
                     inspectionRecyclerAdapter.setInspections(inspections);
                 }
             });
@@ -122,7 +125,10 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
 
     @Override
     public void onClickInspection(int item) {
-
+        Intent intent = new Intent(this, ViewInspectionActivity.class);
+        long inspDate = mInspections.get(item).inspectionDate.getTime();
+        intent.putExtra(INSPECTION_DATE_EXTRA, inspDate);
+        startActivity(intent);
     }
 
 

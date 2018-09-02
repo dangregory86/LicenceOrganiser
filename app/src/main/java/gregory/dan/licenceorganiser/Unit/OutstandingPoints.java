@@ -8,8 +8,6 @@ import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
-import java.util.Date;
-
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
@@ -29,13 +27,13 @@ public class OutstandingPoints{
     public int id;
 
     @ColumnInfo(name = "inspection_date")
-    public Date inspectionDate;
+    public long inspectionDate;
 
     public String point;
 
     public int complete;
 
-    public OutstandingPoints(Date inspectionDate, String point, int complete) {
+    public OutstandingPoints(long inspectionDate, String point, int complete) {
         this.inspectionDate = inspectionDate;
         this.point = point;
         this.complete = complete;

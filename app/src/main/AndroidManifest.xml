@@ -51,7 +51,10 @@
             android:name=".ViewLicenceActivity"
             android:theme="@style/Theme.MyDialog" />
         <activity android:name=".AddInspectionPointActivity" />
-        <activity android:name=".AddInspectionActivity"></activity>
+        <activity android:name=".AddInspectionActivity" />
+        <activity
+            android:name=".ViewInspectionActivity"
+            android:theme="@style/Theme.MyDialog" />
     </application>
 
 </manifest>

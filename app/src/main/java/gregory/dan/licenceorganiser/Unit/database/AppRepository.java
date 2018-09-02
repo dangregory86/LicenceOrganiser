@@ -139,24 +139,20 @@ public class AppRepository {
         }
     }
 
-    public void updatePoint(int complete, int pointId) {
-        new UpdatePointAsyncTask(mDatabase.pointsModel(), complete, pointId).execute();
+    public void updatePoint(OutstandingPoints point) {
+        new UpdatePointAsyncTask(mDatabase.pointsModel()).execute(point);
     }
 
-    private static class UpdatePointAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class UpdatePointAsyncTask extends AsyncTask<OutstandingPoints, Void, Void> {
         private OutstandingPointsDao asyncDao;
-        private int completed;
-        private int pointId;
 
-        UpdatePointAsyncTask(OutstandingPointsDao dao, int isComplete, int thisPointId) {
+        UpdatePointAsyncTask(OutstandingPointsDao dao) {
             asyncDao = dao;
-            completed = isComplete;
-            pointId = thisPointId;
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            asyncDao.updatePoint(completed, pointId);
+        protected Void doInBackground(OutstandingPoints... points) {
+            asyncDao.updatePoint(points[0]);
             return null;
         }
     }

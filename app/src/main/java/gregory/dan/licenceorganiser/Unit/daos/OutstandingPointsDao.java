@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public interface OutstandingPointsDao {
     @Insert(onConflict = REPLACE)
     void insertPoint(OutstandingPoints point);
 
-    @Query("UPDATE OutstandingPoints SET complete=:completeIt WHERE id=:pointId")
-    void updatePoint(int completeIt, int pointId);
+    @Update(onConflict = REPLACE)
+    void updatePoint(OutstandingPoints point);
 
     @Delete
     void deletePoint(OutstandingPoints point);

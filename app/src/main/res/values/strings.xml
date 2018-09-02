@@ -29,7 +29,7 @@
     <string name="licence_item_issue_date_label_text">Issued:</string>
     <string name="licence_item_expiry_date_label_text">Expires:</string>
     <string name="view_unit_add_licence_button_text">Add licence</string>
-    <string name="add_unit_add_inspectionpoint_button_text">Add inspection point</string>
+    <string name="add_unit_add_inspectionpoint_button_text">Add inspection</string>
     <string name="add_ammo_adac_label_text">ADAC</string>
 
     <!--strings for the hcc selection spinners-->
@@ -61,6 +61,8 @@
     <string name="save_inspection_button_text">Save inspection</string>
     <string name="add_inspection_button_text">Add inspection</string>
     <string name="inspection_item_label_text_view_text">Inspection date</string>
+    <string name="inspection_view_points_label_text">The following points were found. Green items have been actioned:</string>
+    <string name="point_completed_button_text">Complete</string>
     <string-array name="compatibility_group_array">
         <item>A</item>
         <item>B</item>

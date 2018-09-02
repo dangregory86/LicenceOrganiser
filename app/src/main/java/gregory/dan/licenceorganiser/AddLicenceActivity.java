@@ -142,16 +142,15 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        int generic = 12;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth,
-                generic, generic, 0);
+        calendar.set(year, month + 1, dayOfMonth,
+                5, month + 1, 0);
         issueDateTimeInMillies = calendar.getTimeInMillis();
-        calendar.set(year + 5, month, dayOfMonth,
-                generic, generic, 0);
+        calendar.set(year + 5, month + 1, dayOfMonth,
+                0, month + 1, 0);
         expiryDateTimeInMillies = calendar.getTimeInMillis();
 
-        String date = "Licence issue date:  " + dayOfMonth + "/" + month + "/" + year;
+        String date = "Licence issue date:  " + dayOfMonth + "/" + (month + 1) + "/" + year;
         issueDateEditText.setText(date);
     }
 

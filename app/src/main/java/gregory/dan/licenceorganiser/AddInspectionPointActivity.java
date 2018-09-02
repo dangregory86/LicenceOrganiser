@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,7 +45,7 @@ public class AddInspectionPointActivity extends AppCompatActivity{
         if (inspectionPointEditText.getText().toString().equals("")) {
             Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
         } else {
-            OutstandingPoints point = new OutstandingPoints(new Date(inspectionDateInMillis),
+            OutstandingPoints point = new OutstandingPoints(inspectionDateInMillis,
                     inspectionPointEditText.getText().toString(),
                     0);
             viewModel.insertPoint(point);

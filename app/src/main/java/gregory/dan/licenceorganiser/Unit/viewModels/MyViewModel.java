@@ -63,8 +63,8 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.insertPoint(point);
     }
 
-    public void updatePoint(int complete, int pointId) {
-        mRepository.updatePoint(complete, pointId);
+    public void updatePoint(OutstandingPoints point) {
+        mRepository.updatePoint(point);
     }
 
     public void deletePoint(OutstandingPoints point) {
