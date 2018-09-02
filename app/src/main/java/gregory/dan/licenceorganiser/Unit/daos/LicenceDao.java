@@ -6,6 +6,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
@@ -23,6 +24,12 @@ public interface LicenceDao {
 
     @Query("SELECT * FROM Licence WHERE unit=:unitName")
     LiveData<List<Licence>> getLicences(String unitName);
+
+    @Query("SELECT * FROM Licence WHERE licenceSerial=:licence")
+    Licence getIndividualLicence(String licence);
+
+    @Update(onConflict = REPLACE)
+    void updateLicence(Licence licence);
 
     @Insert(onConflict = REPLACE)
     void insertLicence(Licence licence);

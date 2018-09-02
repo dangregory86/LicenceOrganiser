@@ -27,6 +27,8 @@ import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
 public class AddLicenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
+    public static final String LICENCE_SERIAL_EXTRA = "gregory.dan.licenceorganiser.licenceserialextra";
+
     private String unitTitle;
     private MyViewModel mMyViewModel;
     @BindView(R.id.new_licence_serial_edit_text) EditText mLicenceSerialEditText;
@@ -38,6 +40,8 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     RadioGroup radioGroupView;
     private long issueDateTimeInMillies, expiryDateTimeInMillies;
     private String licenceType = "Standard";
+    private boolean alreadyExists = false;
+    private Licence mLicence;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +78,44 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     }
 
     @OnClick(R.id.new_licence_save_button)
+    public void clickSaveButton(){
+        if(!alreadyExists){
+            saveLicence();
+            finish();
+        }else{
+            updateLicence();
+            finish();
+        }
+    }
+
+
+
+    private void updateLicence(){
+        if(!mLicenceSerialEditText.getText().toString().equals("") &&
+                !issueDateEditText.getText().toString().equals("")){
+            Licence licence = new Licence(mLicence.licenceSerial,
+                    unitTitle,
+                    licenceType,
+                    new Date(issueDateTimeInMillies),
+                    new Date(expiryDateTimeInMillies));
+            mLicence = licence;
+            mMyViewModel.updateLicence(licence);
+        }else{
+            Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void saveLicence(){
         if(!mLicenceSerialEditText.getText().toString().equals("") &&
                 !issueDateEditText.getText().toString().equals("")){
+            alreadyExists = true;
             Licence licence = new Licence(mLicenceSerialEditText.getText().toString(),
                     unitTitle,
                     licenceType,
                     new Date(issueDateTimeInMillies),
                     new Date(expiryDateTimeInMillies));
+            mLicence = licence;
             mMyViewModel.insertLicence(licence);
-            finish();
         }else{
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
@@ -96,6 +128,16 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
+    }
+
+    @OnClick(R.id.new_licence_add_ammo_button)
+    public void addAmmo(){
+        if (!alreadyExists){
+            saveLicence();
+        }
+        Intent intent = new Intent(this, AddAmmoActivity.class);
+        intent.putExtra(LICENCE_SERIAL_EXTRA, mLicence.licenceSerial);
+        startActivity(intent);
     }
 
     @Override

@@ -90,14 +90,14 @@ public class AppRepository {
         }
     }
 
-    public void updateUnit(Unit unit){
+    public void updateUnit(Unit unit) {
         new UpdateUnitAsyncTask(mDatabase.unitModel()).execute(unit);
     }
 
-    private static class UpdateUnitAsyncTask extends AsyncTask<Unit, Void, Void>{
+    private static class UpdateUnitAsyncTask extends AsyncTask<Unit, Void, Void> {
         private UnitDao asyncDao;
 
-        UpdateUnitAsyncTask(UnitDao unitDao){
+        UpdateUnitAsyncTask(UnitDao unitDao) {
             asyncDao = unitDao;
         }
 
@@ -199,6 +199,28 @@ public class AppRepository {
         }
     }
 
+    public void updateLicence(Licence licence) {
+        new UpdateLicenceAsyncTask(mDatabase.licenceModel()).execute(licence);
+    }
+
+    private static class UpdateLicenceAsyncTask extends AsyncTask<Licence, Void, Void> {
+        private LicenceDao dao;
+
+        UpdateLicenceAsyncTask(LicenceDao licenceDao) {
+            dao = licenceDao;
+        }
+
+        @Override
+        protected Void doInBackground(Licence... licences) {
+            dao.updateLicence(licences[0]);
+            return null;
+        }
+    }
+
+    public Licence getIndividualLicence(String licenceSerialNo){
+        return mDatabase.licenceModel().getIndividualLicence(licenceSerialNo);
+    }
+
     /*
      * The following functions all link to the AmmunitionDao
      *
@@ -242,4 +264,5 @@ public class AppRepository {
             return null;
         }
     }
+
 }

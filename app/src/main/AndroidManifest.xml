@@ -37,12 +37,18 @@
                 android:name="gregory.dan.licenceorganiser.AddUnitActivity"
                 android:value="android.support.PARENT_ACTIVITY" />
         </activity>
-        <activity android:name=".ViewUnitActivity"
+        <activity
+            android:name=".ViewUnitActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="gregory.dan.licenceorganiser.MainActivity"
-                android:value="android.support.PARENT_ACTIVITY"/>
+                android:value="android.support.PARENT_ACTIVITY" />
         </activity>
+        <activity
+            android:name=".AddAmmoActivity"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
+        <activity android:name=".ViewLicenceActivity"
+            android:theme="@style/Theme.MyDialog" />
     </application>
 
 </manifest>

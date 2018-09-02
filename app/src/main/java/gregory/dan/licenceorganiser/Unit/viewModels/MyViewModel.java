@@ -39,7 +39,7 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.deleteUnit(unit);
     }
 
-    public void updateUnit(Unit unit){
+    public void updateUnit(Unit unit) {
         mRepository.updateUnit(unit);
     }
 
@@ -82,6 +82,14 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.deleteUnitLicence(licence);
     }
 
+    public void updateLicence(Licence licence) {
+        mRepository.updateLicence(licence);
+    }
+
+    public Licence getIndividualLicence(String licenceSerialNo){
+        return mRepository.getIndividualLicence(licenceSerialNo);
+    }
+
     /*
      * The following functions all link to the AmmunitionDao
      *
@@ -97,4 +105,5 @@ public class MyViewModel extends AndroidViewModel {
     public void deleteAmmunition(Ammunition ammunition) {
         mRepository.deleteAmmunition(ammunition);
     }
+
 }

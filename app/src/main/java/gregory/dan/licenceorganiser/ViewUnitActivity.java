@@ -22,6 +22,7 @@ import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
+import static gregory.dan.licenceorganiser.AddLicenceActivity.LICENCE_SERIAL_EXTRA;
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
 public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener{
@@ -87,7 +88,9 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
 
     @Override
     public void onClick(int item) {
-
+        Intent intent = new Intent(this, ViewLicenceActivity.class);
+        intent.putExtra(LICENCE_SERIAL_EXTRA, mLicences.get(item).licenceSerial);
+        startActivity(intent);
     }
 
     @OnClick(R.id.view_unit_add_licence_button)
@@ -113,6 +116,7 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
 
         @Override
         protected void onPostExecute(Unit unit) {
+            mUnit = unit;
             setViews(unit);
         }
     }

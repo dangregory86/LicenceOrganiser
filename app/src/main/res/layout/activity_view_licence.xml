@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ViewLicenceActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/view_licence_type_label_text_view4"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/licence_item_type_label_text"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_serial_label_text_view"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_serial_label_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/view_licence_serial_label_text_view" />
+
+        <TextView
+            android:id="@+id/view_licence_issue_date_label_text_view3"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/view_licence_issue_date_label_text"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_type_label_text_view4"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_type_label_text_view4"
+            app:layout_constraintTop_toBottomOf="@+id/view_licence_type_label_text_view4" />
+
+        <TextView
+            android:id="@+id/view_licence_expiry_date_label_text_view2"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/view_licence_expiry_date_label_text"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_issue_date_label_text_view3"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_issue_date_label_text_view3"
+            app:layout_constraintTop_toBottomOf="@+id/view_licence_issue_date_label_text_view3" />
+
+        <TextView
+            android:id="@+id/view_licence_serial_label_text_view"
+            android:layout_width="147dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/licence_item_serial_label_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/view_licence_expiry_date_text_view2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_licence_expiry_date_label_text_view2"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_issue_date_text_view4"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_issue_date_text_view4"
+            app:layout_constraintTop_toTopOf="@+id/view_licence_expiry_date_label_text_view2"
+            tools:text="gregfhahfjdkl" />
+
+        <TextView
+            android:id="@+id/view_licence_issue_date_text_view4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_licence_issue_date_label_text_view3"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_type_text_view3"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_type_text_view3"
+            app:layout_constraintTop_toTopOf="@+id/view_licence_issue_date_label_text_view3"
+            tools:text="gregfhahfjdkl" />
+
+        <TextView
+            android:id="@+id/view_licence_type_text_view3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_licence_type_label_text_view4"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_serial_text_view"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_serial_text_view"
+            app:layout_constraintTop_toTopOf="@+id/view_licence_type_label_text_view4"
+            tools:text="gregfhahfjdkl" />
+
+        <TextView
+            android:id="@+id/view_licence_serial_text_view"
+            android:layout_width="145dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/view_licence_serial_label_text_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_licence_serial_label_text_view"
+            tools:text="gregfhahfjdkl" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/view_licence_ammo_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_expiry_date_text_view2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_expiry_date_label_text_view2"
+            app:layout_constraintTop_toBottomOf="@+id/view_licence_add_ammo_button" />
+
+        <TextView
+            android:id="@+id/view_licence_ammo_allowed_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/view_licence_ammo_allowed_title_text_view_text"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/view_licence_add_ammo_button"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_expiry_date_label_text_view2"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_expiry_date_label_text_view2"
+            app:layout_constraintTop_toTopOf="@+id/view_licence_add_ammo_button" />
+
+        <Button
+            android:id="@+id/view_licence_add_ammo_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/view_licence_add_ammo_button_text"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/view_licence_expiry_date_text_view2"
+            app:layout_constraintStart_toStartOf="@+id/view_licence_expiry_date_text_view2"
+            app:layout_constraintTop_toBottomOf="@+id/view_licence_expiry_date_text_view2" />
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

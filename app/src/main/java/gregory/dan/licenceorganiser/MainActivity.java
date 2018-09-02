@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity
     private MyViewModel mUnitViewModel;
     private List<Unit> mUnits;
 
-    //TODO update unit view activity to include inspection points(or a pop up showing points
-    //TODO update new licence activity to include adding ammunition items
+    //TODO update unit view activity to include inspection points(or a pop up showing points)
     //TODO create new inspection activity
     //TODO create firebase database
     //TODO create icon images for calculator

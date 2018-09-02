@@ -32,6 +32,43 @@
     <string name="licence_item_expiry_date_label_text">Expires:</string>
     <string name="view_unit_add_licence_button_text">Add licence</string>
     <string name="add_unit_add_inspectionpoint_button_text">Add inspection point</string>
+    <string name="add_ammo_adac_label_text">ADAC</string>
+
+    <!--strings for the hcc selection spinners-->
+    <string name="hazard_division_spinner_title">Select hazard division</string>
+    <string-array name="hazard_division_array">
+        <item>1.1</item>
+        <item>1.2</item>
+        <item>1.3</item>
+        <item>1.4</item>
+        <item>1.5</item>
+        <item>1.6</item>
+    </string-array>
+
+    <string name="compatibility_group_spinner_title">Select compatibility group</string>
+    <string name="add_ammo_hcc_edit_text_hint">HCC</string>
+    <string name="add_ammo_description_edit_text_hint">Designation</string>
+    <string name="add_ammo_max_quantity_edit_text_hint">Max quantity allowed</string>
+    <string name="add_ammo_button">Add ammo</string>
+    <string name="view_licence_issue_date_label_text">Issue date:</string>
+    <string name="view_licence_expiry_date_label_text">Expiry date:</string>
+    <string name="view_licence_ammo_allowed_title_text_view_text">Authorised ammunition</string>
+    <string name="ammo_item_layout_max_quantity_label_text">Authorised quantity:</string>
+    <string name="view_licence_add_ammo_button_text">Add ammunition</string>
+    <string-array name="compatibility_group_array">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>S</item>
+    </string-array>
 
 
 </resources>

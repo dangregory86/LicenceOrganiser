@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddAmmoActivity">
+
+    <EditText
+        android:id="@+id/add_ammo_adac_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/add_ammo_adac_label_text"
+        android:inputType="number"
+        android:maxLength="8"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/add_ammo_hcc_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/add_ammo_hcc_edit_text_hint"
+        android:inputType="none"
+        android:clickable="true"
+        android:textAlignment="center"
+        android:focusable="false"
+        app:layout_constraintEnd_toEndOf="@+id/add_ammo_adac_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/add_ammo_adac_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_ammo_adac_edit_text" />
+
+    <EditText
+        android:id="@+id/add_ammo_designation_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/add_ammo_description_edit_text_hint"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/add_ammo_hcc_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/add_ammo_hcc_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_ammo_hcc_edit_text" />
+
+    <EditText
+        android:id="@+id/add_ammo_max_quantity_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/add_ammo_max_quantity_edit_text_hint"
+        android:inputType="number"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/add_ammo_designation_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/add_ammo_designation_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_ammo_designation_edit_text" />
+
+    <Button
+        android:id="@+id/add_ammo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_ammo_button"
+        app:layout_constraintEnd_toEndOf="@+id/add_ammo_max_quantity_edit_text"
+        app:layout_constraintStart_toStartOf="@+id/add_ammo_max_quantity_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/add_ammo_max_quantity_edit_text" />
+
+</android.support.constraint.ConstraintLayout>
