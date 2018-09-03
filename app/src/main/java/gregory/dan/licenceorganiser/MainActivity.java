@@ -18,6 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -35,16 +38,19 @@ public class MainActivity extends AppCompatActivity
 
     @BindView(R.id.unit_list_recycler_view)
     RecyclerView mRecyclerView;
+    TextView mUserTextView;
     private UnitRecyclerViewAdapter mUnitRecyclerViewAdapter;
     private MyViewModel mUnitViewModel;
     private List<Unit> mUnits;
 
+    //firebase
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+
     //TODO create firebase database
     //TODO create icon images for calculator
-    //TODO create login screen
     //TODO improve ui
     //TODO implement notifications
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ButterKnife.bind(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +70,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        mAuth = FirebaseAuth.getInstance();
+
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -69,11 +80,23 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        mUserTextView = headerView.findViewById(R.id.user_text_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }else{
+                    setUserName(firebaseAuth.getCurrentUser().getEmail());
+                }
+            }
+        };
 
         mUnitViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
 
-        ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUnitRecyclerViewAdapter = new UnitRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mUnitRecyclerViewAdapter);
@@ -85,6 +108,17 @@ public class MainActivity extends AppCompatActivity
                 mUnitRecyclerViewAdapter.setUnits(units);
             }
         });
+
+    }
+
+    private void setUserName(String user){
+        mUserTextView.setText(user);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
@@ -117,6 +151,8 @@ public class MainActivity extends AppCompatActivity
             return true;
         } else if (id == R.id.action_delete_all) {
             mUnitViewModel.deleteAllUnits();
+        } else if (id == R.id.action_log_out) {
+            mAuth.signOut();
         }
         return super.onOptionsItemSelected(item);
     }

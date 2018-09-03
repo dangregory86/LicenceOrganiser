@@ -64,7 +64,7 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
     }
 
     public void saveInspection(){
-        if(!inspectedDateEditText.getText().toString().equals("")){
+        if(!inspectedDateEditText.getText().toString().trim().equals("")){
             alreadySaved = true;
             inspection = new Inspection(mUnitTitle,
                     hasPoints,
@@ -84,15 +84,18 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
 
     @OnClick(R.id.add_inspection_new_point_button)
     public void addPoint(){
+
         if(alreadySaved){
+            Intent intent = new Intent(this, AddInspectionPointActivity.class);
+            intent.putExtra(INSPECTION_DATE_EXTRA, inspectionDateInMillis);
+            startActivity(intent);
+        }else if(!inspectedDateEditText.getText().toString().trim().equals("")){
+            saveInspection();
             Intent intent = new Intent(this, AddInspectionPointActivity.class);
             intent.putExtra(INSPECTION_DATE_EXTRA, inspectionDateInMillis);
             startActivity(intent);
         }else{
             saveInspection();
-            Intent intent = new Intent(this, AddInspectionPointActivity.class);
-            intent.putExtra(INSPECTION_DATE_EXTRA, inspectionDateInMillis);
-            startActivity(intent);
         }
     }
 

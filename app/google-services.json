@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "665191551627",
+    "firebase_url": "https://licenceorganiser.firebaseio.com",
+    "project_id": "licenceorganiser",
+    "storage_bucket": "licenceorganiser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665191551627:android:0fb1185173381b36",
+        "android_client_info": {
+          "package_name": "gregory.dan.licenceorganiser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665191551627-c8snq3bsam51dqej8brving42q9g3fqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gregory.dan.licenceorganiser",
+            "certificate_hash": "926a8e08b98ae7c09866e78b4415bb4df5e80621"
+          }
+        },
+        {
+          "client_id": "665191551627-81pgc8ms7677f8o7m5hhfa9rmf9qqqt9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0doKtrfIG2cjHj3sDp0fjaycPXhlDzF8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665191551627-81pgc8ms7677f8o7m5hhfa9rmf9qqqt9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
