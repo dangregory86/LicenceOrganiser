@@ -28,6 +28,20 @@ public class MyViewModel extends AndroidViewModel {
         mAllUnits = mRepository.getAllUnits();
     }
 
+    public void insertToFirebase(Object object){
+        if(Unit.class.isInstance(object)){
+            mRepository.insertUnitToFirebase((Unit) object);
+        }else if(OutstandingPoints.class.isInstance(object)){
+            mRepository.insertPointToFirebase((OutstandingPoints) object);
+        }else if(Licence.class.isInstance(object)){
+            mRepository.insertLicenceToFirebase((Licence) object);
+        }else if(Inspection.class.isInstance(object)){
+            mRepository.insertInspectionToFirebase((Inspection) object);
+        }else if(Ammunition.class.isInstance(object)){
+            mRepository.insertAmmunitionToFirebase((Ammunition) object);
+        }
+    }
+
     public LiveData<List<Unit>> getmAllUnits() {
         return mAllUnits;
     }

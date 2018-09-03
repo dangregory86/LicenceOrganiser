@@ -21,6 +21,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -46,8 +51,9 @@ public class MainActivity extends AppCompatActivity
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mReference;
 
-    //TODO create firebase database
+    //TODO create firebase database complete
     //TODO create icon images for calculator
     //TODO improve ui
     //TODO implement notifications
@@ -71,6 +77,9 @@ public class MainActivity extends AppCompatActivity
         });
 
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        mReference = firebaseDatabase.getReference();
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -108,6 +117,9 @@ public class MainActivity extends AppCompatActivity
                 mUnitRecyclerViewAdapter.setUnits(units);
             }
         });
+
+
+
 
     }
 
@@ -150,6 +162,17 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_delete_all) {
+            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    dataSnapshot.getRef().removeValue();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
             mUnitViewModel.deleteAllUnits();
         } else if (id == R.id.action_log_out) {
             mAuth.signOut();

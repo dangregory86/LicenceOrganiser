@@ -4,6 +4,9 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.List;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
@@ -22,12 +25,30 @@ import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
  */
 public class AppRepository {
 
+    public static final String UNIT_REF_TEXT = "units";
+    public static final String LICENCE_REF_TEXT = "Licences";
+    public static final String POINTS_REF_TEXT = "Points";
+    public static final String INSPECTIONS_REF_TEXT = "Inspections";
+    public static final String AMMUNITION_REF_TEXT = "Ammunition";
+
+
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mUnitRef, mLicenceRef, mPointsRef, mInspectionRef, mAmmunitionRef;
+
     private AppDatabase mDatabase;
     private LiveData<List<Unit>> mUnits;
 
     public AppRepository(Application application) {
         mDatabase = AppDatabase.getInMemoryDatabase(application);
         mUnits = mDatabase.unitModel().loadAllUnits();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUnitRef = mFirebaseDatabase.getReference(UNIT_REF_TEXT);
+        mLicenceRef = mFirebaseDatabase.getReference(LICENCE_REF_TEXT);
+        mPointsRef = mFirebaseDatabase.getReference(POINTS_REF_TEXT);
+        mInspectionRef = mFirebaseDatabase.getReference(INSPECTIONS_REF_TEXT);
+        mAmmunitionRef = mFirebaseDatabase.getReference(AMMUNITION_REF_TEXT);
+
     }
 
     /*
@@ -36,6 +57,10 @@ public class AppRepository {
      * */
     public LiveData<List<Unit>> getAllUnits() {
         return mUnits;
+    }
+
+    public void insertUnitToFirebase(Unit unit){
+        mUnitRef.push().setValue(unit);
     }
 
     public void insertUnit(Unit unit) {
@@ -121,6 +146,10 @@ public class AppRepository {
         return mDatabase.pointsModel().getOutstandingPoints(date);
     }
 
+    public void insertPointToFirebase(OutstandingPoints points){
+        mPointsRef.push().setValue(points);
+    }
+
     public void insertPoint(OutstandingPoints point) {
         new insertPointAsyncTask(mDatabase.pointsModel()).execute(point);
     }
@@ -184,6 +213,10 @@ public class AppRepository {
         return mDatabase.inspectionModel().getInspections(unitName);
     }
 
+    public void insertInspectionToFirebase(Inspection inspection){
+        mInspectionRef.push().setValue(inspection);
+    }
+
     public void insertInspection(Inspection inspection) {
         new InsertInspectionAsyncTask(mDatabase.inspectionModel()).execute(inspection);
     }
@@ -228,6 +261,10 @@ public class AppRepository {
      * */
     public LiveData<List<Licence>> getAllUnitLicences(String unitName) {
         return mDatabase.licenceModel().getLicences(unitName);
+    }
+
+    public void insertLicenceToFirebase(Licence licence){
+        mLicenceRef.push().setValue(licence);
     }
 
     public void insertLicence(Licence licence) {
@@ -294,6 +331,10 @@ public class AppRepository {
      * */
     public LiveData<List<Ammunition>> getAllUnitAmmunition(String licence_serial) {
         return mDatabase.ammunitionModel().getAmmunition(licence_serial);
+    }
+
+    public void insertAmmunitionToFirebase(Ammunition ammunition){
+        mAmmunitionRef.push().setValue(ammunition);
     }
 
     public void insertAmmunition(Ammunition ammunition) {

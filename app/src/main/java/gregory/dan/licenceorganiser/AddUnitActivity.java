@@ -112,6 +112,7 @@ public class AddUnitActivity extends AppCompatActivity {
                 unitCoEt.getText().toString());
         mUnit = unit;
         myViewModel.insertUnit(unit);
+        myViewModel.insertToFirebase(unit);
     }
 
     public void updateUnit() {
