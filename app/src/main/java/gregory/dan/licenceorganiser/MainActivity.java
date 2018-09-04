@@ -32,11 +32,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gregory.dan.licenceorganiser.UI.UnitRecyclerViewAdapter;
+import gregory.dan.licenceorganiser.Unit.Ammunition;
+import gregory.dan.licenceorganiser.Unit.Inspection;
+import gregory.dan.licenceorganiser.Unit.Licence;
+import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 import gregory.dan.qdlibrary.QDCalculator;
 
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.AMMUNITION_REF_TEXT;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.INSPECTIONS_REF_TEXT;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.LICENCE_REF_TEXT;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.POINTS_REF_TEXT;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.UNIT_REF_TEXT;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UnitRecyclerViewAdapter.ListItemClickListener {
@@ -45,15 +54,20 @@ public class MainActivity extends AppCompatActivity
     RecyclerView mRecyclerView;
     TextView mUserTextView;
     private UnitRecyclerViewAdapter mUnitRecyclerViewAdapter;
-    private MyViewModel mUnitViewModel;
+    private MyViewModel myViewModel;
     private List<Unit> mUnits;
 
     //firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private DatabaseReference mReference;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference databaseReference;
+    DatabaseReference mUnitRef;
+    DatabaseReference mLicenceRef;
+    DatabaseReference mInspectionRef;
+    DatabaseReference mPointsRef;
+    DatabaseReference mAmmunitionRef;
 
-    //TODO create firebase database complete
     //TODO create icon images for calculator
     //TODO improve ui
     //TODO implement notifications
@@ -78,10 +92,15 @@ public class MainActivity extends AppCompatActivity
 
         mAuth = FirebaseAuth.getInstance();
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        mReference = firebaseDatabase.getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mUnitRef = mFirebaseDatabase.getReference(UNIT_REF_TEXT);
+        mLicenceRef = mFirebaseDatabase.getReference(LICENCE_REF_TEXT);
+        mInspectionRef = mFirebaseDatabase.getReference(INSPECTIONS_REF_TEXT);
+        mPointsRef = mFirebaseDatabase.getReference(POINTS_REF_TEXT);
+        mAmmunitionRef = mFirebaseDatabase.getReference(AMMUNITION_REF_TEXT);
 
-
+        setupDatabase();
+        databaseReference = mFirebaseDatabase.getReference();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -98,32 +117,28 @@ public class MainActivity extends AppCompatActivity
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }else{
+                } else {
                     setUserName(firebaseAuth.getCurrentUser().getEmail());
                 }
             }
         };
 
-        mUnitViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+        myViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUnitRecyclerViewAdapter = new UnitRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mUnitRecyclerViewAdapter);
 
-        mUnitViewModel.getmAllUnits().observe(this, new Observer<List<Unit>>() {
+        myViewModel.getmAllUnits().observe(this, new Observer<List<Unit>>() {
             @Override
             public void onChanged(@Nullable List<Unit> units) {
                 mUnits = units;
                 mUnitRecyclerViewAdapter.setUnits(units);
             }
         });
-
-
-
-
     }
 
-    private void setUserName(String user){
+    private void setUserName(String user) {
         mUserTextView.setText(user);
     }
 
@@ -162,7 +177,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_delete_all) {
-            mReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     dataSnapshot.getRef().removeValue();
@@ -173,7 +188,7 @@ public class MainActivity extends AppCompatActivity
 
                 }
             });
-            mUnitViewModel.deleteAllUnits();
+            myViewModel.deleteAllUnits();
         } else if (id == R.id.action_log_out) {
             mAuth.signOut();
         }
@@ -202,4 +217,157 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(UNIT_NAME_EXTRA, mUnits.get(item).unitTitle);
         startActivity(intent);
     }
+
+    private void setupDatabase() {
+
+        // get input the units
+        mUnitRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String unitTitle = (String) data.child("unitTitle").getValue();
+                        String unitAddress = (String) data.child("unitAddress").getValue();
+                        String unitContactNumber = (String) data.child("unitContactNumber").getValue();
+                        String unitCO = (String) data.child("unitCO").getValue();
+                        myViewModel.insertUnit(new Unit(unitTitle,
+                                unitAddress,
+                                unitContactNumber,
+                                unitCO));
+                    }
+                    setupLicences();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    private void setupLicences() {
+        // get input the licences
+        mLicenceRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String licenceSerial = (String) data.child("licenceSerial").getValue();
+                        String unitTitle = (String) data.child("unitTitle").getValue();
+                        String licenceType = (String) data.child("licenceType").getValue();
+                        long licenceIssueDate = (long) data.child("licenceIssueDate").getValue();
+                        long licenceRenewalDate = (long) data.child("licenceRenewalDate").getValue();
+                        myViewModel.insertLicence(new Licence(licenceSerial,
+                                unitTitle,
+                                licenceType,
+                                licenceIssueDate,
+                                licenceRenewalDate));
+                    }
+                    setupInspection();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setupInspection() {
+        // get input the inspections
+        mInspectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        long id = (long) data.child("_id").getValue();
+                        String unit = (String) data.child("unit").getValue();
+                        long hasPoints = (long) data.child("hasPoints").getValue();
+                        long inspectionDate = (long) data.child("inspectionDate").getValue();
+                        long reminderDate = (long) data.child("reminderDate").getValue();
+                        long nextInspectionDue = (long) data.child("nextInspectionDue").getValue();
+                        String inspectedBy = (String) data.child("inspectedBy").getValue();
+                        myViewModel.insertInspection(new Inspection(unit,
+                                hasPoints,
+                                inspectionDate,
+                                reminderDate,
+                                nextInspectionDue,
+                                inspectedBy,
+                                id));
+                    }
+                    setupPoints();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setupPoints() {
+        // get input the points
+        mPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        long id = (long) data.child("id").getValue();
+                        long inspectionId = (long) data.child("inspectionId").getValue();
+                        String point = (String) data.child("point").getValue();
+                        long complete = (long) data.child("complete").getValue();
+                        myViewModel.insertPoint(new OutstandingPoints(inspectionId,
+                                point,
+                                complete,
+                                id));
+                    }
+                    setupAmmunition();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setupAmmunition() {
+        // get input the ammunition
+        mAmmunitionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String licenceSerial = (String) data.child("licenceSerial").getValue();
+                        String adac = (String) data.child("adac").getValue();
+                        String description = (String) data.child("description").getValue();
+                        String HCC = (String) data.child("HCC").getValue();
+                        int quantity = (int) data.child("quantity").getValue();
+                        myViewModel.insertAmmunition(new Ammunition(licenceSerial,
+                                adac,
+                                description,
+                                HCC,
+                                quantity));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }

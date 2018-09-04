@@ -5,9 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
-
-import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -20,27 +17,32 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 parentColumns = "unitTitle",
                 childColumns = "unit")
 }, indices = @Index("unit"))
-@TypeConverters(DateConverter.class)
 public class Inspection {
+
+    @PrimaryKey
+    public long _id;
 
     @ColumnInfo(name = "unit")
     public String unit;
 
-    public int hasPoints;
+    public long hasPoints;
 
-    @PrimaryKey
-    public Date inspectionDate;
+    public long inspectionDate;
 
-    public Date reminderDate;
+    public long reminderDate;
 
-    public Date nextInspectionDue;
+    public long nextInspectionDue;
 
-    public Inspection(String unit, int hasPoints, Date inspectionDate, Date reminderDate, Date nextInspectionDue) {
+    public String inspectedBy;
+
+    public Inspection(String unit, long hasPoints, long inspectionDate, long reminderDate, long nextInspectionDue, String inspectedBy, long id) {
         this.unit = unit;
         this.hasPoints = hasPoints;
         this.inspectionDate = inspectionDate;
         this.reminderDate = reminderDate;
         this.nextInspectionDue = nextInspectionDue;
+        this.inspectedBy = inspectedBy;
+        this._id = id;
     }
 
 }

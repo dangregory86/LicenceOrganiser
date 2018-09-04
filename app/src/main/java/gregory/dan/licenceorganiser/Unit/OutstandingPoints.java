@@ -5,7 +5,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
@@ -16,26 +15,26 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(foreignKeys = {
         @ForeignKey(onDelete = CASCADE,
                 entity = Inspection.class,
-        parentColumns = "inspectionDate",
-        childColumns = "inspection_date")
-}, indices = @Index("inspection_date"))
-@TypeConverters(DateConverter.class)
+        parentColumns = "_id",
+        childColumns = "inspection_id")
+}, indices = @Index("inspection_id"))
 public class OutstandingPoints{
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
-    public int id;
+    public long id;
 
-    @ColumnInfo(name = "inspection_date")
-    public long inspectionDate;
+    @ColumnInfo(name = "inspection_id")
+    public long inspectionId;
 
     public String point;
 
-    public int complete;
+    public long complete;
 
-    public OutstandingPoints(long inspectionDate, String point, int complete) {
-        this.inspectionDate = inspectionDate;
+    public OutstandingPoints(long inspectionId, String point, long complete, long id) {
+        this.inspectionId = inspectionId;
         this.point = point;
         this.complete = complete;
+        this.id = id;
     }
 }

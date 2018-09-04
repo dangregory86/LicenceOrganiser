@@ -11,8 +11,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,23 +26,30 @@ import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
 public class AddInspectionActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
 
-    public static final String INSPECTION_DATE_EXTRA = "gregory.dan.licenceorganiser.inspectiondateextra";
+    public static final String INSPECTION_EXTRA = "gregory.dan.licenceorganiser.inspectiondateextra";
 
     @BindView(R.id.add_inspction_date_edit_text)
     EditText inspectedDateEditText;
 
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+
     private long inspectionDateInMillis, remindByDateInMillis, nextInspectionDueInMillis;
     private String mUnitTitle;
-
+    private String user;
     private MyViewModel viewModel;
     private boolean alreadySaved = false;
     private int hasPoints = 0;
-    Inspection inspection;
+    private Inspection inspection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_inspection);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        user = firebaseUser.getEmail();
 
         Intent intent = getIntent();
         if (!intent.hasExtra(UNIT_NAME_EXTRA)) {
@@ -64,14 +73,18 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
     }
 
     public void saveInspection(){
+        long time = System.currentTimeMillis();
         if(!inspectedDateEditText.getText().toString().trim().equals("")){
             alreadySaved = true;
             inspection = new Inspection(mUnitTitle,
                     hasPoints,
-                    new Date(inspectionDateInMillis),
-                    new Date(remindByDateInMillis),
-                    new Date(nextInspectionDueInMillis));
+                     (inspectionDateInMillis),
+                     (remindByDateInMillis),
+                     (nextInspectionDueInMillis),
+                    user,
+                    time);
             viewModel.insertInspection(inspection);
+            viewModel.insertToFirebase(inspection);
         }else{
             Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
         }
@@ -80,6 +93,7 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
     private void updateInspection(){
         inspection.hasPoints = hasPoints;
         viewModel.updateInspection(inspection);
+        viewModel.insertToFirebase(inspection);
     }
 
     @OnClick(R.id.add_inspection_new_point_button)
@@ -87,12 +101,12 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
 
         if(alreadySaved){
             Intent intent = new Intent(this, AddInspectionPointActivity.class);
-            intent.putExtra(INSPECTION_DATE_EXTRA, inspectionDateInMillis);
+            intent.putExtra(INSPECTION_EXTRA, inspection._id);
             startActivity(intent);
         }else if(!inspectedDateEditText.getText().toString().trim().equals("")){
             saveInspection();
             Intent intent = new Intent(this, AddInspectionPointActivity.class);
-            intent.putExtra(INSPECTION_DATE_EXTRA, inspectionDateInMillis);
+            intent.putExtra(INSPECTION_EXTRA, inspection._id);
             startActivity(intent);
         }else{
             saveInspection();

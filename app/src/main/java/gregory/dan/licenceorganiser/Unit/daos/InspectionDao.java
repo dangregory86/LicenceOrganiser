@@ -21,6 +21,9 @@ public interface InspectionDao {
     @Query("SELECT * FROM Inspection WHERE unit=:unitName")
     LiveData<List<Inspection>> getInspections(String unitName);
 
+    @Query("SELECT * FROM Inspection WHERE _id=:id")
+    Inspection getInspection(long id);
+
     @Insert(onConflict = REPLACE)
     void insertInspection(Inspection inspection);
 

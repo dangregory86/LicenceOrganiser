@@ -26,8 +26,9 @@
         android:layout_marginTop="8dp"
         android:text="@string/inspection_view_points_label_text"
         app:layout_constraintEnd_toEndOf="@+id/view_inspection_date_title_text"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view_inspection_date_title_text"
-        app:layout_constraintTop_toBottomOf="@+id/view_inspection_date_title_text" />
+        app:layout_constraintTop_toBottomOf="@+id/inspected_by_text_view" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/view_inspection_points_recycler_view"
@@ -37,4 +38,14 @@
         app:layout_constraintEnd_toEndOf="@+id/view_inspection_points_label_text_view"
         app:layout_constraintStart_toStartOf="@+id/view_inspection_points_label_text_view"
         app:layout_constraintTop_toBottomOf="@+id/view_inspection_points_label_text_view" />
+
+    <TextView
+        android:id="@+id/inspected_by_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/view_inspection_date_title_text"
+        app:layout_constraintStart_toStartOf="@+id/view_inspection_date_title_text"
+        app:layout_constraintTop_toBottomOf="@+id/view_inspection_date_title_text"
+        tools:text="inspected by: dave" />
 </android.support.constraint.ConstraintLayout>

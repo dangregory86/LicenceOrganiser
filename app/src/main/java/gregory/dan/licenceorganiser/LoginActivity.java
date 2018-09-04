@@ -1,5 +1,6 @@
 package gregory.dan.licenceorganiser;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 /**
  * A login screen that offers login via email/password.
@@ -31,11 +35,17 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuthTask = null;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
+    private FirebaseDatabase mFirebaseDatabase;
+
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+
+    //database stuff
+    private MyViewModel myViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
+
+        myViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+        myViewModel.deleteAllUnits();
 
         mAuthTask = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -246,6 +259,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
 
 }
 

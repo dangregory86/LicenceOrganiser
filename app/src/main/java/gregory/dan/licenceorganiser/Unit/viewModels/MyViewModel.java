@@ -30,15 +30,15 @@ public class MyViewModel extends AndroidViewModel {
 
     public void insertToFirebase(Object object){
         if(Unit.class.isInstance(object)){
-            mRepository.insertUnitToFirebase((Unit) object);
+            mRepository.inseertOrUpdateFirebaseUnit((Unit) object);
         }else if(OutstandingPoints.class.isInstance(object)){
-            mRepository.insertPointToFirebase((OutstandingPoints) object);
+            mRepository.inseertOrUpdateFirebasePoint((OutstandingPoints) object);
         }else if(Licence.class.isInstance(object)){
-            mRepository.insertLicenceToFirebase((Licence) object);
+            mRepository.inseertOrUpdateFirebaseLicence((Licence) object);
         }else if(Inspection.class.isInstance(object)){
-            mRepository.insertInspectionToFirebase((Inspection) object);
+            mRepository.inseertOrUpdateFirebaseInspection((Inspection) object);
         }else if(Ammunition.class.isInstance(object)){
-            mRepository.insertAmmunitionToFirebase((Ammunition) object);
+            mRepository.inseertOrUpdateFirebaseAmmunition((Ammunition) object);
         }
     }
 
@@ -69,8 +69,8 @@ public class MyViewModel extends AndroidViewModel {
     /*
      * The following functions all link to the OutstandingPointsDao
      * */
-    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long inspectionDate) {
-        return mRepository.getAllUnitPoints(inspectionDate);
+    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long inspectionId) {
+        return mRepository.getAllUnitPoints(inspectionId);
     }
 
     public void insertPoint(OutstandingPoints point) {
@@ -100,6 +100,10 @@ public class MyViewModel extends AndroidViewModel {
 
     public void updateInspection(Inspection inspection) {
         mRepository.updateInspection(inspection);
+    }
+
+    public Inspection getInspection(long id){
+        return mRepository.getInspection(id);
     }
 
     /*

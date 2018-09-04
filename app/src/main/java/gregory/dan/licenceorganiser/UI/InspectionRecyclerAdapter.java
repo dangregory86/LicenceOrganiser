@@ -40,8 +40,9 @@ public class InspectionRecyclerAdapter extends RecyclerView.Adapter<InspectionRe
         if(inspections == null) {
             return;
         }
-        Date mInspectedDate = inspections.get(position).inspectionDate;
-        String inspectedDate = new SimpleDateFormat("dd/mm/yyyy").format(mInspectedDate);
+        long mInspectedDate = inspections.get(position).inspectionDate;
+        Date mDate = new Date(mInspectedDate);
+        String inspectedDate = new SimpleDateFormat("dd/mm/yyyy").format(mDate);
 
         holder.mInspectionDateTextView.setText(inspectedDate);
     }

@@ -93,6 +93,11 @@
     <string name="error_password_needs_lower_case">Must have a lower case letter</string>
     <string name="error_password_too_short">Password too short</string>
     <string name="error_password_needs_special">Password needs special character</string>
+    <string name="enter_a_unit_name">Enter a unit name</string>
+    <string name="enter_the_address">Enter an address</string>
+    <string name="enter_a_number">Enter a contact number</string>
+    <string name="enter_co_details">Enter the CO details</string>
+    <string name="form_incomplete">Please correct the problems with the form.</string>
 
 
 </resources>

@@ -3,9 +3,13 @@ package gregory.dan.licenceorganiser.Unit.database;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -30,7 +34,6 @@ public class AppRepository {
     public static final String POINTS_REF_TEXT = "Points";
     public static final String INSPECTIONS_REF_TEXT = "Inspections";
     public static final String AMMUNITION_REF_TEXT = "Ammunition";
-
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -59,9 +62,6 @@ public class AppRepository {
         return mUnits;
     }
 
-    public void insertUnitToFirebase(Unit unit){
-        mUnitRef.push().setValue(unit);
-    }
 
     public void insertUnit(Unit unit) {
         new insertUnitAsyncTask(mDatabase.unitModel()).execute(unit);
@@ -142,12 +142,8 @@ public class AppRepository {
     /*
      * The following functions all link to the OutstandingPointsDao
      * */
-    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long date) {
-        return mDatabase.pointsModel().getOutstandingPoints(date);
-    }
-
-    public void insertPointToFirebase(OutstandingPoints points){
-        mPointsRef.push().setValue(points);
+    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long id) {
+        return mDatabase.pointsModel().getOutstandingPoints(id);
     }
 
     public void insertPoint(OutstandingPoints point) {
@@ -213,8 +209,8 @@ public class AppRepository {
         return mDatabase.inspectionModel().getInspections(unitName);
     }
 
-    public void insertInspectionToFirebase(Inspection inspection){
-        mInspectionRef.push().setValue(inspection);
+    public Inspection getInspection(long id){
+        return mDatabase.inspectionModel().getInspection(id);
     }
 
     public void insertInspection(Inspection inspection) {
@@ -261,10 +257,6 @@ public class AppRepository {
      * */
     public LiveData<List<Licence>> getAllUnitLicences(String unitName) {
         return mDatabase.licenceModel().getLicences(unitName);
-    }
-
-    public void insertLicenceToFirebase(Licence licence){
-        mLicenceRef.push().setValue(licence);
     }
 
     public void insertLicence(Licence licence) {
@@ -333,10 +325,6 @@ public class AppRepository {
         return mDatabase.ammunitionModel().getAmmunition(licence_serial);
     }
 
-    public void insertAmmunitionToFirebase(Ammunition ammunition){
-        mAmmunitionRef.push().setValue(ammunition);
-    }
-
     public void insertAmmunition(Ammunition ammunition) {
         new InsertAmmunitionAsyncTask(mDatabase.ammunitionModel()).execute(ammunition);
     }
@@ -373,4 +361,150 @@ public class AppRepository {
         }
     }
 
+    /*Firebase operations*/
+    public void inseertOrUpdateFirebaseUnit(final Unit unit) {
+        mUnitRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 1;
+                if (dataSnapshot.getValue() == null) {
+                    mUnitRef.push().setValue(unit);
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("unitTitle").getValue().equals(unit.unitTitle)) {
+                            String key = data.getKey();
+                            String path = "/" + key;
+                            mUnitRef.child(path).setValue(unit);
+                            return;
+                        } else if(i == dataSnapshot.getChildrenCount()){
+                            mUnitRef.push().setValue(unit);
+                        }
+
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void inseertOrUpdateFirebaseLicence(final Licence licence) {
+        mLicenceRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 1;
+                if (dataSnapshot.getValue() == null) {
+                    mLicenceRef.push().setValue(licence);
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("unitTitle").getValue().equals(licence.unitTitle) && data.child("licenceSerial").getValue().equals(licence.licenceSerial)) {
+                            String key = data.getKey();
+                            String path = "/" + key;
+                            mLicenceRef.child(path).setValue(licence);
+                            return;
+                        } else if(i == dataSnapshot.getChildrenCount()){
+                            mLicenceRef.push().setValue(licence);
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void inseertOrUpdateFirebaseAmmunition(final Ammunition ammunition) {
+        mAmmunitionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 1;
+                if (dataSnapshot.getValue() == null) {
+                    mAmmunitionRef.push().setValue(ammunition);
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("adac").getValue().equals(ammunition.adac) && data.child("licenceSerial").getValue().equals(ammunition.licenceSerial)) {
+                            String key = data.getKey();
+                            String path = "/" + key;
+                            mAmmunitionRef.child(path).setValue(ammunition);
+                            return;
+                        } else if(i == dataSnapshot.getChildrenCount()){
+                            mAmmunitionRef.push().setValue(ammunition);
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void inseertOrUpdateFirebaseInspection(final Inspection inspection) {
+        mInspectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 1;
+                if (dataSnapshot.getValue() == null) {
+                    mInspectionRef.push().setValue(inspection);
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("unit").getValue().equals(inspection.unit) && data.child("_id").getValue().equals(inspection._id)) {
+                            String key = data.getKey();
+                            String path = "/" + key;
+                            mInspectionRef.child(path).setValue(inspection);
+                            return;
+                        } else if(i == dataSnapshot.getChildrenCount()){
+                            mInspectionRef.push().setValue(inspection);
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void inseertOrUpdateFirebasePoint(final OutstandingPoints point) {
+        mPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 1;
+                if (dataSnapshot.getValue() == null) {
+                    mPointsRef.push().setValue(point);
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("id").getValue().equals(point.id)) {
+                            String key = data.getKey();
+                            String path = "/" + key;
+                            mPointsRef.child(path).setValue(point);
+                            break;
+                        } else if(i == dataSnapshot.getChildrenCount()){
+                            mPointsRef.push().setValue(point);
+                        }
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

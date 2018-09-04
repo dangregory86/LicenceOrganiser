@@ -15,7 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,13 +92,11 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     private void updateLicence(){
         if(!mLicenceSerialEditText.getText().toString().equals("") &&
                 !issueDateEditText.getText().toString().equals("")){
-            Licence licence = new Licence(mLicence.licenceSerial,
-                    unitTitle,
-                    licenceType,
-                    new Date(issueDateTimeInMillies),
-                    new Date(expiryDateTimeInMillies));
-            mLicence = licence;
-            mMyViewModel.updateLicence(licence);
+            mLicence.licenceIssueDate = issueDateTimeInMillies;
+            mLicence.licenceRenewalDate =  expiryDateTimeInMillies;
+            mLicence.licenceType = licenceType;
+            mMyViewModel.updateLicence(mLicence);
+            mMyViewModel.insertToFirebase(mLicence);
         }else{
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
@@ -112,10 +109,11 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             Licence licence = new Licence(mLicenceSerialEditText.getText().toString(),
                     unitTitle,
                     licenceType,
-                    new Date(issueDateTimeInMillies),
-                    new Date(expiryDateTimeInMillies));
+                     issueDateTimeInMillies,
+                     expiryDateTimeInMillies);
             mLicence = licence;
             mMyViewModel.insertLicence(licence);
+            mMyViewModel.insertToFirebase(licence);
         }else{
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }

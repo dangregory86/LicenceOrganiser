@@ -51,11 +51,8 @@ public class AddUnitActivity extends AppCompatActivity {
     @OnClick(R.id.new_unit_save_button)
     public void saveButtonClick(View view) {
 
-        if (unitNameEt.getText().toString().equals("") ||
-                unitAddressEt.getText().toString().equals("") ||
-                unitNumberEt.getText().toString().equals("") ||
-                unitCoEt.getText().toString().equals("")) {
-            Toast.makeText(this, "Ensure you complete all boxes!!", Toast.LENGTH_SHORT).show();
+        if (!formComplete()) {
+            Toast.makeText(this, getResources().getString(R.string.form_incomplete), Toast.LENGTH_LONG).show();
         } else if (alreadySaved) {
             updateUnit();
             finish();
@@ -65,13 +62,31 @@ public class AddUnitActivity extends AppCompatActivity {
         }
     }
 
+    private boolean formComplete(){
+        boolean correct = true;
+        if(unitNameEt.getText().toString().trim().equals("")){
+            unitNameEt.setError(getString(R.string.enter_a_unit_name));
+            correct = false;
+        }
+        if(unitAddressEt.getText().toString().trim().equals("")){
+            unitAddressEt.setError(getString(R.string.enter_the_address));
+            correct = false;
+        }
+        if(unitNumberEt.getText().toString().trim().equals("")){
+            unitNumberEt.setError(getString(R.string.enter_a_number));
+            correct = false;
+        }
+        if(unitCoEt.getText().toString().trim().equals("")){
+            unitCoEt.setError(getString(R.string.enter_co_details));
+            correct = false;
+        }
+        return correct;
+    }
+
     @OnClick(R.id.button_licence_add)
     public void addLicence(View v) {
-        if (unitNameEt.getText().toString().equals("") ||
-                unitAddressEt.getText().toString().equals("") ||
-                unitNumberEt.getText().toString().equals("") ||
-                unitCoEt.getText().toString().equals("")) {
-            Toast.makeText(this, "Ensure you complete all boxes!!", Toast.LENGTH_SHORT).show();
+        if (!formComplete()) {
+            Toast.makeText(this, getResources().getString(R.string.form_incomplete), Toast.LENGTH_LONG).show();
         } else if (alreadySaved) {
             Intent intent = new Intent(this, AddLicenceActivity.class);
             intent.putExtra(UNIT_NAME_EXTRA, unitNameEt.getText().toString());
@@ -87,11 +102,8 @@ public class AddUnitActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_unit_add_inspection_button)
     public void addInspectionPoint(View v) {
-        if (unitNameEt.getText().toString().equals("") ||
-                unitAddressEt.getText().toString().equals("") ||
-                unitNumberEt.getText().toString().equals("") ||
-                unitCoEt.getText().toString().equals("")) {
-            Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
+        if (!formComplete()) {
+            Toast.makeText(this, getResources().getString(R.string.form_incomplete), Toast.LENGTH_LONG).show();
         } else if (alreadySaved) {
             Intent intent = new Intent(this, AddInspectionActivity.class);
             intent.putExtra(UNIT_NAME_EXTRA, unitNameEt.getText().toString());
@@ -117,5 +129,6 @@ public class AddUnitActivity extends AppCompatActivity {
 
     public void updateUnit() {
         myViewModel.updateUnit(mUnit);
+        myViewModel.insertToFirebase(mUnit);
     }
 }

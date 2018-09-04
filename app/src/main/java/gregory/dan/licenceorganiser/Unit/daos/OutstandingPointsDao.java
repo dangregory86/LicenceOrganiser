@@ -19,8 +19,8 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface OutstandingPointsDao {
 
-    @Query("SELECT * FROM OutstandingPoints WHERE inspection_date=:date")
-    LiveData<List<OutstandingPoints>> getOutstandingPoints(long date);
+    @Query("SELECT * FROM OutstandingPoints WHERE inspection_id=:id")
+    LiveData<List<OutstandingPoints>> getOutstandingPoints(long id);
 
     @Insert(onConflict = REPLACE)
     void insertPoint(OutstandingPoints point);

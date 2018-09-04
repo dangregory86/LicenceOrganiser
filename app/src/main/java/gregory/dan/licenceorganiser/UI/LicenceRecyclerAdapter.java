@@ -41,10 +41,12 @@ public class LicenceRecyclerAdapter extends RecyclerView.Adapter<LicenceRecycler
             return;
         }
         String mLicenceSerial = licences.get(position).licenceSerial;
-        Date mIssueDateRaw = licences.get(position).licenceIssueDate;
-        String issueDate = new SimpleDateFormat("dd/mm/yyyy").format(mIssueDateRaw);
-        Date mExpiryDateRaw = licences.get(position).licenceRenewalDate;
-        String expiryDate = new SimpleDateFormat("dd/mm/yyyy").format(mExpiryDateRaw);
+        long mIssueDateRaw = licences.get(position).licenceIssueDate;
+        Date missueDate = new Date(mIssueDateRaw);
+        String issueDate = new SimpleDateFormat("dd/mm/yyyy").format(missueDate);
+        long  mExpiryDateRaw = licences.get(position).licenceRenewalDate;
+        Date mExpiryDate = new Date(mExpiryDateRaw);
+        String expiryDate = new SimpleDateFormat("dd/mm/yyyy").format(mExpiryDate);
         String mLicenceType = licences.get(position).licenceType;
 
         holder.mExpiryDateTextView.setText(expiryDate);

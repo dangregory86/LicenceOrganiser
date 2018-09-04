@@ -87,10 +87,12 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
     }
 
     public void instatiateViews(Licence licence) {
-        Date mIssueDateRaw = licence.licenceIssueDate;
-        String issueDate = new SimpleDateFormat("dd/mm/yyyy").format(mIssueDateRaw);
-        Date mExpiryDateRaw = licence.licenceRenewalDate;
-        String expiryDate = new SimpleDateFormat("dd/mm/yyyy").format(mExpiryDateRaw);
+        long mIssueDateRaw = licence.licenceIssueDate;
+        Date mIssueDate = new Date(mIssueDateRaw);
+        String issueDate = new SimpleDateFormat("dd/mm/yyyy").format(mIssueDate);
+        long mExpiryDateRaw = licence.licenceRenewalDate;
+        Date mExpiryDate = new Date(mExpiryDateRaw);
+        String expiryDate = new SimpleDateFormat("dd/mm/yyyy").format(mExpiryDate);
         String mLicenceType = licence.licenceType;
 
         mExpiryDateTextView.setText(expiryDate);

@@ -5,10 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
-
-import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -21,7 +18,6 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         parentColumns = "unitTitle",
         childColumns = "unit")
 }, indices = @Index("unit"))
-@TypeConverters(DateConverter.class)
 public class Licence{
 
     @PrimaryKey
@@ -32,10 +28,10 @@ public class Licence{
     public String unitTitle;
 
     public String licenceType;
-    public Date licenceIssueDate;
-    public Date licenceRenewalDate;
+    public long licenceIssueDate;
+    public long licenceRenewalDate;
 
-    public Licence(@NonNull String licenceSerial, String unitTitle, String licenceType, Date licenceIssueDate, Date licenceRenewalDate) {
+    public Licence(@NonNull String licenceSerial, String unitTitle, String licenceType, long licenceIssueDate, long licenceRenewalDate) {
         this.licenceSerial = licenceSerial;
         this.unitTitle = unitTitle;
         this.licenceType = licenceType;

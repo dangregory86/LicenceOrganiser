@@ -14,14 +14,14 @@ import butterknife.OnClick;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
-import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_DATE_EXTRA;
+import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_EXTRA;
 
 public class AddInspectionPointActivity extends AppCompatActivity{
 
     @BindView(R.id.add_inspection_point_point_edit_text)
     EditText inspectionPointEditText;
 
-    private long inspectionDateInMillis;
+    private long inspection;
 
     private MyViewModel viewModel;
 
@@ -31,10 +31,11 @@ public class AddInspectionPointActivity extends AppCompatActivity{
         setContentView(R.layout.activity_add_inspection_point);
 
         Intent intent = getIntent();
-        if (!intent.hasExtra(INSPECTION_DATE_EXTRA)) {
+        if (!intent.hasExtra(INSPECTION_EXTRA)) {
             finish();
         }
-        inspectionDateInMillis = intent.getLongExtra(INSPECTION_DATE_EXTRA, 0);
+        inspection = intent.getLongExtra(INSPECTION_EXTRA, 0);
+
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
@@ -45,10 +46,13 @@ public class AddInspectionPointActivity extends AppCompatActivity{
         if (inspectionPointEditText.getText().toString().equals("")) {
             Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
         } else {
-            OutstandingPoints point = new OutstandingPoints(inspectionDateInMillis,
+            long time = System.currentTimeMillis();
+            OutstandingPoints point = new OutstandingPoints(inspection,
                     inspectionPointEditText.getText().toString(),
-                    0);
+                    0,
+                    time);
             viewModel.insertPoint(point);
+            viewModel.insertToFirebase(point);
             Toast.makeText(this, "point added", Toast.LENGTH_SHORT).show();
             finish();
         }
