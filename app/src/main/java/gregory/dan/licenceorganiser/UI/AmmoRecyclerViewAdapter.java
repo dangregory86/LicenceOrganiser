@@ -41,7 +41,7 @@ public class AmmoRecyclerViewAdapter extends RecyclerView.Adapter<AmmoRecyclerVi
         String mAdac = ammo.get(position).adac;
         String mDesignation = ammo.get(position).description;
         String mHCC = ammo.get(position).HCC;
-        int mQuantity = ammo.get(position).quantity;
+        long mQuantity = ammo.get(position).quantity;
 
 
         holder.mAdacTextView.setText(mAdac);

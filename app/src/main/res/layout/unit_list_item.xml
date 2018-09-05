@@ -6,21 +6,20 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/cardBackgroundBlue"
     app:cardCornerRadius="@dimen/unit_list_item_padding"
+    app:cardElevation="@dimen/nav_header_vertical_spacing"
     app:cardUseCompatPadding="true">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp">
+        android:layout_height="79dp">
 
 
         <TextView
             android:id="@+id/list_item_unit_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryLight"
             android:padding="@dimen/unit_list_item_padding"
             android:textAlignment="center"
@@ -29,74 +28,13 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:typeface="normal"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="11 EOD Regiment" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/unit_list_item_padding"
-            android:paddingTop="@dimen/unit_list_item_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="62dp">
-
-            <TextView
-                android:id="@+id/list_item_next_due_text_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/next_due_title"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/list_item_unit_due_date_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textAlignment="viewEnd"
-                tools:text="20/11/2019" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="368dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/unit_list_item_margin"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/unit_list_item_padding"
-            android:paddingTop="@dimen/unit_list_item_padding"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-            <TextView
-                android:id="@+id/list_item_unit_points_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/unit_list_item_points_title_text"
-                android:textAlignment="viewStart"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/list_item_unit_outstanding_points_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:textAlignment="viewEnd"
-                tools:text="No outstanding points" />
-        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

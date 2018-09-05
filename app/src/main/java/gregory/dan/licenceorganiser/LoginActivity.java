@@ -61,8 +61,21 @@ public class LoginActivity extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null){
+                if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()){
+                    firebaseAuth.removeAuthStateListener(this);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }else if(firebaseAuth.getCurrentUser() != null){
+                    firebaseAuth.getCurrentUser().sendEmailVerification()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                   if(task.isSuccessful()){
+                                       mAuthTask.signOut();
+                                       finish();
+                                       startActivity(getIntent());
+                                   }
+                                }
+                            });
                 }
             }
         };
@@ -225,6 +238,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                         progressComplete();
                     }
+
                 }
             });
         }

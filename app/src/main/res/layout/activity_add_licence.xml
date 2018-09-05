@@ -96,4 +96,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_licence_add_ammo_button" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/add_licence_ammo_recycler_view"
+        android:layout_width="368dp"
+        android:layout_height="236dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/new_licence_save_button"
+        app:layout_constraintStart_toStartOf="@+id/new_licence_save_button"
+        app:layout_constraintTop_toBottomOf="@+id/new_licence_save_button" />
+
 </android.support.constraint.ConstraintLayout>

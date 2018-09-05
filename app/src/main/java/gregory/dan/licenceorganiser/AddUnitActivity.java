@@ -131,4 +131,12 @@ public class AddUnitActivity extends AppCompatActivity {
         myViewModel.updateUnit(mUnit);
         myViewModel.insertToFirebase(mUnit);
     }
+
+    @Override
+    public void onBackPressed() {
+        if(alreadySaved){
+            myViewModel.deleteUnit(mUnit);
+        }
+        super.onBackPressed();
+    }
 }

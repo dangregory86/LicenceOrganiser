@@ -2,11 +2,15 @@ package gregory.dan.licenceorganiser;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -15,32 +19,40 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import gregory.dan.licenceorganiser.UI.AmmoRecyclerViewAdapter;
+import gregory.dan.licenceorganiser.Unit.Ammunition;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
-public class AddLicenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class AddLicenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AmmoRecyclerViewAdapter.ListItemClickListener {
 
     public static final String LICENCE_SERIAL_EXTRA = "gregory.dan.licenceorganiser.licenceserialextra";
 
     private String unitTitle;
     private MyViewModel mMyViewModel;
-    @BindView(R.id.new_licence_serial_edit_text) EditText mLicenceSerialEditText;
+    @BindView(R.id.new_licence_serial_edit_text)
+    EditText mLicenceSerialEditText;
     @BindView(R.id.new_licence_issue_date_edit_text)
     EditText issueDateEditText;
     @BindView(R.id.new_licence_add_ammo_button)
     Button addAmmoButton;
     @BindView(R.id.new_licence_radio_group)
     RadioGroup radioGroupView;
+    @BindView(R.id.add_licence_ammo_recycler_view)RecyclerView mRecyclerView;
     private long issueDateTimeInMillies, expiryDateTimeInMillies;
     private String licenceType = "Standard";
     private boolean alreadyExists = false;
     private Licence mLicence;
+
+    private AmmoRecyclerViewAdapter ammoRecyclerViewAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +63,7 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
 
         Intent intent = getIntent();
 
-        if(intent.hasExtra(UNIT_NAME_EXTRA)){
+        if (intent.hasExtra(UNIT_NAME_EXTRA)) {
             unitTitle = intent.getStringExtra(UNIT_NAME_EXTRA);
         }
 
@@ -59,13 +71,13 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         radioGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == R.id.new_licence_aq25_radio_button){
+                if (checkedId == R.id.new_licence_aq25_radio_button) {
                     addAmmoButton.setVisibility(View.VISIBLE);
                     licenceType = "AQ25";
-                }else if(checkedId == R.id.new_licence_saa_radio_button){
+                } else if (checkedId == R.id.new_licence_saa_radio_button) {
                     addAmmoButton.setVisibility(View.GONE);
                     licenceType = "SAA";
-                }else{
+                } else {
                     addAmmoButton.setVisibility(View.GONE);
                     licenceType = "Standard";
                 }
@@ -73,48 +85,56 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             }
         });
 
+        ammoRecyclerViewAdapter = new AmmoRecyclerViewAdapter(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(ammoRecyclerViewAdapter);
+
+
         mMyViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+        if(mLicence != null){
+            showRecyclerView();
+        }
     }
 
     @OnClick(R.id.new_licence_save_button)
-    public void clickSaveButton(){
-        if(!alreadyExists){
+    public void clickSaveButton() {
+        if (!alreadyExists) {
             saveLicence();
             finish();
-        }else{
+        } else {
             updateLicence();
             finish();
         }
     }
 
 
-
-    private void updateLicence(){
-        if(!mLicenceSerialEditText.getText().toString().equals("") &&
-                !issueDateEditText.getText().toString().equals("")){
+    private void updateLicence() {
+        if (!mLicenceSerialEditText.getText().toString().equals("") &&
+                !issueDateEditText.getText().toString().equals("")) {
             mLicence.licenceIssueDate = issueDateTimeInMillies;
-            mLicence.licenceRenewalDate =  expiryDateTimeInMillies;
+            mLicence.licenceRenewalDate = expiryDateTimeInMillies;
             mLicence.licenceType = licenceType;
             mMyViewModel.updateLicence(mLicence);
             mMyViewModel.insertToFirebase(mLicence);
-        }else{
+        } else {
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void saveLicence(){
-        if(!mLicenceSerialEditText.getText().toString().equals("") &&
-                !issueDateEditText.getText().toString().equals("")){
+    public void saveLicence() {
+        if (!mLicenceSerialEditText.getText().toString().equals("") &&
+                !issueDateEditText.getText().toString().equals("")) {
             alreadyExists = true;
             Licence licence = new Licence(mLicenceSerialEditText.getText().toString(),
                     unitTitle,
                     licenceType,
-                     issueDateTimeInMillies,
-                     expiryDateTimeInMillies);
+                    issueDateTimeInMillies,
+                    expiryDateTimeInMillies);
             mLicence = licence;
+            showRecyclerView();
             mMyViewModel.insertLicence(licence);
             mMyViewModel.insertToFirebase(licence);
-        }else{
+        } else {
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
 
@@ -129,13 +149,16 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     }
 
     @OnClick(R.id.new_licence_add_ammo_button)
-    public void addAmmo(){
-        if (!alreadyExists){
-            saveLicence();
+    public void addAmmo() {
+        if (!mLicenceSerialEditText.getText().toString().equals("") &&
+                !issueDateEditText.getText().toString().equals("")) {
+            if (!alreadyExists) {
+                saveLicence();
+            }
+            Intent intent = new Intent(this, AddAmmoActivity.class);
+            intent.putExtra(LICENCE_SERIAL_EXTRA, mLicence.licenceSerial);
+            startActivity(intent);
         }
-        Intent intent = new Intent(this, AddAmmoActivity.class);
-        intent.putExtra(LICENCE_SERIAL_EXTRA, mLicence.licenceSerial);
-        startActivity(intent);
     }
 
     @Override
@@ -150,6 +173,11 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
 
         String date = "Licence issue date:  " + dayOfMonth + "/" + (month + 1) + "/" + year;
         issueDateEditText.setText(date);
+    }
+
+    @Override
+    public void onClick(int item) {
+
     }
 
     public static class DatePickerFragment extends DialogFragment {
@@ -168,4 +196,22 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
 
     }
 
+    private void showRecyclerView(){
+
+        mMyViewModel.getAllUnitAmmunition(mLicence.licenceSerial).observe(this, new Observer<List<Ammunition>>() {
+            @Override
+            public void onChanged(@Nullable List<Ammunition> ammunitions) {
+                ammoRecyclerViewAdapter.setAmmunition(ammunitions);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (alreadyExists) {
+            mMyViewModel.deleteFromFirebase(mLicence);
+            mMyViewModel.deleteUnitLicence(mLicence);
+        }
+        super.onBackPressed();
+    }
 }

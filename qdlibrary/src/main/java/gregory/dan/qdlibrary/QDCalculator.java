@@ -1,5 +1,6 @@
 package gregory.dan.qdlibrary;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ public class QDCalculator extends AppCompatActivity {
     private EditText mDistanceEditText;
     private Button mCalculateButton;
     private int pesPos, esPos;
+    private TypedArray pesS, ess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,8 @@ public class QDCalculator extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupUi();
 
-
+        pesS = getResources().obtainTypedArray(R.array.pes_images);
+        ess = getResources().obtainTypedArray(R.array.es_image_names);
 
     }
 
@@ -39,6 +42,8 @@ public class QDCalculator extends AppCompatActivity {
         final String[] esDescriptions = getResources().getStringArray(R.array.es_descriptions_long);
 
         hdImageView = findViewById(R.id.qd_hd_icon);
+        pEsImageView = findViewById(R.id.qd_pes_icon);
+        eSImageView = findViewById(R.id.qd_es_icon);
 
         final Spinner pESSpinner = findViewById(R.id.qd_pes_selection_spinner);
         pESDescriptionTv = findViewById(R.id.qd_pes_description_textview);
@@ -46,6 +51,7 @@ public class QDCalculator extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 pESDescriptionTv.setText(pesDescription[position]);
+                pEsImageView.setImageResource(pesS.getResourceId(position, -1));
                 pesPos = position;
             }
 
@@ -61,6 +67,7 @@ public class QDCalculator extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 eSDescriptionTv.setText(esDescriptions[position]);
+                eSImageView.setImageResource(ess.getResourceId(position, -1));
                 esPos = position;
             }
 

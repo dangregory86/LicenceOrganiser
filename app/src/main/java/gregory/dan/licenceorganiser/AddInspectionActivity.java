@@ -2,11 +2,15 @@ package gregory.dan.licenceorganiser;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,21 +19,26 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import gregory.dan.licenceorganiser.UI.PointRecyclerViewAdapter;
 import gregory.dan.licenceorganiser.Unit.Inspection;
+import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
-public class AddInspectionActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener {
+public class AddInspectionActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, PointRecyclerViewAdapter.ListItemClickListener {
 
     public static final String INSPECTION_EXTRA = "gregory.dan.licenceorganiser.inspectiondateextra";
 
     @BindView(R.id.add_inspction_date_edit_text)
     EditText inspectedDateEditText;
+    @BindView(R.id.add_inspection_recycler_view)RecyclerView mRecyclerView;
+
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -41,6 +50,8 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
     private boolean alreadySaved = false;
     private int hasPoints = 0;
     private Inspection inspection;
+    private PointRecyclerViewAdapter mRecyclerViewAdapter;
+    private List<OutstandingPoints> mOustandingPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +70,27 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this).get(MyViewModel.class);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerViewAdapter = new PointRecyclerViewAdapter(this);
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        if(inspection != null){
+            showRecyclerView();
+        }
+
+    }
+
+    private void showRecyclerView() {
+
+        viewModel.getAllUnitPoints(inspection._id).observe(this, new Observer<List<OutstandingPoints>>() {
+            @Override
+            public void onChanged(@Nullable List<OutstandingPoints> outstandingPoints) {
+                mOustandingPoints = outstandingPoints;
+                mRecyclerViewAdapter.setPoints(outstandingPoints);
+            }
+        });
+
+
     }
 
     @OnClick(R.id.add_inspection_save_inspection_button)
@@ -83,6 +115,7 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
                      (nextInspectionDueInMillis),
                     user,
                     time);
+            showRecyclerView();
             viewModel.insertInspection(inspection);
             viewModel.insertToFirebase(inspection);
         }else{
@@ -133,6 +166,14 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
 
         String date = "Licence issue date:  " + dayOfMonth + "/" + month + "/" + year;
         inspectedDateEditText.setText(date);
+    }
+
+    @Override
+    public void completedClick(int item) {
+        OutstandingPoints point = mOustandingPoints.get(item);
+        point.complete = 1;
+        viewModel.updatePoint(point);
+        viewModel.insertToFirebase(point);
     }
 
     public static class DatePickerFragment extends DialogFragment {

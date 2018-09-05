@@ -98,6 +98,10 @@
     <string name="enter_a_number">Enter a contact number</string>
     <string name="enter_co_details">Enter the CO details</string>
     <string name="form_incomplete">Please correct the problems with the form.</string>
+    <string name="delete">Delete</string>
+    <string name="adac">ADAC:</string>
+    <string name="designation">Designation:</string>
+    <string name="hcc">HCC:</string>
 
 
 </resources>

@@ -20,9 +20,9 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 }, indices = @Index("licence_serial"))
 public class Ammunition {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     @NonNull
-    public int id;
+    public long id;
 
     @ColumnInfo(name = "licence_serial")
     public String licenceSerial;
@@ -30,13 +30,14 @@ public class Ammunition {
     public String adac;
     public String description;
     public String HCC;
-    public int quantity;
+    public long quantity;
 
-    public Ammunition(String licenceSerial, String adac, String description, String HCC, int quantity) {
+    public Ammunition(String licenceSerial, String adac, String description, String HCC, long quantity, long id) {
         this.licenceSerial = licenceSerial;
         this.adac = adac;
         this.description = description;
         this.HCC = HCC;
         this.quantity = quantity;
+        this.id = id;
     }
 }

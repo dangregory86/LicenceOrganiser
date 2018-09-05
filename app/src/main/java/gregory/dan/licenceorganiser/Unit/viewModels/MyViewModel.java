@@ -42,6 +42,22 @@ public class MyViewModel extends AndroidViewModel {
         }
     }
 
+    public void deleteFromFirebase(Object object){
+        if(Unit.class.isInstance(object)){
+            mRepository.deleteUnitFirebase((Unit) object);
+        }else if(OutstandingPoints.class.isInstance(object)){
+            mRepository.deleteInspectionPointFirebase((OutstandingPoints) object);
+        }else if(Licence.class.isInstance(object)){
+            mRepository.deleteLicenceFirebase((Licence) object);
+        }else if(Inspection.class.isInstance(object)){
+            mRepository.deleteInspectionFirebase((Inspection) object);
+        }else if(Ammunition.class.isInstance(object)){
+            Ammunition ammunition = (Ammunition) object;
+            long id = ammunition.id;
+            mRepository.deleteAmmunitionFirebase(id);
+        }
+    }
+
     public LiveData<List<Unit>> getmAllUnits() {
         return mAllUnits;
     }

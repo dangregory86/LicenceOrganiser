@@ -76,8 +76,10 @@ public class AddAmmoActivity extends AppCompatActivity {
                     mAdacEditText.getText().toString(),
                     mDesignationEditText.getText().toString(),
                     mHCCEditText.getText().toString(),
-                    Integer.parseInt(mMaxQuatityEditText.getText().toString()));
+                    Integer.parseInt(mMaxQuatityEditText.getText().toString()),
+                    System.currentTimeMillis());
             mViewModel.insertAmmunition(ammunition);
+            mViewModel.insertToFirebase(ammunition);
             finish();
         }
     }

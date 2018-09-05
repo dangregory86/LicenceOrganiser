@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -150,5 +151,12 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
             mUnit = unit;
             setViews(unit);
         }
+    }
+
+    @OnClick({R.id.delete_unit_unit_view})
+    public void deleteUnit(){
+        mMyViewModel.deleteFromFirebase(mUnit);
+        mMyViewModel.deleteUnit(mUnit);
+        NavUtils.navigateUpFromSameTask(this);
     }
 }

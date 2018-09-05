@@ -19,7 +19,7 @@ import gregory.dan.licenceorganiser.Unit.daos.UnitDao;
 /**
  * Created by Daniel Gregory on 31/08/2018.
  */
-@Database(entities = {Unit.class, Licence.class, Inspection.class, OutstandingPoints.class, Ammunition.class}, version = 1, exportSchema = false)
+@Database(entities = {Unit.class, Licence.class, Inspection.class, OutstandingPoints.class, Ammunition.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -42,6 +42,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class,
                                     "app_database")
+                                    .fallbackToDestructiveMigration()
                                     .build();
                 }
             }

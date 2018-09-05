@@ -45,4 +45,13 @@
         app:layout_constraintStart_toEndOf="@+id/add_inspection_new_point_button"
         app:layout_constraintTop_toBottomOf="@+id/add_inspction_date_edit_text" />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/add_inspection_recycler_view"
+        android:layout_width="368dp"
+        android:layout_height="385dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/add_inspection_save_inspection_button"
+        app:layout_constraintStart_toStartOf="@+id/add_inspection_new_point_button"
+        app:layout_constraintTop_toBottomOf="@+id/add_inspection_new_point_button" />
+
 </android.support.constraint.ConstraintLayout>

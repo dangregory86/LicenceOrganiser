@@ -31,6 +31,19 @@
         <item name="pes_open_stack_untraversed">Open-air stack or light structure, untraversed. Truck, trailer, rail-car or freight container loaded with ammunition, untraversed.</item>
     </string-array>
 
+    <integer-array name="pes_images">
+        <item name="pes_igloo_rear">@drawable/igloo_pes_rear</item>
+        <item name="pes_igloo_side">@drawable/igloo_pes_side</item>
+        <item name="pes_igloo_front">@drawable/igloo_pes_front</item>
+        <item name="pes_heavy_wall_side">@drawable/heavy_walled_pes</item>
+        <item name="pes_heavy_wall_front">@drawable/heavy_walled_pes_front</item>
+        <item name="pes_heavy_wall_light_roof">@drawable/heavy_walled_pes_no_roof</item>
+        <item name="pes_light_wall_traversed">@drawable/light_walled_pes_traversed</item>
+        <item name="pes_light_wall_untraversed">@drawable/light_walled_pes_untraversed</item>
+        <item name="pes_open_stack_traversed">@drawable/open_stack_pes_traversed</item>
+        <item name="pes_open_stack_untraversed">@drawable/open_stack_pes_untraversed</item>
+    </integer-array>
+
 
     <!--Strings for the QD table ES descriptions-->
     <string name="select_es">Select ES type.</string>
@@ -117,6 +130,48 @@
         <item name="es_boiler_house_unmanned_nonvital">Boiler Houses - Unmanned, non-vital </item>
         <item name="es_boiler_house_unmanned_local">Boiler Houses - Unmanned, local </item>
     </string-array>
+
+    <integer-array name="es_image_names">
+    <item name="es_igloo_rear">@drawable/standard_igloo_es_rear</item>
+    <item name="es_igloo_side">@drawable/stand_igloo_es_side</item>
+    <item name="es_igloo_front">@drawable/stand_igloo_es_front</item>
+    <item name="es_igloo_front_2">@drawable/non_stan_igloo_es_front</item>
+    <item name="es_igloo_door_traversed">@drawable/igloo_es_with_traverse_front</item>
+    <item name="es_igloos_rear_2">@drawable/igloo_es_rear</item>
+    <item name="es_igloo_side_2">@drawable/igloo_es_side</item>
+    <item name="es_igloo_front_3">@drawable/igloo_es_front</item>
+    <item name="es_heavy_walled">@drawable/heavy_walled_es</item>
+    <item name="es_heavy_walled_light_roof">@drawable/heavy_walled_es_light_roof</item>
+    <item name="es_open_stack_traversed">@drawable/open_air_stack_traversed</item>
+    <item name="es_open_stack_untraversed">@drawable/open_stack_es_untraversed</item>
+    <item name="es_light_walled_traversed">@drawable/light_walled_es_traversed</item>
+    <item name="es_light_walled_untraversed">@drawable/light_walled_es_untraversed</item>
+    <item name="es_process_building_traversed_roofed">@drawable/apb_protected_roof_traversed</item>
+    <item name="es_process_building_traversed">@drawable/apb_no_protected_roof_traversed</item>
+    <item name="es_process_building_untraversed">@drawable/apb_untraversed</item>
+    <item name="es_transfer_shed_traversed_lessthan_10_persons">0</item>
+    <item name="es_transfer_shed_traversed_morethan_10_persons">0</item>
+    <item name="es_transfer_shed_untraversed_lessthan_10_persons">0</item>
+    <item name="es_transfer_shed_untraversed_morethan_10_persons">0</item>
+    <item name="es_low_density_road">@drawable/road</item>
+    <item name="es_medium_density_road">@drawable/road</item>
+    <item name="es_high_density_road">@drawable/road</item>
+    <item name="es_inhabited_building">@drawable/house</item>
+    <item name="es_vulnerable_building">0</item>
+    <item name="es_office_lessthan_20">0</item>
+    <item name="es_office_morethan_20">0</item>
+    <item name="es_office_changing">0</item>
+    <item name="es_overhead_power_supergrid">0</item>
+    <item name="es_overhead_power_normal">0</item>
+    <item name="es_overhead_power_minor">0</item>
+    <item name="es_pol_protected">0</item>
+    <item name="es_pol_unprotected_vital">0</item>
+    <item name="es_pol_unprotected_nonvital">0</item>
+    <item name="es_pol_small_quantities">0</item>
+    <item name="es_boiler_house_manned">0</item>
+    <item name="es_boiler_house_unmanned_nonvital">0</item>
+    <item name="es_boiler_house_unmanned_local">0</item>
+    </integer-array>
 
     <string name="select_hazard_division_title">Select hazard division</string>
     <string name="distance_in_metres_hint">Distance in metres from PES to ES.</string>
