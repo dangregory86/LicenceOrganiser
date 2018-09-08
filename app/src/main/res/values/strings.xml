@@ -5,7 +5,6 @@
     <string name="nav_header_title">Logged in as:</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
     <string name="next_due_title">Next inspection due:</string>
     <string name="unit_list_item_points_title_text">Points outstanding:</string>
     <string name="qd_calculator_title">QD Calculator</string>
@@ -102,6 +101,26 @@
     <string name="adac">ADAC:</string>
     <string name="designation">Designation:</string>
     <string name="hcc">HCC:</string>
+    <string name="twentyeightdayreminder">Chase up 28 day action points.</string>
+    <string name="twentyeightdayalert">28 day reminder</string>
+    <string name="licence_renewal_reminder">The following licence needs renewing:</string>
+    <string name="lecence_renewal_alert">Licence renewal</string>
+    <string name="inspectionDue">Inspection due in 30 days.</string>
+    <string name="inspection_due_alert">Inspection due.</string>
+    <string name="delete_licence_text">Delete licence</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">Notifications</string>
+    <string name="dont_show_notifications">No notifications</string>
+    <string name="show_notifications">Allow notifications</string>
+    <string name="appwidget_text">No units added.</string>
+    <string name="add_widget">Add widget</string>
+    <string name="widget_unit_title_label_text">Unit:</string>
+    <string name="unit_widget_address_label_text">Address:</string>
+    <string name="unit_widget_contact_no_label_text">Tel.</string>
 
 
 </resources>

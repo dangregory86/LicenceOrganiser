@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_item_root_view"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:background="@color/colorPrimaryLight">
+
+    <TextView
+        android:id="@+id/widget_item_unit_title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="21dp"
+        android:text="@string/widget_unit_title_label_text" />
+
+    <TextView
+        android:id="@+id/unit_widget_unit_title"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/widget_item_unit_title_label"
+        tools:text="11 eod" />
+
+    <TextView
+        android:id="@+id/unit_widget_address_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/widget_item_unit_title_label"
+        android:layout_marginTop="51dp"
+        android:text="@string/unit_widget_address_label_text" />
+
+    <TextView
+        android:id="@+id/unit_widget_tel_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/unit_widget_unit_title"
+        android:layout_marginBottom="74dp"
+        tools:text="010101010101" />
+
+    <TextView
+        android:id="@+id/unit_widget_contact_no_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/unit_widget_tel_no"
+        android:layout_alignStart="@+id/widget_item_unit_title_label"
+        android:text="@string/unit_widget_contact_no_label_text" />
+
+    <TextView
+        android:id="@+id/unit_widget_address"
+        android:layout_width="106dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/unit_widget_address_label"
+        tools:text="here\nand\nthere" />
+</RelativeLayout>

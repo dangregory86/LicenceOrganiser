@@ -9,6 +9,7 @@
     app:contentPadding="@dimen/unit_list_item_padding">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/licence_list_item_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryLight">

@@ -1,9 +1,12 @@
 package gregory.dan.licenceorganiser;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,8 +21,10 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,16 +33,23 @@ import gregory.dan.licenceorganiser.UI.PointRecyclerViewAdapter;
 import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
+import gregory.dan.licenceorganiser.notifications.NotificationService;
 
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.ALERT_NOTIFICATION_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.ID_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.MESSAGE_NOTIFICATION_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.NOTIFICATION_ID;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.UNIT_TITLE_NOTIFICATION_EXTRA;
 
-public class AddInspectionActivity extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener, PointRecyclerViewAdapter.ListItemClickListener {
+public class AddInspectionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, PointRecyclerViewAdapter.ListItemClickListener {
 
     public static final String INSPECTION_EXTRA = "gregory.dan.licenceorganiser.inspectiondateextra";
 
     @BindView(R.id.add_inspction_date_edit_text)
     EditText inspectedDateEditText;
-    @BindView(R.id.add_inspection_recycler_view)RecyclerView mRecyclerView;
+    @BindView(R.id.add_inspection_recycler_view)
+    RecyclerView mRecyclerView;
 
 
     FirebaseAuth firebaseAuth;
@@ -52,6 +64,9 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
     private Inspection inspection;
     private PointRecyclerViewAdapter mRecyclerViewAdapter;
     private List<OutstandingPoints> mOustandingPoints;
+    private String date;
+
+    private SimpleDateFormat sdf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +76,8 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         user = firebaseUser.getEmail();
+
+        sdf = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault());
 
         Intent intent = getIntent();
         if (!intent.hasExtra(UNIT_NAME_EXTRA)) {
@@ -74,7 +91,7 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewAdapter = new PointRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        if(inspection != null){
+        if (inspection != null) {
             showRecyclerView();
         }
 
@@ -85,69 +102,73 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
         viewModel.getAllUnitPoints(inspection._id).observe(this, new Observer<List<OutstandingPoints>>() {
             @Override
             public void onChanged(@Nullable List<OutstandingPoints> outstandingPoints) {
+                if (outstandingPoints != null) {
+                    hasPoints = outstandingPoints.size();
+                }
                 mOustandingPoints = outstandingPoints;
                 mRecyclerViewAdapter.setPoints(outstandingPoints);
             }
         });
 
-
     }
 
     @OnClick(R.id.add_inspection_save_inspection_button)
-    public void buttonClicked(){
-        if(!alreadySaved){
+    public void buttonClicked() {
+        if (!alreadySaved) {
             saveInspection();
             finish();
-        }else{
+        } else {
             updateInspection();
             finish();
         }
     }
 
-    public void saveInspection(){
+    public void saveInspection() {
         long time = System.currentTimeMillis();
-        if(!inspectedDateEditText.getText().toString().trim().equals("")){
+        if (!inspectedDateEditText.getText().toString().trim().equals("")) {
             alreadySaved = true;
             inspection = new Inspection(mUnitTitle,
                     hasPoints,
-                     (inspectionDateInMillis),
-                     (remindByDateInMillis),
-                     (nextInspectionDueInMillis),
+                    (inspectionDateInMillis),
+                    (remindByDateInMillis),
+                    (nextInspectionDueInMillis),
                     user,
                     time);
             showRecyclerView();
+            set28DayReminder();
+            setInspectionDueReminder();
             viewModel.insertInspection(inspection);
             viewModel.insertToFirebase(inspection);
-        }else{
+        } else {
             Toast.makeText(this, getText(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void updateInspection(){
+    private void updateInspection() {
         inspection.hasPoints = hasPoints;
         viewModel.updateInspection(inspection);
         viewModel.insertToFirebase(inspection);
     }
 
     @OnClick(R.id.add_inspection_new_point_button)
-    public void addPoint(){
+    public void addPoint() {
 
-        if(alreadySaved){
+        if (alreadySaved) {
             Intent intent = new Intent(this, AddInspectionPointActivity.class);
             intent.putExtra(INSPECTION_EXTRA, inspection._id);
             startActivity(intent);
-        }else if(!inspectedDateEditText.getText().toString().trim().equals("")){
+        } else if (!inspectedDateEditText.getText().toString().trim().equals("")) {
             saveInspection();
             Intent intent = new Intent(this, AddInspectionPointActivity.class);
             intent.putExtra(INSPECTION_EXTRA, inspection._id);
             startActivity(intent);
-        }else{
+        } else {
             saveInspection();
         }
     }
 
     @OnClick(R.id.add_inspction_date_edit_text)
-    public void getDate(){
+    public void getDate() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
@@ -155,16 +176,18 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        int generic = 12;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth,
-                generic, generic, 0);
+        calendar.set(year, month, dayOfMonth);
+        calendar.set(Calendar.HOUR, 11);
+        calendar.set(Calendar.AM_PM, Calendar.AM);
         inspectionDateInMillis = calendar.getTimeInMillis();
+        calendar.add(Calendar.DATE, 28);
+        remindByDateInMillis = calendar.getTimeInMillis();
+        calendar.add(Calendar.DATE, -28);
+        calendar.add(Calendar.YEAR, 2);
+        nextInspectionDueInMillis = calendar.getTimeInMillis();
 
-        remindByDateInMillis = inspectionDateInMillis + 1000 * 60 * 60 * 24 * 28;
-        nextInspectionDueInMillis = inspectionDateInMillis + 1000 * 60 * 60 * 24 * 365;
-
-        String date = "Licence issue date:  " + dayOfMonth + "/" + month + "/" + year;
+        date = sdf.format(inspectionDateInMillis);
         inspectedDateEditText.setText(date);
     }
 
@@ -190,5 +213,43 @@ public class AddInspectionActivity extends AppCompatActivity  implements DatePic
             return new DatePickerDialog(getActivity(), (AddInspectionActivity) getActivity(), year, month, day);
         }
 
+    }
+
+    private void set28DayReminder() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(inspection.reminderDate);
+
+        long alertTime = calendar.getTimeInMillis();
+
+        Intent alertIntent = new Intent(this, NotificationService.class);
+        alertIntent.putExtra(UNIT_TITLE_NOTIFICATION_EXTRA, mUnitTitle);
+        alertIntent.putExtra(ID_EXTRA, inspection.inspectedBy + date + "1");
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+    }
+
+    private void setInspectionDueReminder() {
+
+        String message = getString(R.string.inspectionDue);
+        String alert = getString(R.string.inspection_due_alert);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(inspection.nextInspectionDue);
+        calendar.add(Calendar.DATE, -30);
+
+        long alertTime = calendar.getTimeInMillis();
+
+        Intent alertIntent = new Intent(this, NotificationService.class);
+        alertIntent.putExtra(UNIT_TITLE_NOTIFICATION_EXTRA, mUnitTitle);
+        alertIntent.putExtra(MESSAGE_NOTIFICATION_EXTRA, message);
+        alertIntent.putExtra(ALERT_NOTIFICATION_EXTRA, alert);
+        alertIntent.putExtra(ID_EXTRA, inspection.inspectedBy + date + "2");
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
     }
 }

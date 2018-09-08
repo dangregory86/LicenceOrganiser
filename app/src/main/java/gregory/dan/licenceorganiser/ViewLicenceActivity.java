@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,10 +77,6 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
             @Override
             public void onChanged(@Nullable List<Ammunition> ammunitions) {
                 ammo = ammunitions;
-                if(ammunitions.size() > 0){
-                    mAmmoAllowedTitleText.setVisibility(View.VISIBLE);
-                    mAddAmmoButton.setVisibility(View.VISIBLE);
-                }
                 recyclerViewAdapter.setAmmunition(ammo);
             }
         });
@@ -87,12 +84,16 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
     }
 
     public void instatiateViews(Licence licence) {
+        if (licence.licenceType.equals("AQ25")) {
+            mAmmoAllowedTitleText.setVisibility(View.VISIBLE);
+            mAddAmmoButton.setVisibility(View.VISIBLE);
+        }
         long mIssueDateRaw = licence.licenceIssueDate;
         Date mIssueDate = new Date(mIssueDateRaw);
-        String issueDate = new SimpleDateFormat("dd/mm/yyyy").format(mIssueDate);
+        String issueDate = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault()).format(mIssueDate);
         long mExpiryDateRaw = licence.licenceRenewalDate;
         Date mExpiryDate = new Date(mExpiryDateRaw);
-        String expiryDate = new SimpleDateFormat("dd/mm/yyyy").format(mExpiryDate);
+        String expiryDate = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault()).format(mExpiryDate);
         String mLicenceType = licence.licenceType;
 
         mExpiryDateTextView.setText(expiryDate);
@@ -101,7 +102,7 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
     }
 
     @OnClick(R.id.view_licence_add_ammo_button)
-    public void addAmmo(){
+    public void addAmmo() {
         Intent intent = new Intent(this, AddAmmoActivity.class);
         intent.putExtra(LICENCE_SERIAL_EXTRA, mLicenceSerialNo);
         startActivity(intent);
@@ -111,6 +112,14 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
     public void onClick(int item) {
 
     }
+
+    @OnClick(R.id.delete_licence_button)
+    public void deleteLicence() {
+        myViewModel.deleteUnitLicence(mLicence);
+        myViewModel.deleteFromFirebase(mLicence);
+        finish();
+    }
+
 
     private class GetLicenceAsyncTask extends AsyncTask<String, Void, Licence> {
 
@@ -127,6 +136,7 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
 
         @Override
         protected void onPostExecute(Licence licence) {
+            mLicence = licence;
             instatiateViews(licence);
         }
     }

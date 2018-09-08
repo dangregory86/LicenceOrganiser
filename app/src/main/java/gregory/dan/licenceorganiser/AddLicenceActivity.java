@@ -1,10 +1,14 @@
 package gregory.dan.licenceorganiser;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -18,8 +22,10 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +34,14 @@ import gregory.dan.licenceorganiser.UI.AmmoRecyclerViewAdapter;
 import gregory.dan.licenceorganiser.Unit.Ammunition;
 import gregory.dan.licenceorganiser.Unit.Licence;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
+import gregory.dan.licenceorganiser.notifications.NotificationService;
 
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.ALERT_NOTIFICATION_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.ID_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.MESSAGE_NOTIFICATION_EXTRA;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.NOTIFICATION_ID;
+import static gregory.dan.licenceorganiser.notifications.NotificationService.UNIT_TITLE_NOTIFICATION_EXTRA;
 
 public class AddLicenceActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AmmoRecyclerViewAdapter.ListItemClickListener {
 
@@ -89,7 +101,6 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(ammoRecyclerViewAdapter);
 
-
         mMyViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
         if(mLicence != null){
             showRecyclerView();
@@ -134,6 +145,8 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             showRecyclerView();
             mMyViewModel.insertLicence(licence);
             mMyViewModel.insertToFirebase(licence);
+
+            setReminder();
         } else {
             Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
@@ -164,19 +177,23 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month + 1, dayOfMonth,
-                5, month + 1, 0);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault());
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        calendar.set(Calendar.HOUR, 11);
+        calendar.set(Calendar.AM_PM, Calendar.AM);
         issueDateTimeInMillies = calendar.getTimeInMillis();
-        calendar.set(year + 5, month + 1, dayOfMonth,
-                0, month + 1, 0);
+        calendar.add(Calendar.YEAR, 5);
         expiryDateTimeInMillies = calendar.getTimeInMillis();
 
-        String date = "Licence issue date:  " + dayOfMonth + "/" + (month + 1) + "/" + year;
+        String date = "Licence issue date:  " + sdf.format(issueDateTimeInMillies);
         issueDateEditText.setText(date);
     }
 
     @Override
     public void onClick(int item) {
+
 
     }
 
@@ -213,5 +230,33 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             mMyViewModel.deleteUnitLicence(mLicence);
         }
         super.onBackPressed();
+    }
+
+    public void setReminder(){
+
+        String message = getString(R.string.licence_renewal_reminder);
+        message = message + mLicence.licenceSerial;
+
+        String alert = getString(R.string.lecence_renewal_alert);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mLicence.licenceRenewalDate);
+        calendar.add(Calendar.DATE, -60);
+
+        long alertTime = calendar.getTimeInMillis();
+
+        Intent alertIntent = new Intent(this, NotificationService.class);
+        alertIntent.putExtra(UNIT_TITLE_NOTIFICATION_EXTRA, unitTitle);
+        alertIntent.putExtra(MESSAGE_NOTIFICATION_EXTRA, message);
+        alertIntent.putExtra(ALERT_NOTIFICATION_EXTRA, alert);
+        alertIntent.putExtra(ID_EXTRA, mLicence.licenceSerial);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+        }else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+        }
     }
 }

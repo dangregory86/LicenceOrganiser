@@ -1,10 +1,16 @@
 package gregory.dan.licenceorganiser.Unit.database;
 
 import android.app.Application;
+import android.app.NotificationManager;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
 import gregory.dan.licenceorganiser.Unit.Inspection;
@@ -33,8 +39,10 @@ public class AppRepository {
 
     private AppDatabase mDatabase;
     private LiveData<List<Unit>> mUnits;
+    private Application application;
 
     public AppRepository(Application application) {
+        this.application = application;
         mDatabaseUtils = new FireBaseDatabaseUtilities();
         mDatabase = AppDatabase.getInMemoryDatabase(application);
         mUnits = mDatabase.unitModel().loadAllUnits();
@@ -195,7 +203,7 @@ public class AppRepository {
         return mDatabase.inspectionModel().getInspections(unitName);
     }
 
-    public Inspection getInspection(long id){
+    public Inspection getInspection(long id) {
         return mDatabase.inspectionModel().getInspection(id);
     }
 
@@ -349,7 +357,7 @@ public class AppRepository {
 
     /*Firebase operations*/
     public void inseertOrUpdateFirebaseUnit(final Unit unit) {
-       mDatabaseUtils.inseertOrUpdateFirebaseUnit(unit);
+        mDatabaseUtils.inseertOrUpdateFirebaseUnit(unit);
     }
 
     public void inseertOrUpdateFirebaseLicence(final Licence licence) {
@@ -357,36 +365,50 @@ public class AppRepository {
     }
 
     public void inseertOrUpdateFirebaseAmmunition(final Ammunition ammunition) {
-       mDatabaseUtils.inseertOrUpdateFirebaseAmmunition(ammunition);
+        mDatabaseUtils.inseertOrUpdateFirebaseAmmunition(ammunition);
     }
 
     public void inseertOrUpdateFirebaseInspection(final Inspection inspection) {
-       mDatabaseUtils.inseertOrUpdateFirebaseInspection(inspection);
+        mDatabaseUtils.inseertOrUpdateFirebaseInspection(inspection);
     }
 
     public void inseertOrUpdateFirebasePoint(final OutstandingPoints point) {
-       mDatabaseUtils.inseertOrUpdateFirebasePoint(point);
+        mDatabaseUtils.inseertOrUpdateFirebasePoint(point);
     }
 
-    public void deleteAmmunitionFirebase(long id){
-       mDatabaseUtils.deleteAmmo(id);
+    public void deleteAmmunitionFirebase(long id) {
+        mDatabaseUtils.deleteAmmo(id);
     }
 
-    public void deleteLicenceFirebase(final Licence licence){
-       mDatabaseUtils.deleteLicence(licence.licenceSerial);
+    public void deleteLicenceFirebase(final Licence licence) {
+        String unit = licence.unitTitle;
+        String serial = licence.licenceSerial;
+        cancelNotification(unit + serial);
+        mDatabaseUtils.deleteLicence(licence.licenceSerial);
     }
 
-    public void deleteUnitFirebase(final Unit unit){
+    public void deleteUnitFirebase(final Unit unit) {
         mDatabaseUtils.deleteUnit(unit.unitTitle);
     }
 
-    public void deleteInspectionFirebase(final Inspection inspection){
+    public void deleteInspectionFirebase(final Inspection inspection) {
+        String unit = inspection.unit;
+        String inspectedBy = inspection.inspectedBy;
+        String date = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault()).format(inspection.inspectionDate);
+        cancelNotification(unit + inspectedBy + date + "1");
+        cancelNotification(unit + inspectedBy + date + "2");
         mDatabaseUtils.deleteInspection(inspection._id);
     }
 
-    public void deleteInspectionPointFirebase(final OutstandingPoints point){
+    public void deleteInspectionPointFirebase(final OutstandingPoints point) {
         mDatabaseUtils.deletePoint(point.id);
     }
 
+    private void cancelNotification(String key) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
+        int notiId = preferences.getInt(key, 0);
+        NotificationManager notificationManager = (NotificationManager) application.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(notiId);
+    }
 
 }
