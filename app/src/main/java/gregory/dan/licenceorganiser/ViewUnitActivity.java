@@ -32,16 +32,22 @@ import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener, InspectionRecyclerAdapter.ListItemClickListener{
 
     @BindView(R.id.view_unit_title_text_view)
+    public
     TextView mUnitTitleTextView;
     @BindView(R.id.view_unit_address_text_view)
+    public
     TextView mUnitAddressTextView;
     @BindView(R.id.view_unit_co_text_view)
+    public
     TextView mUnitCoTextView;
     @BindView(R.id.view_unit_contact_number)
+    public
     TextView mUnitContactNumber;
     @BindView(R.id.view_unit_licence_recycler_view)
+    public
     RecyclerView mUnitLicenceRecyclerView;
-    @BindView(R.id.unit_view_inspection_points_recycler_view) RecyclerView mInspectionRecyclerView;
+    @BindView(R.id.unit_view_inspection_points_recycler_view)
+    public RecyclerView mInspectionRecyclerView;
 
     private MyViewModel mMyViewModel;
     private String mUnitTitle;

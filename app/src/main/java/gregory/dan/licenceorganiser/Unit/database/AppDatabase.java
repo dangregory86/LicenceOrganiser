@@ -34,10 +34,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract AmmunitionDao ammunitionModel();
 
-    public static AppDatabase getInMemoryDatabase(Context context){
-        if(INSTANCE == null){
-            synchronized (AppDatabase.class){
-                if(INSTANCE == null){
+    public static AppDatabase getInMemoryDatabase(Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
                     INSTANCE =
                             Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class,

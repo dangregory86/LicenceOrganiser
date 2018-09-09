@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
  * Created by Daniel Gregory on 26/08/2018.
  */
 @Entity(indices = {@Index("unitTitle")})
-public class Unit{
+public class Unit {
 
     @PrimaryKey
     @NonNull

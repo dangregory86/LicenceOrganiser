@@ -5,8 +5,6 @@
     <string name="nav_header_title">Logged in as:</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="next_due_title">Next inspection due:</string>
-    <string name="unit_list_item_points_title_text">Points outstanding:</string>
     <string name="qd_calculator_title">QD Calculator</string>
     <string name="add_new_unit">Add New Unit</string>
     <string name="new_unit_edit_text_hint">Unit Title</string>
@@ -85,7 +83,6 @@
     <string name="action_register">Register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="log_out">Log out</string>
     <string name="error_password_needs_upper_case">Needs an upper case letter</string>
@@ -108,19 +105,24 @@
     <string name="inspectionDue">Inspection due in 30 days.</string>
     <string name="inspection_due_alert">Inspection due.</string>
     <string name="delete_licence_text">Delete licence</string>
-    <string name="title_activity_settings">Settings</string>
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">Notifications</string>
     <string name="dont_show_notifications">No notifications</string>
     <string name="show_notifications">Allow notifications</string>
     <string name="appwidget_text">No units added.</string>
-    <string name="add_widget">Add widget</string>
     <string name="widget_unit_title_label_text">Unit:</string>
     <string name="unit_widget_address_label_text">Address:</string>
     <string name="unit_widget_contact_no_label_text">Tel.</string>
+    <string name="verify_email_text">Please verify your email.</string>
+    <string name="login_failed">Login failed.</string>
+    <string name="authentication_failed">Authentication failed.</string>
+    <string name="aq25_string">AQ25</string>
+    <string name="saa_string">SAA</string>
+    <string name="standard_licence_string">Standard</string>
+    <string name="licence_issue_date_start_string">Licence issue date:</string>
+    <string name="twenty_eight_day_reminder_title">28 Day reminder</string>
+    <string name="twenty_eight_day_reminder_description">A reminder to chase 28 day action points.</string>
 
 
 </resources>

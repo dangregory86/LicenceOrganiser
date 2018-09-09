@@ -1,7 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
     android:padding="@dimen/widget_margin">
 
     <StackView
@@ -10,20 +9,20 @@
         android:layout_height="match_parent"
         android:loopViews="true"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:background="#09C"/>
+        android:layout_margin="@dimen/unit_view_content_margin"
+        android:background="@drawable/side_nav_bar"/>
 
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:background="#09C"
+        android:layout_margin="@dimen/unit_view_content_margin"
+        android:background="@drawable/side_nav_bar"
         android:gravity="center"
         android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
         android:textColor="#ffffff"
-        android:textSize="24sp"
+        android:textSize="@dimen/unit_widget_text_size"
         android:textStyle="bold|italic" />
 
 </FrameLayout>

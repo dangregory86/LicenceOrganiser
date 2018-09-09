@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,15 +28,17 @@ import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_EXTRA;
 
-public class ViewInspectionActivity extends AppCompatActivity implements PointRecyclerViewAdapter.ListItemClickListener{
+public class ViewInspectionActivity extends AppCompatActivity implements PointRecyclerViewAdapter.ListItemClickListener {
 
     private final static String TITLE_START = "Inspection carried out on: ";
     private final static String INSPECTED_BY_TEXT = "Inspection conducted by: ";
 
-    @BindView(R.id.view_inspection_date_title_text)TextView mInspectionDate;
-    @BindView(R.id.view_inspection_points_recycler_view)RecyclerView mRecyclerView;
-    @BindView(R.id.inspected_by_text_view) TextView mInspectedByTextView;
-    private long mInspectionIdFromIntent;
+    @BindView(R.id.view_inspection_date_title_text)
+    public TextView mInspectionDate;
+    @BindView(R.id.view_inspection_points_recycler_view)
+    public RecyclerView mRecyclerView;
+    @BindView(R.id.inspected_by_text_view)
+    public TextView mInspectedByTextView;
     private List<OutstandingPoints> mOutstandingPoints;
 
     private PointRecyclerViewAdapter mRecyclerViewAdapter;
@@ -43,8 +46,8 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
     private MyViewModel myViewModel;
 
     //firebase
-    FirebaseAuth mFirebaseAuth;
-    FirebaseUser mUser;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +55,14 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
         setContentView(R.layout.activity_view_inspection);
 
         Intent intent = getIntent();
-        if(!intent.hasExtra(INSPECTION_EXTRA)){
+        if (!intent.hasExtra(INSPECTION_EXTRA)) {
             finish();
         }
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mUser = mFirebaseAuth.getCurrentUser();
 
-        mInspectionIdFromIntent = intent.getLongExtra(INSPECTION_EXTRA, 1);
+        long mInspectionIdFromIntent = intent.getLongExtra(INSPECTION_EXTRA, 1);
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerViewAdapter = new PointRecyclerViewAdapter(this);
@@ -79,13 +82,12 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
         String inspectedByText = INSPECTED_BY_TEXT + mUser.getEmail();
         mInspectedByTextView.setText(inspectedByText);
 
-        String inspectionDate = TITLE_START;
-        mInspectionDate.setText(inspectionDate);
+        mInspectionDate.setText(TITLE_START);
     }
 
-    private void setTitleText(long date){
+    private void setTitleText(long date) {
         Date mDate = new Date(date);
-        String newInspectedDate = new SimpleDateFormat("dd/mm/yyyy").format(mDate);
+        String newInspectedDate = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault()).format(mDate);
         String completeTitle = TITLE_START + newInspectedDate;
         mInspectionDate.setText(completeTitle);
     }
@@ -98,10 +100,10 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
         myViewModel.insertToFirebase(point);
     }
 
-    private class GetInspectionAsyncTask extends AsyncTask<Long, Void, Inspection>{
+    private class GetInspectionAsyncTask extends AsyncTask<Long, Void, Inspection> {
         MyViewModel viewModel;
 
-        GetInspectionAsyncTask(MyViewModel myViewModel){
+        GetInspectionAsyncTask(MyViewModel myViewModel) {
             viewModel = myViewModel;
         }
 

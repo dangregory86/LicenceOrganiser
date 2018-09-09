@@ -5,6 +5,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import java.util.Objects;
+
+import gregory.dan.licenceorganiser.R;
+
 /**
  * Created by Daniel Gregory on 06/09/2018.
  */
@@ -18,20 +22,20 @@ public class App extends Application {
         createChannels();
     }
 
-    private void createChannels(){
+    public void createChannels() {
 
-        String twtydayreminder = "28 Day reminder";
-        String twtyDayReminderDesc = "A reminder to chase 28 day action points.";
+        String twtydayreminder = getString(R.string.twenty_eight_day_reminder_title);
+        String twtyDayReminderDesc = getString(R.string.twenty_eight_day_reminder_description);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_1,
                     twtydayreminder,
-                            NotificationManager.IMPORTANCE_DEFAULT);
+                    NotificationManager.IMPORTANCE_DEFAULT);
             channel1.setDescription(twtyDayReminderDesc);
 
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel1);
+            Objects.requireNonNull(manager).createNotificationChannel(channel1);
 
         }
     }

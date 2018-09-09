@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/widget_item_root_view"
     android:layout_width="200dp"
     android:layout_height="200dp"
-    android:background="@color/colorPrimaryLight">
+    android:background="@drawable/side_nav_bar">
 
     <TextView
         android:id="@+id/widget_item_unit_title_label"
@@ -14,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="24dp"
         android:layout_marginTop="21dp"
-        android:text="@string/widget_unit_title_label_text" />
+        android:text="@string/widget_unit_title_label_text"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/unit_widget_unit_title"
@@ -43,7 +43,6 @@
         tools:text="010101010101" />
 
     <TextView
-        android:id="@+id/unit_widget_contact_no_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/unit_widget_tel_no"

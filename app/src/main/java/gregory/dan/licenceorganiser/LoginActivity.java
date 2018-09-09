@@ -19,7 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 /**
  * A login screen that offers login via email/password.
@@ -31,9 +32,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private FirebaseAuth mAuthTask = null;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-
-    private FirebaseDatabase mFirebaseDatabase;
-
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -53,21 +51,16 @@ public class LoginActivity extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()){
+                if (firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().isEmailVerified()) {
                     firebaseAuth.removeAuthStateListener(this);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }else if(firebaseAuth.getCurrentUser() != null){
-                    firebaseAuth.getCurrentUser().sendEmailVerification()
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                   if(task.isSuccessful()){
-                                       mAuthTask.signOut();
-                                       finish();
-                                       startActivity(getIntent());
-                                   }
-                                }
-                            });
+                } else if (firebaseAuth.getCurrentUser() != null) {
+                    if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
+                        Toast.makeText(LoginActivity.this, R.string.verify_email_text, Toast.LENGTH_SHORT).show();
+                        mAuthTask.signOut();
+                        finish();
+                        startActivity(getIntent());
+                    }
                 }
             }
         };
@@ -110,12 +103,12 @@ public class LoginActivity extends AppCompatActivity {
         mAuthTask.addAuthStateListener(mAuthStateListener);
     }
 
-    private void showProgressBar(){
+    private void showProgressBar() {
         mProgressView.setVisibility(View.VISIBLE);
         mLoginFormView.setVisibility(View.INVISIBLE);
     }
 
-    private void progressComplete(){
+    private void progressComplete() {
         mProgressView.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
     }
@@ -170,8 +163,8 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Login failed.",
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, R.string.login_failed,
                                 Toast.LENGTH_SHORT).show();
                         progressComplete();
                     }
@@ -225,10 +218,12 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful()){
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, R.string.authentication_failed,
                                 Toast.LENGTH_SHORT).show();
                         progressComplete();
+                    } else {
+                        Objects.requireNonNull(mAuthTask.getCurrentUser()).sendEmailVerification();
                     }
 
                 }
@@ -244,22 +239,22 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean hasUppercase = !password.equals(password.toLowerCase());
         boolean hasLowercase = !password.equals(password.toUpperCase());
-        boolean isAtLeast8   = password.length() >= 8;//Checks for at least 8 characters
-        boolean hasSpecial   = !password.matches("[A-Za-z0-9 ]*");//Checks at least one char is not alpha numeric
+        boolean isAtLeast8 = password.length() >= 8;//Checks for at least 8 characters
+        boolean hasSpecial = !password.matches("[A-Za-z0-9 ]*");//Checks at least one char is not alpha numeric
 
-        if(!hasUppercase){
+        if (!hasUppercase) {
             mPasswordView.setError(getString(R.string.error_password_needs_upper_case));
             return false;
         }
-        if(!hasLowercase){
+        if (!hasLowercase) {
             mPasswordView.setError(getString(R.string.error_password_needs_lower_case));
             return false;
         }
-        if(!isAtLeast8){
+        if (!isAtLeast8) {
             mPasswordView.setError(getString(R.string.error_password_too_short));
             return false;
         }
-        if(!hasSpecial){
+        if (!hasSpecial) {
             mPasswordView.setError(getString(R.string.error_password_needs_special));
             return false;
         }

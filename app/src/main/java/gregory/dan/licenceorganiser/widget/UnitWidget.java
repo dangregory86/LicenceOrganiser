@@ -14,8 +14,8 @@ import gregory.dan.licenceorganiser.R;
  */
 public class UnitWidget extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         Intent intentService = new Intent(context, UnitWidgetService.class);
         intentService.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

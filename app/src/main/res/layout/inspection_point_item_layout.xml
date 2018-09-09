@@ -14,19 +14,18 @@
         android:id="@+id/inspection_point_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight">
+        android:background="@drawable/side_nav_bar">
 
         <TextView
             android:id="@+id/inspection_point_item_point_text_view"
             android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="@dimen/inspection_point_item_textview_height"
+            android:layout_marginEnd="@dimen/inspection_point_item_margin"
+            android:layout_marginStart="@dimen/inspection_point_item_margin"
+            android:layout_marginTop="@dimen/inspection_point_item_margin"
             android:gravity="center"
-            android:text="TextView"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/inspection_point_item_text_size"
             app:layout_constraintEnd_toStartOf="@+id/inspection_point_item_point_completed_button"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +34,7 @@
             android:id="@+id/inspection_point_item_point_completed_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="@dimen/inspection_point_item_margin"
             android:text="@string/point_completed_button_text"
             app:layout_constraintBottom_toBottomOf="@+id/inspection_point_item_point_text_view"
             app:layout_constraintEnd_toEndOf="parent"

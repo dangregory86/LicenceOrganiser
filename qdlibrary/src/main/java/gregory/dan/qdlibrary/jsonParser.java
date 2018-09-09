@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 /**
  * Created by Daniel Gregory on 30/08/2018.
  */
-public class jsonParser {
+class jsonParser {
 
 
     private static final String HD_CODE = "1.1";

@@ -1,5 +1,6 @@
 package gregory.dan.licenceorganiser;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -40,13 +41,15 @@ import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UnitRecyclerViewAdapter.ListItemClickListener {
 
-    public static final String NOTIFICATIONS_KEY = "notifications";
+    private static final String NOTIFICATIONS_KEY = "notifications";
 
     @BindView(R.id.unit_list_recycler_view)
+    public
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_main)
+    public
     SwipeRefreshLayout mSwipeRefresh;
-    TextView mUserTextView;
+    private TextView mUserTextView;
     private UnitRecyclerViewAdapter mUnitRecyclerViewAdapter;
     private MyViewModel myViewModel;
     private List<Unit> mUnits;
@@ -68,8 +71,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, AddUnitActivity.class);
-                startActivity(intent);
+                startActivity(intent, activityOptions.toBundle());
             }
         });
 
@@ -158,9 +162,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_notification_settings) {
-            if(toggleNotificationSettings()){
+            if (toggleNotificationSettings()) {
                 item.setTitle(getString(R.string.dont_show_notifications));
-            }else{
+            } else {
                 item.setTitle(getString(R.string.show_notifications));
             }
 
@@ -188,23 +192,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(int item) {
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
         Intent intent = new Intent(this, ViewUnitActivity.class);
         intent.putExtra(UNIT_NAME_EXTRA, mUnits.get(item).unitTitle);
-        startActivity(intent);
+        startActivity(intent, activityOptions.toBundle());
     }
 
-    private void refreshDatabase(){
+    private void refreshDatabase() {
         myViewModel.deleteAllUnits();
         new FireBaseDatabaseUtilities(myViewModel).setupDatabase();
         mSwipeRefresh.setRefreshing(false);
     }
 
-    private boolean toggleNotificationSettings(){
+    private boolean toggleNotificationSettings() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean showNotifications = preferences.getBoolean(NOTIFICATIONS_KEY, true);
-        if(showNotifications){
+        if (showNotifications) {
             preferences.edit().putBoolean(NOTIFICATIONS_KEY, false).apply();
-        }else{
+        } else {
             preferences.edit().putBoolean(NOTIFICATIONS_KEY, true).apply();
         }
         return showNotifications;

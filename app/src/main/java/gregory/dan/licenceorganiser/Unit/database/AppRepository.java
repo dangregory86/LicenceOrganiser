@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import gregory.dan.licenceorganiser.Unit.Ammunition;
 import gregory.dan.licenceorganiser.Unit.Inspection;
@@ -234,7 +235,7 @@ public class AppRepository {
         private int numPoints;
         private int inspId;
 
-        public UpdateInspectionAsyncTask(InspectionDao dao) {
+        UpdateInspectionAsyncTask(InspectionDao dao) {
             this.dao = dao;
         }
 
@@ -408,7 +409,7 @@ public class AppRepository {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(application);
         int notiId = preferences.getInt(key, 0);
         NotificationManager notificationManager = (NotificationManager) application.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(notiId);
+        Objects.requireNonNull(notificationManager).cancel(notiId);
     }
 
 }

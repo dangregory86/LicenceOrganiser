@@ -28,30 +28,30 @@ public class MyViewModel extends AndroidViewModel {
         mAllUnits = mRepository.getAllUnits();
     }
 
-    public void insertToFirebase(Object object){
-        if(Unit.class.isInstance(object)){
+    public void insertToFirebase(Object object) {
+        if (Unit.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebaseUnit((Unit) object);
-        }else if(OutstandingPoints.class.isInstance(object)){
+        } else if (OutstandingPoints.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebasePoint((OutstandingPoints) object);
-        }else if(Licence.class.isInstance(object)){
+        } else if (Licence.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebaseLicence((Licence) object);
-        }else if(Inspection.class.isInstance(object)){
+        } else if (Inspection.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebaseInspection((Inspection) object);
-        }else if(Ammunition.class.isInstance(object)){
+        } else if (Ammunition.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebaseAmmunition((Ammunition) object);
         }
     }
 
-    public void deleteFromFirebase(Object object){
-        if(Unit.class.isInstance(object)){
+    public void deleteFromFirebase(Object object) {
+        if (Unit.class.isInstance(object)) {
             mRepository.deleteUnitFirebase((Unit) object);
-        }else if(OutstandingPoints.class.isInstance(object)){
+        } else if (OutstandingPoints.class.isInstance(object)) {
             mRepository.deleteInspectionPointFirebase((OutstandingPoints) object);
-        }else if(Licence.class.isInstance(object)){
+        } else if (Licence.class.isInstance(object)) {
             mRepository.deleteLicenceFirebase((Licence) object);
-        }else if(Inspection.class.isInstance(object)){
+        } else if (Inspection.class.isInstance(object)) {
             mRepository.deleteInspectionFirebase((Inspection) object);
-        }else if(Ammunition.class.isInstance(object)){
+        } else if (Ammunition.class.isInstance(object)) {
             Ammunition ammunition = (Ammunition) object;
             long id = ammunition.id;
             mRepository.deleteAmmunitionFirebase(id);
@@ -118,7 +118,7 @@ public class MyViewModel extends AndroidViewModel {
         mRepository.updateInspection(inspection);
     }
 
-    public Inspection getInspection(long id){
+    public Inspection getInspection(long id) {
         return mRepository.getInspection(id);
     }
 

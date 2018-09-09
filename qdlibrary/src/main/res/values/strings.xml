@@ -176,6 +176,9 @@
     <string name="select_hazard_division_title">Select hazard division</string>
     <string name="distance_in_metres_hint">Distance in metres from PES to ES.</string>
     <string name="calculate">Calculate</string>
+    <string name="pes_image">Imagage showing PES type.</string>
+    <string name="es_image_content_description">Image showing ES type.</string>
+    <string name="hd_image_content_description">image showing the HD selected.</string>
     <string-array name="hazard_divisions">
         <item>1.1</item>
         <item>1.2.1</item>

@@ -15,10 +15,10 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(foreignKeys = {
         @ForeignKey(onDelete = CASCADE,
                 entity = Unit.class,
-        parentColumns = "unitTitle",
-        childColumns = "unit")
+                parentColumns = "unitTitle",
+                childColumns = "unit")
 }, indices = @Index("unit"))
-public class Licence{
+public class Licence {
 
     @PrimaryKey
     @NonNull

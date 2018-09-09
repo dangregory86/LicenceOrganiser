@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:clickable="true"
         android:ems="10"
-        android:focusable="false"
+        android:focusable="true"
         android:hint="@string/date_of_inspection"
         android:inputType="none"
         android:longClickable="false"

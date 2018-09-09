@@ -60,11 +60,11 @@ public class PointRecyclerViewAdapter extends RecyclerView.Adapter<PointRecycler
         }
     }
 
-    public interface ListItemClickListener{
+    public interface ListItemClickListener {
         void completedClick(int item);
     }
 
-    public PointRecyclerViewAdapter(PointRecyclerViewAdapter.ListItemClickListener listItemClickListener){
+    public PointRecyclerViewAdapter(PointRecyclerViewAdapter.ListItemClickListener listItemClickListener) {
         this.listItemClickListener = listItemClickListener;
     }
 
@@ -75,9 +75,10 @@ public class PointRecyclerViewAdapter extends RecyclerView.Adapter<PointRecycler
         TextView mInspectionPoint;
         @BindView(R.id.inspection_point_constraint_layout)
         ConstraintLayout mConstraintLayout;
-        @BindView(R.id.inspection_point_item_point_completed_button)Button mCompleteButton;
+        @BindView(R.id.inspection_point_item_point_completed_button)
+        Button mCompleteButton;
 
-        public PointViewHolder(View itemView) {
+        PointViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -85,7 +86,7 @@ public class PointRecyclerViewAdapter extends RecyclerView.Adapter<PointRecycler
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(position != RecyclerView.NO_POSITION) {
+                    if (position != RecyclerView.NO_POSITION) {
                         listItemClickListener.completedClick(getAdapterPosition());
                     }
                 }

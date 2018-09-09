@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,13 +48,15 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
     public static final String INSPECTION_EXTRA = "gregory.dan.licenceorganiser.inspectiondateextra";
 
     @BindView(R.id.add_inspction_date_edit_text)
+    public
     EditText inspectedDateEditText;
     @BindView(R.id.add_inspection_recycler_view)
+    public
     RecyclerView mRecyclerView;
 
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     private long inspectionDateInMillis, remindByDateInMillis, nextInspectionDueInMillis;
     private String mUnitTitle;
@@ -75,7 +78,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        user = firebaseUser.getEmail();
+        user = Objects.requireNonNull(firebaseUser).getEmail();
 
         sdf = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault());
 
@@ -123,7 +126,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
         }
     }
 
-    public void saveInspection() {
+    private void saveInspection() {
         long time = System.currentTimeMillis();
         if (!inspectedDateEditText.getText().toString().trim().equals("")) {
             alreadySaved = true;
@@ -210,7 +213,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), (AddInspectionActivity) getActivity(), year, month, day);
+            return new DatePickerDialog(Objects.requireNonNull(getActivity()), (AddInspectionActivity) getActivity(), year, month, day);
         }
 
     }
@@ -228,7 +231,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+        Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
     }
 
     private void setInspectionDueReminder() {
@@ -250,6 +253,6 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+        Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
     }
 }

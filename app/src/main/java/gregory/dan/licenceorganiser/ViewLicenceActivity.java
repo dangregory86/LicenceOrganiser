@@ -37,18 +37,25 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
     private List<Ammunition> ammo;
 
     @BindView(R.id.view_licence_expiry_date_text_view2)
+    public
     TextView mExpiryDateTextView;
     @BindView(R.id.view_licence_issue_date_text_view4)
+    public
     TextView mIssueDateTextView;
     @BindView(R.id.view_licence_serial_text_view)
+    public
     TextView mSerialTextView;
     @BindView(R.id.view_licence_type_text_view3)
+    public
     TextView mLicenceTypeTextView;
     @BindView(R.id.view_licence_ammo_allowed_title_text_view)
+    public
     TextView mAmmoAllowedTitleText;
     @BindView(R.id.view_licence_ammo_recycler_view)
+    public
     RecyclerView mRecyclerView;
     @BindView(R.id.view_licence_add_ammo_button)
+    public
     Button mAddAmmoButton;
 
     @Override
@@ -83,7 +90,7 @@ public class ViewLicenceActivity extends AppCompatActivity implements AmmoRecycl
 
     }
 
-    public void instatiateViews(Licence licence) {
+    private void instatiateViews(Licence licence) {
         if (licence.licenceType.equals("AQ25")) {
             mAmmoAllowedTitleText.setVisibility(View.VISIBLE);
             mAddAmmoButton.setVisibility(View.VISIBLE);
