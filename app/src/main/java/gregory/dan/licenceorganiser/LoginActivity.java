@@ -20,8 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
 /**
  * A login screen that offers login via email/password.
  */
@@ -55,12 +53,10 @@ public class LoginActivity extends AppCompatActivity {
                     firebaseAuth.removeAuthStateListener(this);
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else if (firebaseAuth.getCurrentUser() != null) {
-                    if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
-                        Toast.makeText(LoginActivity.this, R.string.verify_email_text, Toast.LENGTH_SHORT).show();
-                        mAuthTask.signOut();
-                        finish();
-                        startActivity(getIntent());
+                    if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+                        firebaseAuth.getCurrentUser().sendEmailVerification();
                     }
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
             }
         };
@@ -222,8 +218,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, R.string.authentication_failed,
                                 Toast.LENGTH_SHORT).show();
                         progressComplete();
-                    } else {
-                        Objects.requireNonNull(mAuthTask.getCurrentUser()).sendEmailVerification();
                     }
 
                 }

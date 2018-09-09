@@ -4,9 +4,13 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
+import gregory.dan.licenceorganiser.R;
 import gregory.dan.licenceorganiser.Unit.Ammunition;
 import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.Licence;
@@ -22,13 +26,19 @@ public class MyViewModel extends AndroidViewModel {
     private AppRepository mRepository;
     private LiveData<List<Unit>> mAllUnits;
 
+    private FirebaseAuth mFirebaseAuth;
+
     public MyViewModel(@NonNull Application application) {
         super(application);
         mRepository = new AppRepository(application);
         mAllUnits = mRepository.getAllUnits();
+        mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
     public void insertToFirebase(Object object) {
+        if(!checkAuth()){
+            return;
+        }
         if (Unit.class.isInstance(object)) {
             mRepository.inseertOrUpdateFirebaseUnit((Unit) object);
         } else if (OutstandingPoints.class.isInstance(object)) {
@@ -43,6 +53,9 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void deleteFromFirebase(Object object) {
+        if(!checkAuth()){
+            return;
+        }
         if (Unit.class.isInstance(object)) {
             mRepository.deleteUnitFirebase((Unit) object);
         } else if (OutstandingPoints.class.isInstance(object)) {
@@ -63,18 +76,28 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void insertUnit(Unit unit) {
+
         mRepository.insertUnit(unit);
     }
 
     public void deleteUnit(Unit unit) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.deleteUnit(unit);
     }
 
     public void updateUnit(Unit unit) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.updateUnit(unit);
     }
 
     public void deleteAllUnits() {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.deleteAllUnits();
     }
 
@@ -90,14 +113,21 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void insertPoint(OutstandingPoints point) {
+
         mRepository.insertPoint(point);
     }
 
     public void updatePoint(OutstandingPoints point) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.updatePoint(point);
     }
 
     public void deletePoint(OutstandingPoints point) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.deletePoint(point);
     }
 
@@ -111,10 +141,14 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void insertInspection(Inspection inspection) {
+
         mRepository.insertInspection(inspection);
     }
 
     public void updateInspection(Inspection inspection) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.updateInspection(inspection);
     }
 
@@ -131,14 +165,21 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void insertLicence(Licence licence) {
+
         mRepository.insertLicence(licence);
     }
 
     public void deleteUnitLicence(Licence licence) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.deleteUnitLicence(licence);
     }
 
     public void updateLicence(Licence licence) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.updateLicence(licence);
     }
 
@@ -155,11 +196,23 @@ public class MyViewModel extends AndroidViewModel {
     }
 
     public void insertAmmunition(Ammunition ammunition) {
+
         mRepository.insertAmmunition(ammunition);
     }
 
     public void deleteAmmunition(Ammunition ammunition) {
+        if(!checkAuth()){
+            return;
+        }
         mRepository.deleteAmmunition(ammunition);
     }
 
+    private boolean checkAuth(){
+        if(mFirebaseAuth.getCurrentUser().isEmailVerified()){
+            return true;
+        }else{
+            Toast.makeText(getApplication().getApplicationContext(), R.string.verify_email_text_fail, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 }
