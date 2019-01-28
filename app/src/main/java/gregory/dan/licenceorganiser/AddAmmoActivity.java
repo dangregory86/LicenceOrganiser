@@ -22,16 +22,12 @@ import static gregory.dan.licenceorganiser.AddLicenceActivity.LICENCE_SERIAL_EXT
 public class AddAmmoActivity extends AppCompatActivity {
 
     @BindView(R.id.add_ammo_adac_edit_text)
-    public
     EditText mAdacEditText;
     @BindView(R.id.add_ammo_hcc_edit_text)
-    public
     EditText mHCCEditText;
     @BindView(R.id.add_ammo_designation_edit_text)
-    public
     EditText mDesignationEditText;
     @BindView(R.id.add_ammo_max_quantity_edit_text)
-    public
     EditText mMaxQuatityEditText;
 
     private MyViewModel mViewModel;
@@ -49,7 +45,7 @@ public class AddAmmoActivity extends AppCompatActivity {
         startTextChangeListenener();
 
         Intent intent = getIntent();
-        if (!intent.hasExtra(LICENCE_SERIAL_EXTRA)) {
+        if(!intent.hasExtra(LICENCE_SERIAL_EXTRA)){
             finish();
         }
 
@@ -67,15 +63,15 @@ public class AddAmmoActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.add_ammo_button)
-    public void clicked() {
+    public void clicked(){
         saveAmmo();
     }
 
-    private void saveAmmo() {
-        if (mAdacEditText.getText().toString().length() == 8 &&
-                !mHCCEditText.getText().toString().trim().equals("") &&
-                !mDesignationEditText.getText().toString().trim().equals("") &&
-                !mMaxQuatityEditText.getText().toString().trim().equals("")) {
+    private void saveAmmo(){
+        if(mAdacEditText.getText().toString().length() == 8 &&
+                !mHCCEditText.getText().toString().equals("") &&
+                !mDesignationEditText.getText().toString().equals("") &&
+                !mMaxQuatityEditText.getText().toString().equals("")){
             Ammunition ammunition = new Ammunition(mLicenceSerial,
                     mAdacEditText.getText().toString(),
                     mDesignationEditText.getText().toString(),

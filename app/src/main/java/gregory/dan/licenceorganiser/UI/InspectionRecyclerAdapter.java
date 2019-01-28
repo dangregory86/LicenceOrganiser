@@ -78,7 +78,7 @@ public class InspectionRecyclerAdapter extends RecyclerView.Adapter<InspectionRe
         @BindView(R.id.inspection_item_constraint_layout)
         ConstraintLayout mConstraintLayout;
 
-        InspectionViewHolder(View itemView) {
+        public InspectionViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);

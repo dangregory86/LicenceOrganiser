@@ -16,7 +16,7 @@ import gregory.dan.licenceorganiser.Unit.Unit;
 /**
  * Created by Daniel Gregory on 26/08/2018.
  */
-public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerViewAdapter.UnitViewHolder> {
+public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerViewAdapter.UnitViewHolder>{
 
     private List<Unit> units;
     private ListItemClickListener mListItemClickListener;
@@ -33,7 +33,7 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull UnitViewHolder holder, int position) {
-        if (units == null) {
+        if(units == null) {
             return;
         }
         String unitTitle = units.get(position).unitTitle;
@@ -42,14 +42,14 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
 
     @Override
     public int getItemCount() {
-        if (units != null) {
+        if(units != null){
             return units.size();
-        } else {
+        }else{
             return 0;
         }
     }
 
-    public interface ListItemClickListener {
+    public interface ListItemClickListener{
         void onClick(int item);
     }
 
@@ -57,11 +57,11 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
         mListItemClickListener = listItemClickListener;
     }
 
-    public class UnitViewHolder<U extends RecyclerView.ViewHolder> extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class UnitViewHolder<U extends RecyclerView.ViewHolder> extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView unitTitleText;
 
-        UnitViewHolder(View itemView) {
+        public UnitViewHolder(View itemView) {
             super(itemView);
             unitTitleText = itemView.findViewById(R.id.list_item_unit_title);
             itemView.setOnClickListener(this);
@@ -73,7 +73,7 @@ public class UnitRecyclerViewAdapter extends RecyclerView.Adapter<UnitRecyclerVi
         }
     }
 
-    public void setUnits(List<Unit> units) {
+    public void setUnits(List<Unit> units){
         this.units = units;
         notifyDataSetChanged();
     }

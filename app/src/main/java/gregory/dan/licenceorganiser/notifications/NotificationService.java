@@ -91,7 +91,6 @@ public class NotificationService extends Service {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(unitTitle + id, m);
-        editor.apply();
         managerCompat.notify(m, notification);
     }
 }

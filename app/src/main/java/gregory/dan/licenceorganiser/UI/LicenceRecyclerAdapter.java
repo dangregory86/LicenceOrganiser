@@ -58,7 +58,7 @@ public class LicenceRecyclerAdapter extends RecyclerView.Adapter<LicenceRecycler
         calendar.setTimeInMillis(mExpiryDateRaw);
         calendar.add(Calendar.MONTH, -2);
         long startRenewingLicence = calendar.getTimeInMillis();
-        if (startRenewingLicence - System.currentTimeMillis() < 0) {
+        if(startRenewingLicence - System.currentTimeMillis() < 0){
             holder.mConstraintLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
@@ -98,7 +98,7 @@ public class LicenceRecyclerAdapter extends RecyclerView.Adapter<LicenceRecycler
         @BindView(R.id.licence_list_item_constraint_layout)
         ConstraintLayout mConstraintLayout;
 
-        LicenceViewHolder(View itemView) {
+        public LicenceViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);

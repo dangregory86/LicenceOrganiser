@@ -16,10 +16,9 @@ import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_EXTRA;
 
-public class AddInspectionPointActivity extends AppCompatActivity {
+public class AddInspectionPointActivity extends AppCompatActivity{
 
     @BindView(R.id.add_inspection_point_point_edit_text)
-    public
     EditText inspectionPointEditText;
 
     private long inspection;
@@ -54,6 +53,7 @@ public class AddInspectionPointActivity extends AppCompatActivity {
                     time);
             viewModel.insertPoint(point);
             viewModel.insertToFirebase(point);
+            Toast.makeText(this, "point added", Toast.LENGTH_SHORT).show();
             finish();
         }
     }

@@ -26,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,21 +50,16 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
     private String unitTitle;
     private MyViewModel mMyViewModel;
     @BindView(R.id.new_licence_serial_edit_text)
-    public
     EditText mLicenceSerialEditText;
     @BindView(R.id.new_licence_issue_date_edit_text)
-    public
     EditText issueDateEditText;
     @BindView(R.id.new_licence_add_ammo_button)
-    public
     Button addAmmoButton;
     @BindView(R.id.new_licence_radio_group)
-    public
     RadioGroup radioGroupView;
-    @BindView(R.id.add_licence_ammo_recycler_view)
-    public RecyclerView mRecyclerView;
+    @BindView(R.id.add_licence_ammo_recycler_view)RecyclerView mRecyclerView;
     private long issueDateTimeInMillies, expiryDateTimeInMillies;
-    private String licenceType = getString(R.string.standard_licence_string);
+    private String licenceType = "Standard";
     private boolean alreadyExists = false;
     private Licence mLicence;
 
@@ -89,19 +83,15 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         radioGroupView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.new_licence_aq25_radio_button:
-                        addAmmoButton.setVisibility(View.VISIBLE);
-                        licenceType = getString(R.string.aq25_string);
-                        break;
-                    case R.id.new_licence_saa_radio_button:
-                        addAmmoButton.setVisibility(View.GONE);
-                        licenceType = getString(R.string.saa_string);
-                        break;
-                    default:
-                        addAmmoButton.setVisibility(View.GONE);
-                        licenceType = getString(R.string.standard_licence_string);
-                        break;
+                if (checkedId == R.id.new_licence_aq25_radio_button) {
+                    addAmmoButton.setVisibility(View.VISIBLE);
+                    licenceType = "AQ25";
+                } else if (checkedId == R.id.new_licence_saa_radio_button) {
+                    addAmmoButton.setVisibility(View.GONE);
+                    licenceType = "SAA";
+                } else {
+                    addAmmoButton.setVisibility(View.GONE);
+                    licenceType = "Standard";
                 }
 
             }
@@ -112,7 +102,7 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         mRecyclerView.setAdapter(ammoRecyclerViewAdapter);
 
         mMyViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-        if (mLicence != null) {
+        if(mLicence != null){
             showRecyclerView();
         }
     }
@@ -138,11 +128,11 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             mMyViewModel.updateLicence(mLicence);
             mMyViewModel.insertToFirebase(mLicence);
         } else {
-            Toast.makeText(this, getString(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void saveLicence() {
+    public void saveLicence() {
         if (!mLicenceSerialEditText.getText().toString().equals("") &&
                 !issueDateEditText.getText().toString().equals("")) {
             alreadyExists = true;
@@ -158,7 +148,7 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
 
             setReminder();
         } else {
-            Toast.makeText(this, getString(R.string.complete_all_boxes), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ensure you complete all sections", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -197,7 +187,7 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         calendar.add(Calendar.YEAR, 5);
         expiryDateTimeInMillies = calendar.getTimeInMillis();
 
-        String date = getString(R.string.licence_issue_date_start_string) + sdf.format(issueDateTimeInMillies);
+        String date = "Licence issue date:  " + sdf.format(issueDateTimeInMillies);
         issueDateEditText.setText(date);
     }
 
@@ -218,12 +208,12 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(Objects.requireNonNull(getActivity()), (AddLicenceActivity) getActivity(), year, month, day);
+            return new DatePickerDialog(getActivity(), (AddLicenceActivity) getActivity(), year, month, day);
         }
 
     }
 
-    private void showRecyclerView() {
+    private void showRecyclerView(){
 
         mMyViewModel.getAllUnitAmmunition(mLicence.licenceSerial).observe(this, new Observer<List<Ammunition>>() {
             @Override
@@ -242,7 +232,7 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         super.onBackPressed();
     }
 
-    private void setReminder() {
+    public void setReminder(){
 
         String message = getString(R.string.licence_renewal_reminder);
         message = message + mLicence.licenceSerial;
@@ -264,9 +254,9 @@ public class AddLicenceActivity extends AppCompatActivity implements DatePickerD
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Objects.requireNonNull(alarmManager).setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
-        } else {
-            Objects.requireNonNull(alarmManager).set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
+        }else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP, alertTime, PendingIntent.getService(this, NOTIFICATION_ID, alertIntent, 0));
         }
     }
 }

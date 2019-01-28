@@ -15,17 +15,17 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Entity(foreignKeys = {
         @ForeignKey(onDelete = CASCADE,
                 entity = Inspection.class,
-                parentColumns = "_id",
-                childColumns = "inspection_id")
+        parentColumns = "_id",
+        childColumns = "inspection_id")
 }, indices = @Index("inspection_id"))
-public class OutstandingPoints {
+public class OutstandingPoints{
 
     @PrimaryKey
     @NonNull
     public long id;
 
     @ColumnInfo(name = "inspection_id")
-    private long inspectionId;
+    public long inspectionId;
 
     public String point;
 
@@ -36,9 +36,5 @@ public class OutstandingPoints {
         this.point = point;
         this.complete = complete;
         this.id = id;
-    }
-
-    public long getInspectionId() {
-        return inspectionId;
     }
 }

@@ -13,17 +13,5 @@
 Refer to App Widget Documentation for margin information
 http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     -->
-    <dimen name="widget_margin">0dp</dimen>
-    <dimen name="ammunition_item_text_size">18sp</dimen>
-    <dimen name="ammunition_item_margin">8dp</dimen>
-    <dimen name="inspection_item_text_size">18sp</dimen>
-    <dimen name="inspection_point_item_textview_height">100dp</dimen>
-    <dimen name="inspection_point_item_margin">8dp</dimen>
-    <dimen name="inspection_point_item_text_size">18sp</dimen>
-    <dimen name="licence_list_item_text_size">18sp</dimen>
-    <dimen name="unit_list_item_padding_constraint_layout">15dp</dimen>
-    <dimen name="unit_list_item_text_size">18sp</dimen>
-    <dimen name="unit_view_content_margin">8dp</dimen>
-    <dimen name="unit_widget_text_size">24sp</dimen>
-    <dimen name="view_inspection_margin">8dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

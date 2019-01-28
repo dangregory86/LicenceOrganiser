@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import gregory.dan.licenceorganiser.R;
 import gregory.dan.licenceorganiser.Unit.Unit;
@@ -42,7 +41,7 @@ public class UnitWidgetService extends RemoteViewsService {
         private List<Unit> mUnits;
         private int mWidgetId;
 
-        UnitWidgetViewFactory(Context context, Intent intent) {
+        UnitWidgetViewFactory(Context context, Intent intent){
             this.context = context;
             this.mWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -67,7 +66,7 @@ public class UnitWidgetService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            if (mUnits == null) {
+            if(mUnits == null){
                 return 0;
             }
             return mUnits.size();
@@ -106,7 +105,7 @@ public class UnitWidgetService extends RemoteViewsService {
             return false;
         }
 
-        private List<Unit> getmUnits() {
+        private List<Unit> getmUnits(){
             final List<Unit> units = new ArrayList<>();
             mRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -118,7 +117,7 @@ public class UnitWidgetService extends RemoteViewsService {
                             String unitAddress = (String) data.child("unitAddress").getValue();
                             String unitContactNumber = (String) data.child("unitContactNumber").getValue();
                             String unitCO = (String) data.child("unitCO").getValue();
-                            units.add(new Unit(Objects.requireNonNull(unitTitle), unitAddress, unitContactNumber, unitCO));
+                            units.add(new Unit(unitTitle, unitAddress, unitContactNumber, unitCO));
                         }
                     }
                 }

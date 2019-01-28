@@ -18,18 +18,14 @@ import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 public class AddUnitActivity extends AppCompatActivity {
 
     @BindView(R.id.new_unit_title_edit_text)
-    public
     EditText unitNameEt;
     @BindView(R.id.new_unit_address_edit_text)
-    public
     EditText unitAddressEt;
     @BindView(R.id.new_unit_phone_edit_text)
-    public
     EditText unitNumberEt;
     @BindView(R.id.new_unit_co_name)
-    public
     EditText unitCoEt;
-    private MyViewModel myViewModel;
+    MyViewModel myViewModel;
 
     private boolean alreadySaved = false;
     private Unit mUnit;
@@ -66,21 +62,21 @@ public class AddUnitActivity extends AppCompatActivity {
         }
     }
 
-    private boolean formComplete() {
+    private boolean formComplete(){
         boolean correct = true;
-        if (unitNameEt.getText().toString().trim().equals("")) {
+        if(unitNameEt.getText().toString().trim().equals("")){
             unitNameEt.setError(getString(R.string.enter_a_unit_name));
             correct = false;
         }
-        if (unitAddressEt.getText().toString().trim().equals("")) {
+        if(unitAddressEt.getText().toString().trim().equals("")){
             unitAddressEt.setError(getString(R.string.enter_the_address));
             correct = false;
         }
-        if (unitNumberEt.getText().toString().trim().equals("")) {
+        if(unitNumberEt.getText().toString().trim().equals("")){
             unitNumberEt.setError(getString(R.string.enter_a_number));
             correct = false;
         }
-        if (unitCoEt.getText().toString().trim().equals("")) {
+        if(unitCoEt.getText().toString().trim().equals("")){
             unitCoEt.setError(getString(R.string.enter_co_details));
             correct = false;
         }
@@ -121,7 +117,7 @@ public class AddUnitActivity extends AppCompatActivity {
         }
     }
 
-    private void saveUnit() {
+    public void saveUnit() {
         Unit unit = new Unit(unitNameEt.getText().toString(),
                 unitAddressEt.getText().toString(),
                 unitNumberEt.getText().toString(),
@@ -131,14 +127,14 @@ public class AddUnitActivity extends AppCompatActivity {
         myViewModel.insertToFirebase(unit);
     }
 
-    private void updateUnit() {
+    public void updateUnit() {
         myViewModel.updateUnit(mUnit);
         myViewModel.insertToFirebase(mUnit);
     }
 
     @Override
     public void onBackPressed() {
-        if (alreadySaved) {
+        if(alreadySaved){
             myViewModel.deleteUnit(mUnit);
         }
         super.onBackPressed();

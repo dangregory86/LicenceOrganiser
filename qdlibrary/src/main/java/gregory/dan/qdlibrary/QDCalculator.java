@@ -15,14 +15,12 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class QDCalculator extends AppCompatActivity {
-    private TextView pESDescriptionTv;
-    private TextView eSDescriptionTv;
-    private TextView mResultTextView;
+    public TextView pESDescriptionTv, eSDescriptionTv, mResultTextView;
     private ImageView hdImageView, pEsImageView, eSImageView;
     private EditText mDistanceEditText;
+    private Button mCalculateButton;
     private int pesPos, esPos;
     private TypedArray pesS, ess;
 
@@ -31,7 +29,7 @@ public class QDCalculator extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qdcalculator);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupUi();
 
         pesS = getResources().obtainTypedArray(R.array.pes_images);
@@ -104,7 +102,7 @@ public class QDCalculator extends AppCompatActivity {
 
         mResultTextView = findViewById(R.id.qd_result_text_view);
         mDistanceEditText = findViewById(R.id.qd_distance_in_metres_edit_text);
-        Button mCalculateButton = findViewById(R.id.qd_calculate_button);
+        mCalculateButton = findViewById(R.id.qd_calculate_button);
         mCalculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

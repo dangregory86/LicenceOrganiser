@@ -78,7 +78,7 @@ public class AmmoRecyclerViewAdapter extends RecyclerView.Adapter<AmmoRecyclerVi
         @BindView(R.id.ammo_item_layout_max_qunatity_text_view)
         TextView mMaxQtyTextView;
 
-        AmunitionViewHolder(View itemView) {
+        public AmunitionViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
