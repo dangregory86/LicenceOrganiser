@@ -123,7 +123,6 @@
     <string name="licence_issue_date_start_string">Licence issue date:</string>
     <string name="twenty_eight_day_reminder_title">28 Day reminder</string>
     <string name="twenty_eight_day_reminder_description">A reminder to chase 28 day action points.</string>
-    <string name="verify_email_text_fail">Verify your email to save.</string>
 
 
 </resources>
