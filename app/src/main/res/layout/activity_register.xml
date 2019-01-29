@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <EditText
+        android:id="@+id/register_popup_first_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/first_name"
+        android:inputType="number"
+        android:maxLength="8"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_popup_rank" />
+
+    <EditText
+        android:id="@+id/register_popup_surname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/surname"
+        android:inputType="text"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/register_popup_first_name"
+        app:layout_constraintStart_toStartOf="@+id/register_popup_first_name"
+        app:layout_constraintTop_toBottomOf="@+id/register_popup_first_name" />
+
+    <EditText
+        android:id="@+id/register_popup_rank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/rank"
+        android:inputType="none"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/register_popup_surname"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/register_popup_surname"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/register_popup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/action_register"
+        app:layout_constraintEnd_toEndOf="@+id/register_popup_surname"
+        app:layout_constraintStart_toStartOf="@+id/register_popup_surname"
+        app:layout_constraintTop_toBottomOf="@+id/register_popup_surname" />
+
+</android.support.constraint.ConstraintLayout>

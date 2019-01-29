@@ -121,6 +121,10 @@
     <string name="widget_unit_title_label_text">Unit:</string>
     <string name="unit_widget_address_label_text">Address:</string>
     <string name="unit_widget_contact_no_label_text">Tel.</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="rank">Rank</string>
+    <string name="rank_spinner_title">Select rank</string>
 
 
 </resources>

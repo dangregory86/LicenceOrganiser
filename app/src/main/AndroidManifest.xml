@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -77,9 +79,10 @@
                 android:resource="@xml/unit_widget_info" />
         </receiver>
 
-        <service android:name=".widget.UnitWidgetService"
+        <service
+            android:name=".widget.UnitWidgetService"
             android:enabled="true"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
