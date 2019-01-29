@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,7 +77,7 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
 
         new GetInspectionAsyncTask(myViewModel).execute(mInspectionIdFromIntent);
 
-        String inspectedByText = INSPECTED_BY_TEXT + mUser.getEmail();
+        String inspectedByText = INSPECTED_BY_TEXT + mUser.getDisplayName();
         mInspectedByTextView.setText(inspectedByText);
 
         String inspectionDate = TITLE_START;
@@ -85,7 +86,7 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
 
     private void setTitleText(long date){
         Date mDate = new Date(date);
-        String newInspectedDate = new SimpleDateFormat("dd/mm/yyyy").format(mDate);
+        String newInspectedDate = new SimpleDateFormat("dd-MMMM-YYYY", Locale.getDefault()).format(mDate);
         String completeTitle = TITLE_START + newInspectedDate;
         mInspectionDate.setText(completeTitle);
     }

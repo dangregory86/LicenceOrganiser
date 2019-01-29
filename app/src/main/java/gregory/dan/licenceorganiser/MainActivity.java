@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    //TODO create user details
     //TODO sort authentication out
     //TODO update the qd calculator to include more
+    //TODO get the inspections list to show correct colour
+    //TODO get the inspection to show who completed the inspection.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
                 if (firebaseAuth.getCurrentUser() == null || !firebaseAuth.getCurrentUser().isEmailVerified()) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
-                    setUserName(firebaseAuth.getCurrentUser().getEmail());
+                    setUserName(firebaseAuth.getCurrentUser().getDisplayName());
                 }
             }
         };

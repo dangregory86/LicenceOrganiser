@@ -125,6 +125,9 @@
     <string name="surname">Surname</string>
     <string name="rank">Rank</string>
     <string name="rank_spinner_title">Select rank</string>
+    <string name="verify_email">Verify email</string>
+    <string name="resend_verification">Resend verification</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>
