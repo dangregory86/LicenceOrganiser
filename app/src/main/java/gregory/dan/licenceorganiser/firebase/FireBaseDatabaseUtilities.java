@@ -34,7 +34,7 @@ public class FireBaseDatabaseUtilities {
     private MyViewModel myViewModel;
 
 
-    public FireBaseDatabaseUtilities(MyViewModel viewModel){
+    public FireBaseDatabaseUtilities(MyViewModel viewModel) {
         myViewModel = viewModel;
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUnitRef = mFirebaseDatabase.getReference(UNIT_REF_TEXT);
@@ -44,7 +44,7 @@ public class FireBaseDatabaseUtilities {
         mAmmunitionRef = mFirebaseDatabase.getReference(AMMUNITION_REF_TEXT);
     }
 
-    public FireBaseDatabaseUtilities(){
+    public FireBaseDatabaseUtilities() {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUnitRef = mFirebaseDatabase.getReference(UNIT_REF_TEXT);
         mLicenceRef = mFirebaseDatabase.getReference(LICENCE_REF_TEXT);
@@ -208,7 +208,7 @@ public class FireBaseDatabaseUtilities {
 
     /*delete functions*/
 
-    public void deleteUnit(final String unitName){
+    public void deleteUnit(final String unitName) {
         mUnitRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -234,13 +234,13 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteAllUnitLicences(final String unitName){
+    public void deleteAllUnitLicences(final String unitName) {
         mLicenceRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        if(data.child("unitTitle").getValue().equals(unitName)){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("unitTitle").getValue().equals(unitName)) {
                             String key = data.getKey();
                             String path = "/" + key;
                             mLicenceRef.child(path).removeValue();
@@ -258,13 +258,13 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteLicence(final String licenceSerial){
+    public void deleteLicence(final String licenceSerial) {
         mLicenceRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot data : dataSnapshot.getChildren()){
-                        if(data.child("licenceSerial").getValue().equals(licenceSerial)){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("licenceSerial").getValue().equals(licenceSerial)) {
                             String key = data.getKey();
                             String path = "/" + key;
                             mLicenceRef.child(path).removeValue();
@@ -281,13 +281,13 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteAllLicenceAmmo(final String licenceSerial){
+    public void deleteAllLicenceAmmo(final String licenceSerial) {
         mAmmunitionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot data: dataSnapshot.getChildren()){
-                        if(data.child("licenceSerial").getValue().equals(licenceSerial)){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("licenceSerial").getValue().equals(licenceSerial)) {
                             String key = data.getKey();
                             String path = "/" + key;
                             mAmmunitionRef.child(path).removeValue();
@@ -303,13 +303,13 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteAmmo(final long ammoId){
+    public void deleteAmmo(final long ammoId) {
         mAmmunitionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot data: dataSnapshot.getChildren()){
-                        if(data.child("id").getValue().equals(ammoId)){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.child("id").getValue().equals(ammoId)) {
                             String key = data.getKey();
                             String path = "/" + key;
                             mAmmunitionRef.child(path).removeValue();
@@ -325,7 +325,7 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteAllUnitInspections(final String unitName){
+    public void deleteAllUnitInspections(final String unitName) {
         mInspectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -351,7 +351,7 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteInspection(final long id){
+    public void deleteInspection(final long id) {
         mInspectionRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -376,7 +376,7 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deleteAllInspectionPoints(final long inspId){
+    public void deleteAllInspectionPoints(final long inspId) {
         mPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -400,7 +400,7 @@ public class FireBaseDatabaseUtilities {
         });
     }
 
-    public void deletePoint(final long id){
+    public void deletePoint(final long id) {
         mPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -438,7 +438,7 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mUnitRef.child(path).setValue(unit);
                             return;
-                        } else if(i == dataSnapshot.getChildrenCount()){
+                        } else if (i == dataSnapshot.getChildrenCount()) {
                             mUnitRef.push().setValue(unit);
                         }
 
@@ -468,7 +468,7 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mLicenceRef.child(path).setValue(licence);
                             return;
-                        } else if(i == dataSnapshot.getChildrenCount()){
+                        } else if (i == dataSnapshot.getChildrenCount()) {
                             mLicenceRef.push().setValue(licence);
                         }
                         i++;
@@ -497,7 +497,7 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mAmmunitionRef.child(path).setValue(ammunition);
                             return;
-                        } else if(i == dataSnapshot.getChildrenCount()){
+                        } else if (i == dataSnapshot.getChildrenCount()) {
                             mAmmunitionRef.push().setValue(ammunition);
                         }
                         i++;
@@ -526,7 +526,7 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mInspectionRef.child(path).setValue(inspection);
                             return;
-                        } else if(i == dataSnapshot.getChildrenCount()){
+                        } else if (i == dataSnapshot.getChildrenCount()) {
                             mInspectionRef.push().setValue(inspection);
                         }
                         i++;
@@ -555,7 +555,7 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mPointsRef.child(path).setValue(point);
                             break;
-                        } else if(i == dataSnapshot.getChildrenCount()){
+                        } else if (i == dataSnapshot.getChildrenCount()) {
                             mPointsRef.push().setValue(point);
                         }
                         i++;

@@ -29,7 +29,7 @@ import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_EXTR
 import static gregory.dan.licenceorganiser.AddLicenceActivity.LICENCE_SERIAL_EXTRA;
 import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 
-public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener, InspectionRecyclerAdapter.ListItemClickListener{
+public class ViewUnitActivity extends AppCompatActivity implements LicenceRecyclerAdapter.ListItemClickListener, InspectionRecyclerAdapter.ListItemClickListener {
 
     @BindView(R.id.view_unit_title_text_view)
     TextView mUnitTitleTextView;
@@ -41,7 +41,8 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     TextView mUnitContactNumber;
     @BindView(R.id.view_unit_licence_recycler_view)
     RecyclerView mUnitLicenceRecyclerView;
-    @BindView(R.id.unit_view_inspection_points_recycler_view) RecyclerView mInspectionRecyclerView;
+    @BindView(R.id.unit_view_inspection_points_recycler_view)
+    RecyclerView mInspectionRecyclerView;
 
     private MyViewModel mMyViewModel;
     private String mUnitTitle;
@@ -70,7 +71,7 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
         Intent intent = getIntent();
 
 
-        if(intent.hasExtra(UNIT_NAME_EXTRA)){
+        if (intent.hasExtra(UNIT_NAME_EXTRA)) {
             mUnitTitle = intent.getStringExtra(UNIT_NAME_EXTRA);
             getSupportActionBar().setTitle(mUnitTitle);
             new GetUnitAsyncTask(mMyViewModel).execute(mUnitTitle);
@@ -88,13 +89,13 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
                     inspectionRecyclerAdapter.setInspections(inspections);
                 }
             });
-        }else{
+        } else {
             finish();
         }
     }
 
 
-    private void setViews(Unit unit){
+    private void setViews(Unit unit) {
         mUnit = unit;
         mUnitTitleTextView.setText(unit.unitTitle);
         mUnitAddressTextView.setText(unit.unitAddress);
@@ -111,14 +112,14 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     }
 
     @OnClick(R.id.view_unit_add_licence_button)
-    public void addAnotherLicence(View v){
+    public void addAnotherLicence(View v) {
         Intent intent = new Intent(this, AddLicenceActivity.class);
         intent.putExtra(UNIT_NAME_EXTRA, mUnitTitle);
         startActivity(intent);
     }
 
     @OnClick(R.id.unit_view_add_inspection_point_button)
-    public void addInspectionPoint(){
+    public void addInspectionPoint() {
         Intent intent = new Intent(this, AddInspectionActivity.class);
         intent.putExtra(UNIT_NAME_EXTRA, mUnitTitle);
         startActivity(intent);
@@ -133,10 +134,10 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     }
 
 
-    private class GetUnitAsyncTask extends AsyncTask<String, Void, Unit>{
+    private class GetUnitAsyncTask extends AsyncTask<String, Void, Unit> {
         private MyViewModel viewModel;
 
-        GetUnitAsyncTask(MyViewModel myViewModel){
+        GetUnitAsyncTask(MyViewModel myViewModel) {
             viewModel = myViewModel;
         }
 
@@ -154,7 +155,7 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     }
 
     @OnClick({R.id.delete_unit_unit_view})
-    public void deleteUnit(){
+    public void deleteUnit() {
         mMyViewModel.deleteFromFirebase(mUnit);
         mMyViewModel.deleteUnit(mUnit);
         NavUtils.navigateUpFromSameTask(this);
