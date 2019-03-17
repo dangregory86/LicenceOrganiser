@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     //TODO get the inspections list to show correct colour
     //TODO get the inspection to show who completed the inspection.
     //TODO put unit location on
+    //TODO implement workmanager to update cloud database and implement daily syncronisation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

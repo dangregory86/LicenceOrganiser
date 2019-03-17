@@ -158,6 +158,6 @@ public class ViewUnitActivity extends AppCompatActivity implements LicenceRecycl
     public void deleteUnit() {
         mMyViewModel.deleteFromFirebase(mUnit);
         mMyViewModel.deleteUnit(mUnit);
-        NavUtils.navigateUpFromSameTask(this);
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

@@ -53,7 +53,6 @@ public class FireBaseDatabaseUtilities {
         mAmmunitionRef = mFirebaseDatabase.getReference(AMMUNITION_REF_TEXT);
     }
 
-
     /*functions to set up the database*/
     public void setupDatabase() {
         // get input the units
@@ -335,10 +334,9 @@ public class FireBaseDatabaseUtilities {
                         if (data.child("unit").getValue().equals(unitName)) {
                             String key = data.getKey();
                             String path = "/" + key;
-                            mInspectionRef.child(path).removeValue();
                             long inspId = (long) data.child("_id").getValue();
                             deleteAllInspectionPoints(inspId);
-                            break;
+                            mInspectionRef.child(path).removeValue();
                         }
                     }
                 }
@@ -363,7 +361,6 @@ public class FireBaseDatabaseUtilities {
                             String path = "/" + key;
                             mInspectionRef.child(path).removeValue();
                             deleteAllInspectionPoints(id);
-                            break;
                         }
                     }
                 }
@@ -387,7 +384,6 @@ public class FireBaseDatabaseUtilities {
                             String key = data.getKey();
                             String path = "/" + key;
                             mPointsRef.child(path).removeValue();
-                            break;
                         }
                     }
                 }
@@ -411,7 +407,6 @@ public class FireBaseDatabaseUtilities {
                             String key = data.getKey();
                             String path = "/" + key;
                             mPointsRef.child(path).removeValue();
-                            break;
                         }
                     }
                 }
