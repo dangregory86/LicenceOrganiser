@@ -5,6 +5,11 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -23,6 +28,7 @@ import gregory.dan.licenceorganiser.workmanagers.UpdateFirebaseWorkManager;
 
 import static gregory.dan.licenceorganiser.Constants.OBJECT_DATA_KEY;
 import static gregory.dan.licenceorganiser.Constants.OBJECT_TYPE;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.UNIT_REF_TEXT;
 
 /**
  * Created by Daniel Gregory on 31/08/2018.
@@ -30,29 +36,44 @@ import static gregory.dan.licenceorganiser.Constants.OBJECT_TYPE;
 public class MyViewModel extends AndroidViewModel {
 
     private AppRepository mRepository;
-    private LiveData<List<Unit>> mAllUnits;
-    WorkManager mWorkManager;
+    private WorkManager mWorkManager;
+    private FirebaseDatabase mDatabase;
+    private FirebaseQueryLiveData mFirebaseQueryLiveData;
 
     public MyViewModel(@NonNull Application application) {
         super(application);
         mRepository = new AppRepository(application);
-        mAllUnits = mRepository.getAllUnits();
+        mDatabase = FirebaseDatabase.getInstance();
         mWorkManager = WorkManager.getInstance();
     }
 
-//    public void insertToFirebase(Object object){
-//        if(Unit.class.isInstance(object)){
-//            mRepository.inseertOrUpdateFirebaseUnit((Unit) object);
-//        }else if(OutstandingPoints.class.isInstance(object)){
-//            mRepository.inseertOrUpdateFirebasePoint((OutstandingPoints) object);
-//        }else if(Licence.class.isInstance(object)){
-//            mRepository.inseertOrUpdateFirebaseLicence((Licence) object);
-//        }else if(Inspection.class.isInstance(object)){
-//            mRepository.inseertOrUpdateFirebaseInspection((Inspection) object);
-//        }else if(Ammunition.class.isInstance(object)){
-//            mRepository.inseertOrUpdateFirebaseAmmunition((Ammunition) object);
-//        }
-//    }
+    private void observeFirebaseUnits(){
+        DatabaseReference ref = mDatabase.getReference(UNIT_REF_TEXT);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                } else {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        String unitTitle = (String) data.child("unitTitle").getValue();
+                        String unitAddress = (String) data.child("unitAddress").getValue();
+                        String unitContactNumber = (String) data.child("unitContactNumber").getValue();
+                        String unitCO = (String) data.child("unitCO").getValue();
+                        insertUnit(new Unit(unitTitle,
+                                unitAddress,
+                                unitContactNumber,
+                                unitCO));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     public void insertToFirebase(Object object) {
         Data data = mData(object);
@@ -106,8 +127,10 @@ public class MyViewModel extends AndroidViewModel {
         }
     }
 
-    public LiveData<List<Unit>> getmAllUnits() {
-        return mAllUnits;
+    public LiveData<DataSnapshot> getmAllUnits() {
+        DatabaseReference ref = mDatabase.getReference(UNIT_REF_TEXT);
+        mFirebaseQueryLiveData = new FirebaseQueryLiveData(ref);
+        return mFirebaseQueryLiveData;
     }
 
     public void insertUnit(Unit unit) {

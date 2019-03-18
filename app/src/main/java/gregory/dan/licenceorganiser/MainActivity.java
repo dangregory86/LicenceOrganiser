@@ -1,5 +1,6 @@
 package gregory.dan.licenceorganiser;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -24,7 +25,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +44,8 @@ import static gregory.dan.licenceorganiser.AddUnitActivity.UNIT_NAME_EXTRA;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, UnitRecyclerViewAdapter.ListItemClickListener {
 
+
+
     public static final String NOTIFICATIONS_KEY = "notifications";
 
     @BindView(R.id.unit_list_recycler_view)
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     TextView mUserTextView;
     private UnitRecyclerViewAdapter mUnitRecyclerViewAdapter;
     private MyViewModel myViewModel;
-    private List<Unit> mUnits;
+    private List<Unit> mUnits = new ArrayList<>();
 
     //firebase
     private FirebaseAuth mAuth;
@@ -70,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ButterKnife.bind(this);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -109,11 +116,28 @@ public class MainActivity extends AppCompatActivity
         mUnitRecyclerViewAdapter = new UnitRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mUnitRecyclerViewAdapter);
 
-        myViewModel.getmAllUnits().observe(this, new Observer<List<Unit>>() {
+//        myViewModel.getmAllUnits().observe(this, new Observer<List<Unit>>() {
+//            @Override
+//            public void onChanged(@Nullable List<Unit> units) {
+//                mUnits = units;
+//                mUnitRecyclerViewAdapter.setUnits(units);
+//            }
+//        });
+
+        LiveData<DataSnapshot> unitsSnapshot = myViewModel.getmAllUnits();
+        unitsSnapshot.observe(this, new Observer<DataSnapshot>() {
             @Override
-            public void onChanged(@Nullable List<Unit> units) {
-                mUnits = units;
-                mUnitRecyclerViewAdapter.setUnits(units);
+            public void onChanged(@Nullable DataSnapshot dataSnapshot) {
+                if(dataSnapshot != null){
+                    if(mUnits != null){
+                        mUnits.clear();
+                    }
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        Unit unit = data.getValue(Unit.class);
+                        mUnits.add(unit);
+                    }
+                    mUnitRecyclerViewAdapter.setUnits(mUnits);
+                }
             }
         });
 

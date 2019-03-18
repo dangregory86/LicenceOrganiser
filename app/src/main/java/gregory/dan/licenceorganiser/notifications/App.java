@@ -5,6 +5,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 /**
  * Created by Daniel Gregory on 06/09/2018.
  */
@@ -16,6 +18,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         createChannels();
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     private void createChannels(){

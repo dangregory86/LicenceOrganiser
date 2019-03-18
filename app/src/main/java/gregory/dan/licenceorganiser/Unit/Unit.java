@@ -21,6 +21,10 @@ public class Unit{
 
     public String unitCO;
 
+    public Unit(){
+
+    }
+
     public Unit(@NonNull String unitTitle, String unitAddress, String unitContactNumber, String unitCO) {
         this.unitTitle = unitTitle;
         this.unitAddress = unitAddress;

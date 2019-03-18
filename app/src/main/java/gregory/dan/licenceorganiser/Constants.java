@@ -13,19 +13,12 @@ public class Constants {
     public static final String CHANNEL_ID = "VERBOSE_NOTIFICATION" ;
     public static final int NOTIFICATION_ID = 1;
 
-    // The name of the image manipulation work
-    static final String IMAGE_MANIPULATION_WORK_NAME = "image_manipulation_work";
-
-    // Other keys
-    public static final String OUTPUT_PATH = "blur_filter_outputs";
-    public static final String KEY_IMAGE_URI = "KEY_IMAGE_URI";
-    static final String TAG_OUTPUT = "OUTPUT";
-
-    public static final long DELAY_TIME_MILLIS = 3000;
-
     //viewmodal constants
     public static final String OBJECT_DATA_KEY = "gregory.dan.licenceorganiser.Unit.viewModels.objectdatakey";
     public static final String OBJECT_TYPE = "gregory.dan.licenceorganiser.Unit.viewModels.objecttype";
+
+    // update service
+    public static final String UPDATE_SERVICE_ID = "gregory.dan.licenceorganiser.services.UpdateService.update.id";
 
     // Ensures this class is never instantiated
     private Constants() {}
