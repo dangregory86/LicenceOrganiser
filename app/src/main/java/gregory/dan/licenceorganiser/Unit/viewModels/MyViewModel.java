@@ -28,6 +28,7 @@ import gregory.dan.licenceorganiser.workmanagers.UpdateFirebaseWorkManager;
 
 import static gregory.dan.licenceorganiser.Constants.OBJECT_DATA_KEY;
 import static gregory.dan.licenceorganiser.Constants.OBJECT_TYPE;
+import static gregory.dan.licenceorganiser.Unit.database.AppRepository.POINTS_REF_TEXT;
 import static gregory.dan.licenceorganiser.Unit.database.AppRepository.UNIT_REF_TEXT;
 
 /**
@@ -156,20 +157,10 @@ public class MyViewModel extends AndroidViewModel {
     /*
      * The following functions all link to the OutstandingPointsDao
      * */
-    public LiveData<List<OutstandingPoints>> getAllUnitPoints(long inspectionId) {
-        return mRepository.getAllUnitPoints(inspectionId);
-    }
-
-    public void insertPoint(OutstandingPoints point) {
-        mRepository.insertPoint(point);
-    }
-
-    public void updatePoint(OutstandingPoints point) {
-        mRepository.updatePoint(point);
-    }
-
-    public void deletePoint(OutstandingPoints point) {
-        mRepository.deletePoint(point);
+    public LiveData<DataSnapshot> getAllUnitPoints() {
+        DatabaseReference ref = mDatabase.getReference(POINTS_REF_TEXT);
+        mFirebaseQueryLiveData = new FirebaseQueryLiveData(ref);
+        return mFirebaseQueryLiveData;
     }
 
     /*

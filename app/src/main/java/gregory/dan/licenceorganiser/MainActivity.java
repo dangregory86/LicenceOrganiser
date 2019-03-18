@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     //TODO get the inspections list to show correct colour
     //TODO get the inspection to show who completed the inspection.
     //TODO put unit location on
-    //TODO implement workmanager to update cloud database and implement daily syncronisation
+    //TODO finish implementing firebase database persistence and get rid of room.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,14 +115,6 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUnitRecyclerViewAdapter = new UnitRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(mUnitRecyclerViewAdapter);
-
-//        myViewModel.getmAllUnits().observe(this, new Observer<List<Unit>>() {
-//            @Override
-//            public void onChanged(@Nullable List<Unit> units) {
-//                mUnits = units;
-//                mUnitRecyclerViewAdapter.setUnits(units);
-//            }
-//        });
 
         LiveData<DataSnapshot> unitsSnapshot = myViewModel.getmAllUnits();
         unitsSnapshot.observe(this, new Observer<DataSnapshot>() {

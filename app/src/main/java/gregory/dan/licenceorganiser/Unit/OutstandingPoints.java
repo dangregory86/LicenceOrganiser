@@ -31,6 +31,10 @@ public class OutstandingPoints{
 
     public long complete;
 
+    public OutstandingPoints(){
+
+    }
+
     public OutstandingPoints(long inspectionId, String point, long complete, long id) {
         this.inspectionId = inspectionId;
         this.point = point;

@@ -153,16 +153,6 @@ public class FireBaseDatabaseUtilities {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() == null) {
                 } else {
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        long id = (long) data.child("id").getValue();
-                        long inspectionId = (long) data.child("inspectionId").getValue();
-                        String point = (String) data.child("point").getValue();
-                        long complete = (long) data.child("complete").getValue();
-                        myViewModel.insertPoint(new OutstandingPoints(inspectionId,
-                                point,
-                                complete,
-                                id));
-                    }
                     setupAmmunition();
                 }
             }

@@ -51,7 +51,6 @@ public class AddInspectionPointActivity extends AppCompatActivity{
                     inspectionPointEditText.getText().toString(),
                     0,
                     time);
-            viewModel.insertPoint(point);
             viewModel.insertToFirebase(point);
             Toast.makeText(this, "point added", Toast.LENGTH_SHORT).show();
             finish();

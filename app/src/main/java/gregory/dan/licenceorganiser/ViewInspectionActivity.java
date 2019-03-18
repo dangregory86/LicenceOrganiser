@@ -1,5 +1,6 @@
 package gregory.dan.licenceorganiser;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +27,7 @@ import butterknife.ButterKnife;
 import gregory.dan.licenceorganiser.UI.PointRecyclerViewAdapter;
 import gregory.dan.licenceorganiser.Unit.Inspection;
 import gregory.dan.licenceorganiser.Unit.OutstandingPoints;
+import gregory.dan.licenceorganiser.Unit.Unit;
 import gregory.dan.licenceorganiser.Unit.viewModels.MyViewModel;
 
 import static gregory.dan.licenceorganiser.AddInspectionActivity.INSPECTION_EXTRA;
@@ -37,7 +41,7 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
     @BindView(R.id.view_inspection_points_recycler_view)RecyclerView mRecyclerView;
     @BindView(R.id.inspected_by_text_view) TextView mInspectedByTextView;
     private long mInspectionIdFromIntent;
-    private List<OutstandingPoints> mOutstandingPoints;
+    private List<OutstandingPoints> mOutstandingPoints = new ArrayList<>();
 
     private PointRecyclerViewAdapter mRecyclerViewAdapter;
 
@@ -67,11 +71,22 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
         myViewModel = ViewModelProviders.of(this).get(MyViewModel.class);
-        myViewModel.getAllUnitPoints(mInspectionIdFromIntent).observe(this, new Observer<List<OutstandingPoints>>() {
+        LiveData<DataSnapshot> points = myViewModel.getAllUnitPoints();
+        points.observe(this, new Observer<DataSnapshot>() {
             @Override
-            public void onChanged(@Nullable List<OutstandingPoints> outstandingPoints) {
-                mOutstandingPoints = outstandingPoints;
-                mRecyclerViewAdapter.setPoints(outstandingPoints);
+            public void onChanged(@Nullable DataSnapshot dataSnapshot) {
+                if(dataSnapshot != null){
+                    if(mOutstandingPoints != null){
+                        mOutstandingPoints.clear();
+                    }
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        OutstandingPoints point = data.getValue(OutstandingPoints.class);
+                        if(point.inspectionId == mInspectionIdFromIntent) {
+                            mOutstandingPoints.add(point);
+                        }
+                    }
+                    mRecyclerViewAdapter.setPoints(mOutstandingPoints);
+                }
             }
         });
 
@@ -95,7 +110,6 @@ public class ViewInspectionActivity extends AppCompatActivity implements PointRe
     public void completedClick(int item) {
         OutstandingPoints point = mOutstandingPoints.get(item);
         point.complete = 1;
-        myViewModel.updatePoint(point);
         myViewModel.insertToFirebase(point);
     }
 

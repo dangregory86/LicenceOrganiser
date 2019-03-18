@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -51,7 +54,6 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
     @BindView(R.id.add_inspection_recycler_view)
     RecyclerView mRecyclerView;
 
-
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
@@ -63,7 +65,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
     private int hasPoints = 0;
     private Inspection inspection;
     private PointRecyclerViewAdapter mRecyclerViewAdapter;
-    private List<OutstandingPoints> mOustandingPoints;
+    private List<OutstandingPoints> mOustandingPoints = new ArrayList<>();
     private String date;
 
     private SimpleDateFormat sdf;
@@ -99,14 +101,33 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
 
     private void showRecyclerView() {
 
-        viewModel.getAllUnitPoints(inspection._id).observe(this, new Observer<List<OutstandingPoints>>() {
+//        viewModel.getAllUnitPoints(inspection._id).observe(this, new Observer<List<OutstandingPoints>>() {
+//            @Override
+//            public void onChanged(@Nullable List<OutstandingPoints> outstandingPoints) {
+//                if (outstandingPoints != null) {
+//                    hasPoints = outstandingPoints.size();
+//                }
+//                mOustandingPoints = outstandingPoints;
+//                mRecyclerViewAdapter.setPoints(outstandingPoints);
+//            }
+//        });
+
+        LiveData<DataSnapshot> points = viewModel.getAllUnitPoints();
+        points.observe(this, new Observer<DataSnapshot>() {
             @Override
-            public void onChanged(@Nullable List<OutstandingPoints> outstandingPoints) {
-                if (outstandingPoints != null) {
-                    hasPoints = outstandingPoints.size();
+            public void onChanged(@Nullable DataSnapshot dataSnapshot) {
+                if(dataSnapshot != null){
+                    if(mOustandingPoints != null){
+                        mOustandingPoints.clear();
+                    }
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        OutstandingPoints point = data.getValue(OutstandingPoints.class);
+                        if(point.inspectionId == inspection._id) {
+                            mOustandingPoints.add(point);
+                        }
+                    }
+                    mRecyclerViewAdapter.setPoints(mOustandingPoints);
                 }
-                mOustandingPoints = outstandingPoints;
-                mRecyclerViewAdapter.setPoints(outstandingPoints);
             }
         });
 
@@ -195,7 +216,7 @@ public class AddInspectionActivity extends AppCompatActivity implements DatePick
     public void completedClick(int item) {
         OutstandingPoints point = mOustandingPoints.get(item);
         point.complete = 1;
-        viewModel.updatePoint(point);
+//        viewModel.updatePoint(point);
         viewModel.insertToFirebase(point);
     }
 
